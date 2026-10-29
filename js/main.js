@@ -162,9 +162,27 @@ toggle.addEventListener('click', () => {
 menu.addEventListener('click', (e) => { if (e.target.closest('a')) cerrarMenu(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarMenu(); });
 
-const marcarScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
-marcarScroll();
-window.addEventListener('scroll', marcarScroll, { passive: true });
+// Al hacer scroll: fondo de la barra, barra de progreso y la captura de la
+// portada que se endereza (de 7° a 0° en los primeros 500 px)
+const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const progreso = document.querySelector('.progreso');
+const capturaHero = document.querySelector('.window--hero');
+let scrollPendiente = false;
+
+function alHacerScroll() {
+  scrollPendiente = false;
+  const y = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  nav.classList.toggle('is-scrolled', y > 8);
+  progreso.style.transform = `scaleX(${total > 0 ? Math.min(1, y / total) : 0})`;
+  if (!sinMovimiento) capturaHero.style.setProperty('--tilt', `${(7 * Math.max(0, 1 - y / 500)).toFixed(2)}deg`);
+}
+alHacerScroll();
+window.addEventListener('scroll', () => {
+  if (scrollPendiente) return;
+  scrollPendiente = true;
+  requestAnimationFrame(alHacerScroll);
+}, { passive: true });
 
 // Recorrido por la app: pestañas accesibles con flechas, Inicio y Fin
 const tablist = document.querySelector('.tour__tabs');
@@ -212,13 +230,49 @@ document.querySelectorAll('.zoom').forEach((boton) => {
 });
 visor.addEventListener('click', () => visor.close());
 
+// Orden para las apariciones escalonadas (--i en el CSS): entre bloques
+// hermanos y entre los elementos de cada lista
+document.querySelectorAll('.reveal').forEach((el) => {
+  const hermanos = [...el.parentElement.children].filter((h) => h.classList.contains('reveal'));
+  el.style.setProperty('--i', hermanos.indexOf(el));
+});
+document.querySelectorAll('.games, .diag, .nohace__list, .plans__notes, .req, .install, .compra__pasos, .ticks').forEach((lista) => {
+  [...lista.children].forEach((hijo, i) => hijo.style.setProperty('--i', i));
+});
+
+// Brillo que sigue al mouse en las tarjetas (solo con mouse, no en pantallas táctiles)
+if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.step, .trust__item, .plan, .card, .game, .dl__card, .nohace').forEach((el) => el.classList.add('spot'));
+  document.addEventListener('pointermove', (e) => {
+    const tarjeta = e.target.closest('.spot');
+    if (!tarjeta) return;
+    const caja = tarjeta.getBoundingClientRect();
+    tarjeta.style.setProperty('--mx', `${e.clientX - caja.left}px`);
+    tarjeta.style.setProperty('--my', `${e.clientY - caja.top}px`);
+  }, { passive: true });
+}
+
+// Cifras que cuentan desde 0 cuando aparecen
+function contar(el) {
+  const meta = Number(el.dataset.count);
+  const inicio = performance.now();
+  const paso = (ahora) => {
+    const avance = Math.min(1, (ahora - inicio) / 1400);
+    el.textContent = Math.round(meta * (1 - (1 - avance) ** 3));
+    if (avance < 1) requestAnimationFrame(paso);
+  };
+  requestAnimationFrame(paso);
+}
+
 // Aparición suave de las secciones
-const aparecer = document.querySelectorAll('.reveal');
+const aparecer = document.querySelectorAll('.reveal, .stats__grid');
 if ('IntersectionObserver' in window) {
+  document.querySelectorAll('[data-count]').forEach((el) => { el.textContent = '0'; });
   const io = new IntersectionObserver((entradas) => {
     entradas.forEach((entrada) => {
       if (!entrada.isIntersecting) return;
       entrada.target.classList.add('is-visible');
+      entrada.target.querySelectorAll('[data-count]').forEach(contar);
       io.unobserve(entrada.target);
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
