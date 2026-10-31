@@ -8,12 +8,14 @@ const RAYO = {
   terminos: 'https://sebaile.github.io/rayo-optimizador/terminos.html',
   catalogo: 'https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md',
 
-  // Links de pago por plan y moneda (Mercado Pago, Flow, Lemon Squeezy, Gumroad…).
-  // Vacíos: «Comprar» lleva al Discord para comprar por ticket, como hoy.
-  // Con link: el botón cobra directo y la web explica la entrega por correo.
-  pago: {
-    pro: { clp: '', usd: '' },
-    elite: { clp: '', usd: '' },
+  // Links de pago de Mercado Pago (pesos chilenos), uno por plan. Se crean en
+  // la cuenta de Mercado Pago, en Cobrar → Link de pago, con el precio exacto.
+  // Con link, en CLP el botón dice «Pagar con Mercado Pago» y después del pago
+  // el comprador abre un ticket en Discord con su comprobante.
+  // Vacíos (o en USD): «Comprar» lleva al Discord para comprar por ticket.
+  mercadoPago: {
+    pro: '',   // $3.990
+    elite: '', // $6.990
   },
 };
 
@@ -52,17 +54,35 @@ fetch(`https://api.github.com/repos/${RAYO.repo}/releases/latest`)
 const guardar = (clave, valor) => { try { localStorage.setItem(clave, valor); } catch (e) { /* sin almacenamiento */ } };
 const leer = (clave) => { try { return localStorage.getItem(clave); } catch (e) { return null; } };
 
+// Estado original de cada botón Comprar, para volver a él al cambiar a USD
+const botonesCompra = [...document.querySelectorAll('[data-comprar]')].map((el) => ({
+  el,
+  plan: el.dataset.comprar,
+  texto: el.querySelector('span'),
+  textoOriginal: el.querySelector('span').textContent,
+  icono: el.querySelector('svg'),
+  iconoOriginal: el.querySelector('use').getAttribute('href'),
+  iconoOculto: el.querySelector('svg').hasAttribute('hidden'), // en <svg> no existe la propiedad .hidden
+  alternativa: el.nextElementSibling,
+}));
+
 function usarMoneda(moneda) {
   document.querySelectorAll('[data-moneda]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.moneda === moneda)));
   document.querySelectorAll(`[data-${moneda}]`).forEach((el) => { el.textContent = el.dataset[moneda]; });
 
-  document.querySelectorAll('[data-comprar]').forEach((el) => {
-    el.href = RAYO.pago[el.dataset.comprar][moneda] || RAYO.discord;
+  botonesCompra.forEach((b) => {
+    const link = moneda === 'clp' ? RAYO.mercadoPago[b.plan] : '';
+    b.el.href = link || RAYO.discord;
+    b.el.toggleAttribute('data-mp', Boolean(link));
+    b.texto.textContent = link ? 'Pagar con Mercado Pago' : b.textoOriginal;
+    b.icono.querySelector('use').setAttribute('href', link ? '#i-card' : b.iconoOriginal);
+    b.icono.toggleAttribute('hidden', link ? false : b.iconoOculto);
+    b.alternativa.hidden = !link;
   });
 
-  const directo = Boolean(RAYO.pago.pro[moneda] || RAYO.pago.elite[moneda]);
+  const conMercadoPago = botonesCompra.some((b) => b.el.hasAttribute('data-mp'));
   document.querySelectorAll('[data-venta]').forEach((el) => {
-    el.hidden = el.dataset.venta !== (directo ? 'directo' : 'discord');
+    el.hidden = el.dataset.venta !== (conMercadoPago ? 'mercadopago' : 'discord');
   });
 }
 
@@ -73,6 +93,14 @@ usarMoneda(leer('rayo-moneda') || (enChile ? 'clp' : 'usd'));
 document.querySelectorAll('[data-moneda]').forEach((b) => b.addEventListener('click', () => {
   usarMoneda(b.dataset.moneda);
   guardar('rayo-moneda', b.dataset.moneda);
+}));
+
+// Mercado Pago se abre en otra pestaña: al volver, el siguiente paso ya está a la vista
+botonesCompra.forEach((b) => b.el.addEventListener('click', () => {
+  if (!b.el.hasAttribute('data-mp')) return;
+  const aviso = document.querySelector('.compra__aviso');
+  aviso.hidden = false;
+  setTimeout(() => aviso.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
 }));
 
 // Descargar: en Windows baja el archivo y muestra los pasos de instalación;

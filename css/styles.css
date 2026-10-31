@@ -951,6 +951,9 @@ h2 {
 .plan:nth-child(2) .plan__amount { color: var(--orange-2); }
 .plan__unit { color: var(--muted); font-size: 14px; font-weight: 500; }
 .plan__tag { margin: 12px 0 22px; color: var(--muted); font-size: 15px; min-height: 48px; }
+.plan__alt { margin-top: 10px; color: var(--dim); font-size: 13px; text-align: center; }
+.plan__alt a { color: var(--muted); font-weight: 600; }
+.plan__alt a:hover { color: var(--text); }
 
 .plan__list {
   display: grid;
@@ -1080,6 +1083,25 @@ h2 {
   color: var(--orange-2);
   font: 700 14px/1 var(--display);
 }
+.compra__alt { margin-top: 20px; color: var(--muted); font-size: 14px; }
+
+/* Siguiente paso tras abrir Mercado Pago */
+.compra__aviso {
+  display: flex;
+  align-items: center;
+  gap: 14px 16px;
+  margin-bottom: 24px;
+  padding: 16px 18px;
+  border: 1px solid rgba(34, 197, 94, .35);
+  border-radius: var(--radius);
+  background: rgba(34, 197, 94, .07);
+  animation: subir .45s cubic-bezier(.2, .7, .2, 1);
+}
+.compra__aviso strong { display: block; font-size: 15.5px; font-weight: 600; }
+.compra__aviso span:not(.card__icon) { display: block; margin-top: 2px; color: var(--muted); font-size: 14.5px; }
+.compra__aviso b { color: var(--text); font-weight: 600; }
+.compra__aviso .btn { margin-left: auto; flex: none; color: var(--on-orange); }
+
 .compra__pasos strong { display: block; font-size: 15.5px; font-weight: 600; }
 .compra__pasos span { display: block; margin-top: 6px; color: var(--muted); font-size: 14.5px; }
 .compra__pasos span strong { display: inline; font-size: inherit; color: var(--text); }
@@ -1593,6 +1615,9 @@ code {
   .moneda { width: 100%; margin-top: -16px; }
   .moneda__btn { flex: 1; padding-inline: 8px; }
   .compra { padding: 24px 20px; }
+  .compra__aviso { flex-wrap: wrap; }
+  .compra__aviso > div { flex: 1 1 200px; }
+  .compra__aviso .btn { width: 100%; margin-left: 0; }
   .compra__pasos { grid-template-columns: 1fr; gap: 20px; }
   .compra__pasos li { display: grid; grid-template-columns: 30px 1fr; column-gap: 14px; }
   .compra__pasos li::before { grid-row: span 2; margin-bottom: 0; }

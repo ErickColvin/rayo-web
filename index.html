@@ -74,6 +74,7 @@
   <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
   <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></symbol>
   <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></symbol>
 </svg>
 
@@ -543,7 +544,8 @@
           <h3 class="plan__name">Pro</h3>
           <p class="plan__price"><span class="plan__amount" data-clp="$3.990" data-usd="US$5">$3.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
           <p class="plan__tag">Todas las optimizaciones para ganar FPS y bajar el input lag.</p>
-          <a class="btn btn--ghost btn--block" data-comprar="pro" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Comprar Pro</a>
+          <a class="btn btn--ghost btn--block" data-comprar="pro" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i" hidden><use href="#i-card"/></svg><span>Comprar Pro</span></a>
+          <p class="plan__alt" hidden>¿Prefieres transferencia? Compra por <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</p>
           <ul class="plan__list">
             <li>Todo lo del plan Gratis</li>
             <li>Las 87 optimizaciones (FPS, latencia, red, registro, NVIDIA)</li>
@@ -565,7 +567,8 @@
           <h3 class="plan__name">Elite</h3>
           <p class="plan__price"><span class="plan__amount" data-clp="$6.990" data-usd="US$8">$6.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
           <p class="plan__tag">La experiencia completa mientras juegas.</p>
-          <a class="btn btn--primary btn--block" data-comprar="elite" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-zap-fill"/></svg>Comprar Elite</a>
+          <a class="btn btn--primary btn--block" data-comprar="elite" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-zap-fill"/></svg><span>Comprar Elite</span></a>
+          <p class="plan__alt" hidden>¿Prefieres transferencia? Compra por <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</p>
           <ul class="plan__list">
             <li>Todo lo del plan Pro</li>
             <li>Overlay: FPS, 1 % low, temperaturas y ping</li>
@@ -586,10 +589,18 @@
       </ul>
 
       <div class="compra reveal" id="comprar">
+        <div class="compra__aviso" role="status" hidden>
+          <span class="card__icon card__icon--green"><svg class="i"><use href="#i-check"/></svg></span>
+          <div><strong>¿Ya pagaste?</strong><span>Abre un ticket en <b>#comprar</b> de nuestro Discord con tu comprobante y te entregamos la clave ahí.</span></div>
+          <a class="btn btn--primary btn--sm" data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-message"/></svg>Abrir ticket</a>
+        </div>
         <div class="compra__head">
           <h3>Cómo comprar</h3>
           <ul class="pagos" aria-label="Medios de pago" data-venta="discord">
             <li>Transferencia</li><li>Mercado Pago</li><li>PayPal</li>
+          </ul>
+          <ul class="pagos" aria-label="Medios de pago" data-venta="mercadopago" hidden>
+            <li>Mercado Pago</li><li>Tarjeta de crédito</li><li>Débito</li>
           </ul>
         </div>
         <ol class="compra__pasos" data-venta="discord">
@@ -597,11 +608,12 @@
           <li><strong>Paga como prefieras</strong><span>Transferencia o Mercado Pago (tarjeta) desde Chile, o PayPal desde otros países.</span></li>
           <li><strong>Activa tu clave</strong><span>Al confirmar el pago recibes tu clave (empieza por RAYO-) en el ticket. Pégala en Rayo → Ajustes → Activar clave.</span></li>
         </ol>
-        <ol class="compra__pasos" data-venta="directo" hidden>
-          <li><strong>Elige tu plan</strong><span>Pulsa Comprar y paga en el checkout seguro, sin crear cuenta.</span></li>
-          <li><strong>Recibe tu clave</strong><span>Te llega por correo después del pago. Guárdala: sirve en hasta 2 PC tuyos.</span></li>
-          <li><strong>Actívala en Rayo</strong><span>Pégala en Ajustes → Activar clave. ¿Prefieres pagar por transferencia? Abre un ticket en nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</span></li>
+        <ol class="compra__pasos" data-venta="mercadopago" hidden>
+          <li><strong>Paga con Mercado Pago</strong><span>Pulsa «Pagar con Mercado Pago» en tu plan. Puedes usar tarjeta de crédito, débito o tu saldo de Mercado Pago.</span></li>
+          <li><strong>Abre un ticket con tu comprobante</strong><span>Entra a nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>, pulsa «Create ticket» en <strong>#comprar</strong> y pega el comprobante o el número de operación.</span></li>
+          <li><strong>Activa tu clave</strong><span>Recibes tu clave (empieza por RAYO-) en el ticket. Pégala en Rayo → Ajustes → Activar clave.</span></li>
         </ol>
+        <p class="compra__alt" data-venta="mercadopago" hidden>¿Prefieres pagar por transferencia? Abre el ticket directamente y paga ahí.</p>
       </div>
     </div>
   </section>
@@ -702,7 +714,7 @@
         <details>
           <summary>¿Cómo compro y activo mi licencia?<svg class="i"><use href="#i-chevron"/></svg></summary>
           <p data-venta="discord">Entra a nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y abre un ticket en el canal #comprar. Pagas por transferencia, Mercado Pago o PayPal y, al confirmar el pago, recibes tu clave (empieza por RAYO-). Pégala en Rayo → Ajustes → Activar clave: el plan se desbloquea sin reinstalar. La clave es personal y sirve en hasta 2 PC tuyos.</p>
-          <p data-venta="directo" hidden>Pulsa Comprar en el plan que quieras y paga en el checkout. Recibes tu clave por correo (empieza por RAYO-). Pégala en Rayo → Ajustes → Activar clave: el plan se desbloquea sin reinstalar. La clave es personal y sirve en hasta 2 PC tuyos.</p>
+          <p data-venta="mercadopago" hidden>Pulsa «Pagar con Mercado Pago» en el plan que quieras y paga con tarjeta o tu saldo. Después abre un ticket en el canal #comprar de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> con el comprobante y recibes tu clave (empieza por RAYO-). Pégala en Rayo → Ajustes → Activar clave: el plan se desbloquea sin reinstalar. La clave es personal y sirve en hasta 2 PC tuyos. Si prefieres transferencia, o pagas desde fuera de Chile con PayPal, abre el ticket directamente.</p>
         </details>
         <details>
           <summary>¿Y si no me funciona?<svg class="i"><use href="#i-chevron"/></svg></summary>
