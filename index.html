@@ -60,6 +60,7 @@
   <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
   <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
   <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5H11"/></symbol>
   <symbol id="i-flask" viewBox="0 0 24 24"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2M8.5 2h7M7 16h10"/></symbol>
@@ -544,8 +545,7 @@
           <h3 class="plan__name">Pro</h3>
           <p class="plan__price"><span class="plan__amount" data-clp="$3.990" data-usd="US$5">$3.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
           <p class="plan__tag">Todas las optimizaciones para ganar FPS y bajar el input lag.</p>
-          <a class="btn btn--ghost btn--block" data-comprar="pro" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i" hidden><use href="#i-card"/></svg><span>Comprar Pro</span></a>
-          <p class="plan__alt" hidden>¿Otro medio de pago? Compra por <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</p>
+          <a class="btn btn--ghost btn--block" data-comprar="pro" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Comprar Pro</a>
           <ul class="plan__list">
             <li>Todo lo del plan Gratis</li>
             <li>Las 87 optimizaciones (FPS, latencia, red, registro, NVIDIA)</li>
@@ -567,8 +567,7 @@
           <h3 class="plan__name">Elite</h3>
           <p class="plan__price"><span class="plan__amount" data-clp="$6.990" data-usd="US$8">$6.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
           <p class="plan__tag">La experiencia completa mientras juegas.</p>
-          <a class="btn btn--primary btn--block" data-comprar="elite" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-zap-fill"/></svg><span>Comprar Elite</span></a>
-          <p class="plan__alt" hidden>¿Otro medio de pago? Compra por <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</p>
+          <a class="btn btn--primary btn--block" data-comprar="elite" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-zap-fill"/></svg>Comprar Elite</a>
           <ul class="plan__list">
             <li>Todo lo del plan Pro</li>
             <li>Overlay: FPS, 1 % low, temperaturas y ping</li>
@@ -589,11 +588,6 @@
       </ul>
 
       <div class="compra reveal" id="comprar">
-        <div class="compra__aviso" role="status" hidden>
-          <span class="card__icon card__icon--green"><svg class="i"><use href="#i-check"/></svg></span>
-          <div><strong>¿Ya pagaste?</strong><span>Abre un ticket en <b>#comprar</b> de nuestro Discord con tu comprobante y te entregamos la clave ahí.</span></div>
-          <a class="btn btn--primary btn--sm" data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-message"/></svg>Abrir ticket</a>
-        </div>
         <div class="compra__head">
           <h3>Cómo comprar</h3>
           <ul class="pagos" aria-label="Medios de pago" data-venta="discord">
@@ -609,11 +603,11 @@
           <li><strong>Activa tu clave</strong><span>Al confirmar el pago recibes tu clave (empieza por RAYO-) en el ticket. Pégala en Rayo → Ajustes → Activar clave.</span></li>
         </ol>
         <ol class="compra__pasos" data-venta="mercadopago" hidden>
-          <li><strong>Paga con Mercado Pago</strong><span>Pulsa «Pagar con Mercado Pago» en tu plan. Puedes pagar con tarjeta de crédito o débito sin crear cuenta, con transferencia desde tu banco o con tu cuenta de Mercado Pago.</span></li>
+          <li><strong>Elige cómo pagar</strong><span>Pulsa Comprar en tu plan. Con <strong>Mercado Pago</strong> dejas tu nombre, correo y número y pagas con tarjeta, transferencia desde tu banco o tu cuenta. Con <strong>transferencia directa</strong> te unes a nuestro Discord y pagas por ticket.</span></li>
           <li><strong>Abre un ticket con tu comprobante</strong><span>Entra a nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>, pulsa «Create ticket» en <strong>#comprar</strong> y pega el comprobante o el número de operación.</span></li>
           <li><strong>Activa tu clave</strong><span>Recibes tu clave (empieza por RAYO-) en el ticket. Pégala en Rayo → Ajustes → Activar clave.</span></li>
         </ol>
-        <p class="compra__alt" data-venta="mercadopago" hidden>¿Quieres usar otro medio de pago o tuviste un problema al pagar? Abre el ticket directamente y te ayudamos.</p>
+        <p class="compra__alt" data-venta="mercadopago" hidden>¿Tuviste un problema al pagar? Abre el ticket directamente y te ayudamos.</p>
       </div>
     </div>
   </section>
@@ -714,7 +708,7 @@
         <details>
           <summary>¿Cómo compro y activo mi licencia?<svg class="i"><use href="#i-chevron"/></svg></summary>
           <p data-venta="discord">Entra a nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y abre un ticket en el canal #comprar. Pagas por transferencia, Mercado Pago o PayPal y, al confirmar el pago, recibes tu clave (empieza por RAYO-). Pégala en Rayo → Ajustes → Activar clave: el plan se desbloquea sin reinstalar. La clave es personal y sirve en hasta 2 PC tuyos.</p>
-          <p data-venta="mercadopago" hidden>Pulsa «Pagar con Mercado Pago» en el plan que quieras y paga con tarjeta, transferencia bancaria o tu cuenta de Mercado Pago. Después abre un ticket en el canal #comprar de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> con el comprobante y recibes tu clave (empieza por RAYO-). Pégala en Rayo → Ajustes → Activar clave: el plan se desbloquea sin reinstalar. La clave es personal y sirve en hasta 2 PC tuyos. Si pagas desde fuera de Chile (PayPal) o prefieres otro medio, abre el ticket directamente.</p>
+          <p data-venta="mercadopago" hidden>Pulsa Comprar en el plan que quieras y elige cómo pagar. Con Mercado Pago dejas tu nombre, correo y número y pagas con tarjeta, transferencia bancaria o tu cuenta; con transferencia directa te unes a nuestro Discord. Después de pagar abre un ticket en el canal #comprar de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> con el comprobante y recibes tu clave (empieza por RAYO-). Pégala en Rayo → Ajustes → Activar clave: el plan se desbloquea sin reinstalar. La clave es personal y sirve en hasta 2 PC tuyos. Si pagas desde fuera de Chile (PayPal) o prefieres otro medio, abre el ticket directamente.</p>
         </details>
         <details>
           <summary>¿Y si no me funciona?<svg class="i"><use href="#i-chevron"/></svg></summary>
@@ -791,6 +785,70 @@
 <dialog class="visor" aria-label="Captura ampliada">
   <img src="" alt="">
   <button class="visor__close" type="button" aria-label="Cerrar"><svg class="i"><use href="#i-x"/></svg></button>
+</dialog>
+
+<!-- Popup de compra: Mercado Pago (pide nombre, correo y número) o transferencia por Discord -->
+<dialog class="pop" aria-labelledby="pop-titulo">
+  <div class="pop__body">
+    <div class="pop__head">
+      <h2 id="pop-titulo">Comprar Rayo <span data-pop="plan">Pro</span></h2>
+      <p class="pop__precio"><strong data-pop="precio">$3.990</strong><span data-pop="unidad">CLP · pago único</span></p>
+    </div>
+  
+    <section class="pop__paso" data-paso="elegir">
+      <p class="pop__lead">¿Cómo quieres pagar?</p>
+      <button class="opcion" type="button" data-ir="datos">
+        <span class="card__icon card__icon--blue"><svg class="i"><use href="#i-card"/></svg></span>
+        <span class="opcion__texto"><strong>Mercado Pago</strong><span>Tarjeta de crédito o débito, transferencia desde tu banco o tu cuenta de Mercado Pago.</span></span>
+        <svg class="i opcion__flecha"><use href="#i-arrow"/></svg>
+      </button>
+      <button class="opcion" type="button" data-ir="discord">
+        <span class="card__icon card__icon--purple"><svg class="i"><use href="#i-message"/></svg></span>
+        <span class="opcion__texto"><strong>Transferencia directa</strong><span>Únete a nuestro Discord, abre un ticket y te damos los datos de la cuenta.</span></span>
+        <svg class="i opcion__flecha"><use href="#i-arrow"/></svg>
+      </button>
+    </section>
+  
+    <form class="pop__paso" data-paso="datos" novalidate hidden>
+      <button class="pop__volver" type="button" data-ir="elegir"><svg class="i"><use href="#i-arrow-left"/></svg>Volver</button>
+      <h3>Tus datos</h3>
+      <p class="pop__lead">Los usamos solo para identificar tu pago y entregarte la clave.</p>
+      <label class="campo"><span>Nombre y apellido</span><input name="nombre" autocomplete="name" maxlength="80" required></label>
+      <label class="campo"><span>Correo</span><input name="correo" type="email" inputmode="email" autocomplete="email" maxlength="120" required></label>
+      <label class="campo"><span>Número de teléfono</span><input name="numero" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="+56 9 1234 5678" required></label>
+      <input class="pop__trampa" name="sitio" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="pop__error" role="alert" hidden></p>
+      <button class="btn btn--primary btn--block" type="submit"><span>Continuar al pago</span><svg class="i"><use href="#i-arrow"/></svg></button>
+      <p class="pop__legal">Al continuar aceptas los <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos de uso</a>.</p>
+    </form>
+  
+    <section class="pop__paso" data-paso="pagar" hidden>
+      <h3>Listo, <span data-pop="nombre"></span></h3>
+      <p class="pop__nota" data-pop="sinConfirmar" hidden>No pudimos confirmar que tus datos llegaron. Puedes pagar igual: al abrir el ticket, escribe tu nombre y tu correo.</p>
+      <ol class="pop__pasos">
+        <li>
+          <strong>Paga en Mercado Pago</strong><span>Se abre en otra pestaña.</span>
+          <a class="btn btn--primary btn--block" data-pop="pagar" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-card"/></svg><span>Pagar <span data-pop="precio">$3.990</span></span></a>
+        </li>
+        <li>
+          <strong>Abre un ticket con tu comprobante</strong><span>En <b>#comprar</b> de nuestro Discord. Ahí te entregamos tu clave.</span>
+          <a class="btn btn--ghost btn--block" data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-message"/></svg>Abrir ticket en Discord</a>
+        </li>
+      </ol>
+    </section>
+  
+    <section class="pop__paso" data-paso="discord" hidden>
+      <button class="pop__volver" type="button" data-ir="elegir"><svg class="i"><use href="#i-arrow-left"/></svg>Volver</button>
+      <h3 data-clp="Paga por transferencia" data-usd="Paga con PayPal">Paga por transferencia</h3>
+      <ol class="pop__pasos">
+        <li><strong>Únete a nuestro Discord</strong><span>Es gratis y toma un minuto.</span></li>
+        <li><strong>Abre un ticket en #comprar</strong><span>Pulsa «Create ticket» y dinos qué plan quieres.</span></li>
+        <li><strong>Paga y recibe tu clave</strong><span data-clp="Te damos los datos para transferir y, al confirmar el pago, recibes tu clave en el ticket." data-usd="Te enviamos el cobro por PayPal y, al confirmar el pago, recibes tu clave en el ticket.">Te damos los datos para transferir y, al confirmar el pago, recibes tu clave en el ticket.</span></li>
+      </ol>
+      <a class="btn btn--primary btn--block" data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-message"/></svg>Unirme al Discord</a>
+    </section>
+  </div>
+  <button class="visor__close" type="button" aria-label="Cerrar" data-cerrar><svg class="i"><use href="#i-x"/></svg></button>
 </dialog>
 
 <!-- Para quien abre la web desde el celular (TikTok, Instagram…): Rayo se instala en el PC -->

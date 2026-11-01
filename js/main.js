@@ -10,13 +10,16 @@ const RAYO = {
 
   // Links de pago de Mercado Pago (pesos chilenos), uno por plan. Se crean en
   // la cuenta de Mercado Pago, en Cobrar → Link de pago, con el precio exacto.
-  // Con link, en CLP el botón dice «Pagar con Mercado Pago» y después del pago
-  // el comprador abre un ticket en Discord con su comprobante.
-  // Vacíos (o en USD): «Comprar» lleva al Discord para comprar por ticket.
+  // «Comprar» abre un popup: Mercado Pago (pide nombre, correo y número) o
+  // transferencia por ticket en Discord. Vacíos (o en USD): solo Discord.
   mercadoPago: {
     pro: 'https://mpago.la/34eSBdt',   // RayoPRO $3.990
     elite: 'https://mpago.la/1wXjGYJ', // RayoELITE $6.990
   },
+
+  // URL de la aplicación web de Apps Script que guarda los pedidos en la
+  // planilla de Google (instrucciones en planilla/pedidos.gs). Termina en /exec.
+  planillaPedidos: 'https://script.google.com/macros/s/AKfycbwVxmh3H0O-A68tjzgqRvSiAntOcqfnJy7cQ_0aZWpLKaGXWIIaGjGUqlgwLJR7Fcpm/exec',
 };
 
 const instalador = `https://github.com/${RAYO.repo}/releases/latest/download/RayoSetup.exe`;
@@ -54,33 +57,15 @@ fetch(`https://api.github.com/repos/${RAYO.repo}/releases/latest`)
 const guardar = (clave, valor) => { try { localStorage.setItem(clave, valor); } catch (e) { /* sin almacenamiento */ } };
 const leer = (clave) => { try { return localStorage.getItem(clave); } catch (e) { return null; } };
 
-// Estado original de cada botón Comprar, para volver a él al cambiar a USD
-const botonesCompra = [...document.querySelectorAll('[data-comprar]')].map((el) => ({
-  el,
-  plan: el.dataset.comprar,
-  texto: el.querySelector('span'),
-  textoOriginal: el.querySelector('span').textContent,
-  icono: el.querySelector('svg'),
-  iconoOriginal: el.querySelector('use').getAttribute('href'),
-  iconoOculto: el.querySelector('svg').hasAttribute('hidden'), // en <svg> no existe la propiedad .hidden
-  alternativa: el.nextElementSibling,
-}));
+let monedaActual = 'clp';
+const linkMercadoPago = (plan) => (monedaActual === 'clp' ? RAYO.mercadoPago[plan] : '');
 
 function usarMoneda(moneda) {
+  monedaActual = moneda;
   document.querySelectorAll('[data-moneda]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.moneda === moneda)));
   document.querySelectorAll(`[data-${moneda}]`).forEach((el) => { el.textContent = el.dataset[moneda]; });
 
-  botonesCompra.forEach((b) => {
-    const link = moneda === 'clp' ? RAYO.mercadoPago[b.plan] : '';
-    b.el.href = link || RAYO.discord;
-    b.el.toggleAttribute('data-mp', Boolean(link));
-    b.texto.textContent = link ? 'Pagar con Mercado Pago' : b.textoOriginal;
-    b.icono.querySelector('use').setAttribute('href', link ? '#i-card' : b.iconoOriginal);
-    b.icono.toggleAttribute('hidden', link ? false : b.iconoOculto);
-    b.alternativa.hidden = !link;
-  });
-
-  const conMercadoPago = botonesCompra.some((b) => b.el.hasAttribute('data-mp'));
+  const conMercadoPago = Boolean(linkMercadoPago('pro') || linkMercadoPago('elite'));
   document.querySelectorAll('[data-venta]').forEach((el) => {
     el.hidden = el.dataset.venta !== (conMercadoPago ? 'mercadopago' : 'discord');
   });
@@ -95,13 +80,89 @@ document.querySelectorAll('[data-moneda]').forEach((b) => b.addEventListener('cl
   guardar('rayo-moneda', b.dataset.moneda);
 }));
 
-// Mercado Pago se abre en otra pestaña: al volver, el siguiente paso ya está a la vista
-botonesCompra.forEach((b) => b.el.addEventListener('click', () => {
-  if (!b.el.hasAttribute('data-mp')) return;
-  const aviso = document.querySelector('.compra__aviso');
-  aviso.hidden = false;
-  setTimeout(() => aviso.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+// Popup de compra. Sin JavaScript, «Comprar» sigue llevando al Discord.
+const pop = document.querySelector('.pop');
+const formulario = pop.querySelector('form');
+const errorForm = pop.querySelector('.pop__error');
+const botonEnviar = formulario.querySelector('[type="submit"]');
+const pintar = (clave, texto) => pop.querySelectorAll(`[data-pop="${clave}"]`).forEach((el) => { el.textContent = texto; });
+let planElegido = 'pro';
+
+function irA(paso) {
+  pop.querySelectorAll('[data-paso]').forEach((p) => { p.hidden = p.dataset.paso !== paso; });
+  const primero = pop.querySelector(`[data-paso="${paso}"]`).querySelector('input, button:not(.pop__volver), a');
+  if (primero) primero.focus({ preventScroll: true });
+}
+
+document.querySelectorAll('[data-comprar]').forEach((boton) => boton.addEventListener('click', (e) => {
+  e.preventDefault();
+  planElegido = boton.dataset.comprar;
+  const plan = boton.closest('.plan');
+  pintar('plan', plan.querySelector('.plan__name').textContent);
+  pintar('precio', plan.querySelector('.plan__amount').textContent);
+  pintar('unidad', plan.querySelector('.plan__unit').textContent);
+
+  // Sin Mercado Pago (en USD o sin link) se va directo a la compra por Discord
+  const conMercadoPago = Boolean(linkMercadoPago(planElegido));
+  pop.querySelector('[data-ir="datos"]').hidden = !conMercadoPago;
+  pop.querySelector('[data-paso="discord"] .pop__volver').hidden = !conMercadoPago;
+  errorForm.hidden = true;
+  pop.showModal();
+  irA(conMercadoPago ? 'elegir' : 'discord');
 }));
+
+pop.addEventListener('click', (e) => {
+  const destino = e.target.closest('[data-ir]');
+  if (destino) irA(destino.dataset.ir);
+  else if (e.target === pop || e.target.closest('[data-cerrar]')) pop.close();
+});
+
+function marcarError(campo, mensaje) {
+  errorForm.textContent = mensaje;
+  errorForm.hidden = false;
+  campo.setAttribute('aria-invalid', 'true');
+  campo.focus();
+}
+
+formulario.addEventListener('input', (e) => e.target.removeAttribute('aria-invalid'));
+
+formulario.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorForm.hidden = true;
+  formulario.querySelectorAll('[aria-invalid]').forEach((c) => c.removeAttribute('aria-invalid'));
+  const campos = formulario.elements;
+  const nombre = campos.nombre.value.trim();
+  const correo = campos.correo.value.trim();
+  const numero = campos.numero.value.trim();
+  if (nombre.length < 2) return marcarError(campos.nombre, 'Escribe tu nombre y apellido.');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(correo)) return marcarError(campos.correo, 'Revisa tu correo: debe ser como nombre@correo.com.');
+  if (numero.replace(/\D/g, '').length < 8) return marcarError(campos.numero, 'Escribe tu número con código de área, por ejemplo +56 9 1234 5678.');
+
+  botonEnviar.disabled = true;
+  botonEnviar.querySelector('span').textContent = 'Guardando…';
+  let guardado = false;
+  if (campos.sitio.value) {
+    guardado = true; // campo trampa lleno: es un bot, no se envía nada
+  } else if (RAYO.planillaPedidos) {
+    try {
+      const respuesta = await fetch(RAYO.planillaPedidos, {
+        method: 'POST',
+        body: new URLSearchParams({ plan: planElegido, nombre, correo, numero }),
+        signal: AbortSignal.timeout(12000),
+      });
+      guardado = respuesta.ok && (await respuesta.json()).ok === true;
+    } catch (err) { guardado = false; }
+  } else {
+    console.warn('Rayo web: falta planillaPedidos en js/main.js; el pedido no se guardó.');
+  }
+  botonEnviar.disabled = false;
+  botonEnviar.querySelector('span').textContent = 'Continuar al pago';
+
+  pintar('nombre', nombre.split(' ')[0]);
+  pop.querySelector('[data-pop="sinConfirmar"]').hidden = guardado;
+  pop.querySelector('[data-pop="pagar"]').href = linkMercadoPago(planElegido);
+  irA('pagar');
+});
 
 // Descargar: en Windows baja el archivo y muestra los pasos de instalación;
 // en celular o Mac ofrece enviarse el enlace para abrirlo en el PC
