@@ -88,10 +88,35 @@ const botonEnviar = formulario.querySelector('[type="submit"]');
 const pintar = (clave, texto) => pop.querySelectorAll(`[data-pop="${clave}"]`).forEach((el) => { el.textContent = texto; });
 let planElegido = 'pro';
 
+// Contra spam, la planilla exige un permiso firmado de un solo uso, pedido al
+// abrir el formulario, y que pasen al menos 4 s antes de enviar el pedido
+const ESPERA_MINIMA = 4500; // un poco más que los 4 s que exige el script
+const DURACION_PERMISO = 50 * 60 * 1000; // el script los acepta hasta 60 min
+const limiteTiempo = (ms) => (AbortSignal.timeout ? AbortSignal.timeout(ms) : undefined);
+const esperar = (ms) => new Promise((listo) => { setTimeout(listo, ms); });
+let permiso = null; // promesa de { token, desde }
+
+function pedirPermiso() {
+  permiso = fetch(`${RAYO.planillaPedidos}?accion=token`, { signal: limiteTiempo(12000) })
+    .then((r) => r.json())
+    .then((d) => (d.token ? { token: d.token, desde: Date.now() } : null))
+    .catch(() => null);
+  return permiso;
+}
+
+async function permisoListo() {
+  let p = await permiso;
+  if (!p || Date.now() - p.desde > DURACION_PERMISO) p = await pedirPermiso();
+  if (p) await esperar(ESPERA_MINIMA - (Date.now() - p.desde));
+  permiso = null; // cada permiso sirve para un solo envío
+  return p ? p.token : '';
+}
+
 function irA(paso) {
   pop.querySelectorAll('[data-paso]').forEach((p) => { p.hidden = p.dataset.paso !== paso; });
   const primero = pop.querySelector(`[data-paso="${paso}"]`).querySelector('input, button:not(.pop__volver), a');
   if (primero) primero.focus({ preventScroll: true });
+  if (paso === 'datos' && RAYO.planillaPedidos && !permiso) pedirPermiso();
 }
 
 document.querySelectorAll('[data-comprar]').forEach((boton) => boton.addEventListener('click', (e) => {
@@ -144,14 +169,20 @@ formulario.addEventListener('submit', async (e) => {
   if (campos.sitio.value) {
     guardado = true; // campo trampa lleno: es un bot, no se envía nada
   } else if (RAYO.planillaPedidos) {
-    try {
-      const respuesta = await fetch(RAYO.planillaPedidos, {
-        method: 'POST',
-        body: new URLSearchParams({ plan: planElegido, nombre, correo, numero }),
-        signal: AbortSignal.timeout(12000),
-      });
-      guardado = respuesta.ok && (await respuesta.json()).ok === true;
-    } catch (err) { guardado = false; }
+    const enviar = async () => {
+      try {
+        const respuesta = await fetch(RAYO.planillaPedidos, {
+          method: 'POST',
+          body: new URLSearchParams({ plan: planElegido, nombre, correo, numero, token: await permisoListo() }),
+          signal: limiteTiempo(12000),
+        });
+        return await respuesta.json();
+      } catch (err) { return { ok: false }; }
+    };
+    let resultado = await enviar();
+    // Permiso vencido o rechazado (p. ej. el formulario quedó abierto mucho rato): un reintento
+    if (resultado.motivo === 'token') resultado = await enviar();
+    guardado = resultado.ok === true;
   } else {
     console.warn('Rayo web: falta planillaPedidos en js/main.js; el pedido no se guardó.');
   }
