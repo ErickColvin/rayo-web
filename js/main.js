@@ -14,8 +14,8 @@ const RAYO = {
   // el comprador abre un ticket en Discord con su comprobante.
   // Vacíos (o en USD): «Comprar» lleva al Discord para comprar por ticket.
   mercadoPago: {
-    pro: '',   // $3.990
-    elite: '', // $6.990
+    pro: 'https://mpago.la/34eSBdt',   // RayoPRO $3.990
+    elite: 'https://mpago.la/1wXjGYJ', // RayoELITE $6.990
   },
 };
 
