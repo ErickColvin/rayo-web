@@ -20,7 +20,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    // La página se ve por pantallas (Inicio, Funciones, Juegos, Precios, Ayuda).
+    // Se elige aquí, antes de dibujar, según el #hash; enlaces viejos como
+    // #descargar o #preguntas llevan a su pantalla nueva.
+    window.vistaDesdeHash = function (hash) {
+      var alias = { top: 'inicio', seguridad: 'funciones', descargar: 'ayuda', instalar: 'ayuda', smartscreen: 'ayuda', preguntas: 'ayuda', comprar: 'precios' };
+      var id = alias[hash] || hash;
+      return ['inicio', 'funciones', 'juegos', 'precios', 'ayuda'].indexOf(id) >= 0 ? id : null;
+    };
+    document.documentElement.classList.add('js');
+    document.documentElement.dataset.vista = vistaDesdeHash(location.hash.slice(1)) || 'inicio';
+  </script>
 
   <script type="application/ld+json">
   {
@@ -83,34 +94,43 @@
 
 <header class="nav">
   <div class="wrap nav__inner">
-    <a class="brand" href="#top" aria-label="Rayo, volver arriba">
+    <a class="brand" href="#inicio" aria-label="Rayo, ir al inicio">
       <span class="brand__mark"><svg class="i"><use href="#i-zap-fill"/></svg></span>
       <span class="brand__name">RAYO</span>
     </a>
-    <nav class="nav__links" id="menu" aria-label="Principal">
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#inicio">Inicio</a>
       <a href="#funciones">Funciones</a>
       <a href="#juegos">Juegos</a>
-      <a href="#seguridad">Seguridad</a>
       <a href="#precios">Precios</a>
-      <a href="#preguntas">Preguntas</a>
+      <a href="#ayuda">Ayuda</a>
       <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>
     </nav>
     <div class="nav__cta">
       <a class="btn btn--primary btn--sm" data-descarga href="https://github.com/sebaile/rayo-optimizador/releases/latest/download/RayoSetup.exe">
         <svg class="i"><use href="#i-download"/></svg><span>Descargar gratis</span>
       </a>
-      <button class="nav__toggle" type="button" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
-        <svg class="i"><use href="#i-menu"/></svg>
-      </button>
     </div>
   </div>
   <span class="progreso" aria-hidden="true"></span>
 </header>
 
+<!-- En el celular las pantallas se cambian desde esta barra, como en una app -->
+<nav class="tabbar" aria-label="Pantallas">
+  <a href="#inicio"><svg class="i"><use href="#i-home"/></svg>Inicio</a>
+  <a href="#funciones"><svg class="i"><use href="#i-rocket"/></svg>Funciones</a>
+  <a href="#juegos"><svg class="i"><use href="#i-gamepad"/></svg>Juegos</a>
+  <a href="#precios"><svg class="i"><use href="#i-tag"/></svg>Precios</a>
+  <a href="#ayuda"><svg class="i"><use href="#i-info"/></svg>Ayuda</a>
+</nav>
+
 <main id="contenido">
 
-  <!-- HERO -->
-  <section class="hero" id="top">
+  <!-- Cada <section class="vista"> es una pantalla. js/main.js muestra una a la
+       vez según el enlace o el #hash; sin JavaScript se ven todas seguidas. -->
+
+  <!-- INICIO -->
+  <section class="vista hero" id="inicio" aria-label="Inicio">
     <div class="wrap hero__copy">
       <p class="eyebrow"><span class="eyebrow__dot"></span>Optimizador de FPS para Windows · <span data-version>v2.5.3</span></p>
       <h1>Saca los FPS que <span class="grad">tu PC ya tiene</span>.</h1>
@@ -156,7 +176,7 @@
   </section>
 
   <!-- RECORRIDO POR LA APP -->
-  <section class="section section--alt" id="funciones">
+  <section class="vista section" id="funciones" aria-label="Funciones">
     <div class="wrap">
       <header class="section__head reveal">
         <p class="kicker">Cómo funciona</p>
@@ -313,11 +333,20 @@
           </div>
         </div>
       </div>
+
+      <ul class="garantias reveal" aria-label="Seguro por diseño">
+        <li><svg class="i"><use href="#i-undo"/></svg>Todo se puede deshacer</li>
+        <li><svg class="i"><use href="#i-shield"/></svg>Punto de restauración automático</li>
+        <li><svg class="i"><use href="#i-flask"/></svg>Modo simulación</li>
+        <li><svg class="i"><use href="#i-ban"/></svg>No toca Defender ni Windows Update</li>
+        <li><svg class="i"><use href="#i-monitor"/></svg>No se inyecta en tus juegos</li>
+      </ul>
+      <a class="siguiente" href="#juegos">Ver los juegos compatibles<svg class="i"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
   <!-- JUEGOS -->
-  <section class="section" id="juegos">
+  <section class="vista section" id="juegos" aria-label="Juegos">
     <div class="wrap">
       <header class="section__head reveal">
         <p class="kicker">Configs por juego</p>
@@ -347,43 +376,12 @@
         <li class="game game--more"><span class="game__mono"><svg class="i"><use href="#i-sparkles"/></svg></span>Y cualquier otro</li>
       </ul>
       <p class="games__ask reveal">¿Falta tu juego? Pídelo en <strong>#pedir-juegos</strong> de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y aparece en Rayo sin actualizar.</p>
-    </div>
-  </section>
-
-  <!-- SEGURIDAD -->
-  <section class="section section--alt" id="seguridad">
-    <div class="wrap">
-      <header class="section__head reveal">
-        <p class="kicker">Seguro por diseño</p>
-        <h2>Optimiza sin miedo a romper nada</h2>
-      </header>
-
-      <div class="seguro">
-        <div class="seguro__col reveal">
-          <h3><span class="card__icon card__icon--green"><svg class="i"><use href="#i-undo"/></svg></span>Todo se puede deshacer</h3>
-          <ul class="ticks">
-            <li>Guarda el valor original de cada cambio y lo revierte con un clic</li>
-            <li>Crea un punto de restauración de Windows antes de aplicar</li>
-            <li>Modo simulación: muestra lo que haría sin tocar nada</li>
-            <li>Avisa si un ajuste es avanzado, requiere reinicio o sube el consumo</li>
-          </ul>
-        </div>
-        <div class="seguro__col reveal">
-          <h3><span class="card__icon card__icon--red"><svg class="i"><use href="#i-ban"/></svg></span>Lo que nunca hace</h3>
-          <ul class="nohace__list">
-            <li>No desactiva Windows Defender, el UAC ni Windows Update</li>
-            <li>No quita las protecciones contra Spectre y Meltdown</li>
-            <li>No se inyecta en los juegos ni toca sus anticheats</li>
-            <li>No recopila ni envía tus datos</li>
-          </ul>
-        </div>
-      </div>
-      <p class="seguro__nota reveal">Las apps que quitas con Debloat se reinstalan desde Microsoft Store. <a class="link" data-link="catalogo" href="https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md" target="_blank" rel="noopener"><svg class="i"><use href="#i-file"/></svg>Ver el cambio exacto de cada ajuste</a></p>
+      <a class="siguiente" href="#precios">Ver planes y precios<svg class="i"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
   <!-- PRECIOS -->
-  <section class="section" id="precios">
+  <section class="vista section" id="precios" aria-label="Precios">
     <div class="wrap">
       <header class="section__head reveal">
         <p class="kicker">Precios</p>
@@ -452,15 +450,15 @@
     </div>
   </section>
 
-  <!-- DESCARGAR -->
-  <section class="section section--alt" id="descargar">
+  <!-- AYUDA: descarga y preguntas -->
+  <section class="vista section" id="ayuda" aria-label="Descarga y ayuda">
     <div class="wrap">
       <header class="section__head reveal">
-        <p class="kicker">Descargar</p>
+        <p class="kicker">Descarga y ayuda</p>
         <h2>Listo en un par de minutos</h2>
       </header>
 
-      <div class="dl">
+      <div class="ayuda">
         <div class="dl__card reveal">
           <div class="dl__top">
             <span class="brand__mark brand__mark--md"><svg class="i"><use href="#i-zap-fill"/></svg></span>
@@ -472,75 +470,54 @@
           <a class="btn btn--ghost btn--block" data-descarga data-portable href="https://github.com/sebaile/rayo-optimizador/releases/latest">
             <svg class="i"><use href="#i-package"/></svg>Versión portátil (ZIP)<span class="btn__meta" data-tam="zip">431 KB</span>
           </a>
-          <p class="dl__ok" role="status" hidden><svg class="i"><use href="#i-check"/></svg><span>Tu descarga empezó. Sigue los pasos para instalar.</span></p>
+          <p class="dl__ok" role="status" hidden><svg class="i"><use href="#i-check"/></svg><span>Tu descarga empezó. Abajo tienes los pasos para instalar.</span></p>
           <p class="dl__req">Windows 10 (1903+) u 11 · .NET 4.8 incluido · Español e inglés · <a data-notas href="https://github.com/sebaile/rayo-optimizador/releases/latest" target="_blank" rel="noopener">Novedades y SHA-256</a></p>
+          <p class="dl__soporte">¿Otra duda? Pregunta en el canal de soporte de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</p>
         </div>
 
-        <div class="dl__side reveal">
-          <ol class="install" id="instalar">
-            <li><strong>Ejecuta el instalador</strong><span>O descomprime el ZIP.</span></li>
-            <li><strong>Acepta el permiso de administrador</strong><span>Sin él, Rayo abre en modo de solo lectura.</span></li>
-            <li><strong>Pulsa «Optimizar ahora»</strong><span>Aplica el perfil Recomendado.</span></li>
-            <li><strong>Reinicia si Rayo te lo pide</strong><span>Algunos ajustes lo necesitan.</span></li>
-          </ol>
-          <p class="dl__aviso"><svg class="i"><use href="#i-alert"/></svg><span><strong>¿Dice «Windows protegió su PC»?</strong> Es normal: Rayo aún no tiene firma digital. Pulsa «Más información» → «Ejecutar de todas formas».</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PREGUNTAS -->
-  <section class="section" id="preguntas">
-    <div class="wrap faq">
-      <header class="faq__head reveal">
-        <p class="kicker">Preguntas frecuentes</p>
-        <h2>Antes de descargar</h2>
-        <p>¿Te queda una duda? Pregunta en el canal de soporte de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</p>
-      </header>
-      <div class="faq__list reveal">
-        <details>
-          <summary>¿Rayo es seguro para mi PC?<svg class="i"><use href="#i-chevron"/></svg></summary>
-          <p>Sí. Guarda el valor original de cada cambio, crea un punto de restauración antes de aplicar y puedes revertir un ajuste o todos desde Respaldo. No desactiva Windows Defender, el UAC ni Windows Update, y los ajustes con algún costo lo avisan antes.</p>
-        </details>
-        <details>
-          <summary>¿Me pueden banear en Valorant, Fortnite u otros juegos?<svg class="i"><use href="#i-chevron"/></svg></summary>
-          <p>Rayo no se inyecta en los juegos ni toca sus anticheats (Vanguard, Easy Anti-Cheat, BattlEye, Ricochet…). Cambia ajustes de Windows y, en Fortnite, LoL y Rocket League, el mismo archivo de configuración que cambias desde el menú del juego. El overlay se dibuja por encima, sin entrar al juego.</p>
-        </details>
-        <details>
-          <summary>¿Cuántos FPS voy a ganar?<svg class="i"><use href="#i-chevron"/></svg></summary>
-          <p>Depende de tu equipo y de cómo esté hoy: un PC con la RAM sin XMP o Windows lleno de procesos mejora mucho más que uno ya afinado. Por eso Rayo trae un benchmark: mides antes y después en tu propio PC.</p>
-        </details>
-        <details>
-          <summary>¿Cómo compro y activo mi clave?<svg class="i"><use href="#i-chevron"/></svg></summary>
-          <p data-venta="mercadopago" hidden>Pulsa Comprar y elige Mercado Pago (dejas tu nombre, correo y número) o transferencia por Discord. Con el pago listo, abre un ticket en #comprar de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y recibes tu clave. Pégala en Rayo → Ajustes → Activar clave. Sirve en hasta 2 PC tuyos.</p>
-          <p data-venta="discord">Pulsa Comprar, únete a nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y abre un ticket en #comprar. Al confirmar el pago recibes tu clave: pégala en Rayo → Ajustes → Activar clave. Sirve en hasta 2 PC tuyos.</p>
-        </details>
-        <details>
-          <summary>¿Y si no me funciona?<svg class="i"><use href="#i-chevron"/></svg></summary>
-          <p>Tienes 10 días desde la compra para pedir la devolución completa si Rayo no funciona en tu PC y el soporte no lo resuelve. Detalles en los <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos de uso</a>.</p>
-        </details>
-        <details>
-          <summary>¿Qué necesito para usarlo?<svg class="i"><use href="#i-chevron"/></svg></summary>
-          <p>Windows 10 (1903 o superior) u 11 de 64 bits y permiso de administrador para aplicar cambios. Funciona con AMD, Intel, NVIDIA y Radeon, en escritorio o notebook (tiene perfil Portátil).</p>
-        </details>
-        <details>
-          <summary>¿Es una suscripción?<svg class="i"><use href="#i-chevron"/></svg></summary>
-          <p>No. Pro y Elite se pagan una sola vez y traen las actualizaciones incluidas. El plan Gratis no pide medio de pago y sirve para probar Rayo en tu PC.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="section section--final">
-    <div class="wrap">
-      <div class="final reveal">
-        <span class="brand__mark brand__mark--lg"><svg class="i"><use href="#i-zap-fill"/></svg></span>
-        <h2>Descubre qué está frenando tu PC</h2>
-        <p>El escáner y el perfil Recomendado son gratis.</p>
-        <div class="hero__ctas">
-          <a class="btn btn--primary btn--lg" data-descarga href="https://github.com/sebaile/rayo-optimizador/releases/latest/download/RayoSetup.exe"><svg class="i"><use href="#i-download"/></svg>Descargar gratis</a>
-          <a class="btn btn--ghost btn--lg" href="#precios">Comparar planes</a>
+        <div class="faq__list reveal">
+          <details id="instalar">
+            <summary>¿Cómo lo instalo?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <ol class="faq__pasos">
+              <li>Ejecuta el instalador o descomprime el ZIP.</li>
+              <li>Acepta el permiso de administrador (sin él, Rayo abre en modo de solo lectura).</li>
+              <li>Pulsa «Optimizar ahora» para aplicar el perfil Recomendado.</li>
+              <li>Reinicia si Rayo te lo pide.</li>
+            </ol>
+          </details>
+          <details id="smartscreen">
+            <summary>¿Por qué dice «Windows protegió su PC»?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p>Es normal: Rayo aún no tiene firma digital de código. Pulsa «Más información» y luego «Ejecutar de todas formas». Si quieres, compara el hash SHA-256 con el de la página de la versión.</p>
+          </details>
+          <details>
+            <summary>¿Rayo es seguro para mi PC?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p>Sí. Guarda el valor original de cada cambio, crea un punto de restauración antes de aplicar y puedes revertir uno o todos. No desactiva Windows Defender, el UAC ni Windows Update, no quita las protecciones contra Spectre y Meltdown y no recopila tus datos. Puedes ver el cambio exacto de cada ajuste en el <a data-link="catalogo" href="https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md" target="_blank" rel="noopener">catálogo</a>.</p>
+          </details>
+          <details>
+            <summary>¿Me pueden banear en Valorant, Fortnite u otros juegos?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p>Rayo no se inyecta en los juegos ni toca sus anticheats (Vanguard, Easy Anti-Cheat, BattlEye, Ricochet…). Cambia ajustes de Windows y, en Fortnite, LoL y Rocket League, el mismo archivo de configuración que cambias desde el menú del juego.</p>
+          </details>
+          <details>
+            <summary>¿Cuántos FPS voy a ganar?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p>Depende de tu equipo y de cómo esté hoy: un PC con la RAM sin XMP o Windows lleno de procesos mejora mucho más que uno ya afinado. Por eso Rayo trae un benchmark: mides antes y después en tu propio PC.</p>
+          </details>
+          <details>
+            <summary>¿Cómo compro y activo mi clave?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p data-venta="mercadopago" hidden>Pulsa Comprar y elige Mercado Pago (dejas tu nombre, correo y número) o transferencia por Discord. Con el pago listo, abre un ticket en #comprar de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y recibes tu clave. Pégala en Rayo → Ajustes → Activar clave. Sirve en hasta 2 PC tuyos.</p>
+            <p data-venta="discord">Pulsa Comprar, únete a nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y abre un ticket en #comprar. Al confirmar el pago recibes tu clave: pégala en Rayo → Ajustes → Activar clave. Sirve en hasta 2 PC tuyos.</p>
+          </details>
+          <details>
+            <summary>¿Y si no me funciona?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p>Tienes 10 días desde la compra para pedir la devolución completa si Rayo no funciona en tu PC y el soporte no lo resuelve. Detalles en los <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos de uso</a>.</p>
+          </details>
+          <details>
+            <summary>¿Qué necesito para usarlo?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p>Windows 10 (1903 o superior) u 11 de 64 bits y permiso de administrador para aplicar cambios. Funciona con AMD, Intel, NVIDIA y Radeon, en escritorio o notebook (tiene perfil Portátil).</p>
+          </details>
+          <details>
+            <summary>¿Es una suscripción?<svg class="i"><use href="#i-chevron"/></svg></summary>
+            <p>No. Pro y Elite se pagan una sola vez y traen las actualizaciones incluidas. El plan Gratis no pide medio de pago y sirve para probar Rayo en tu PC.</p>
+          </details>
         </div>
       </div>
     </div>
@@ -549,34 +526,14 @@
 </main>
 
 <footer class="footer">
-  <div class="wrap footer__inner">
-    <div class="footer__brand">
-      <a class="brand" href="#top" aria-label="Rayo, volver arriba">
-        <span class="brand__mark"><svg class="i"><use href="#i-zap-fill"/></svg></span>
-        <span class="brand__name">RAYO</span>
-      </a>
-      <p>Optimizador de FPS para Windows.<br>Hecho en Chile por Sebastian Perez.</p>
-    </div>
-    <nav class="footer__cols" aria-label="Pie de página">
-      <div>
-        <p class="footer__title">Ayuda</p>
-        <a href="#preguntas">Preguntas frecuentes</a>
-        <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord y soporte</a>
-        <a data-link="correo" href="mailto:2002sebastian.perez@gmail.com">Correo</a>
-      </div>
-      <div>
-        <p class="footer__title">Legal</p>
-        <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos y privacidad</a>
-        <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Devoluciones</a>
-        <a data-link="catalogo" href="https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md" target="_blank" rel="noopener">Catálogo de optimizaciones</a>
-      </div>
-    </nav>
-  </div>
   <div class="wrap">
-    <div class="footer__legal">
-      <p>© 2026 Rayo. Los resultados dependen de tu hardware y de cada juego; Rayo no garantiza un número de FPS.</p>
-      <p>Fortnite, Valorant, Counter-Strike 2, League of Legends y demás juegos mencionados son marcas de sus respectivos dueños. Rayo no está afiliado a ellos.</p>
-    </div>
+    <nav class="footer__links" aria-label="Pie de página">
+      <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord y soporte</a>
+      <a data-link="correo" href="mailto:2002sebastian.perez@gmail.com">Correo</a>
+      <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos, privacidad y devoluciones</a>
+      <a data-link="catalogo" href="https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md" target="_blank" rel="noopener">Catálogo de optimizaciones</a>
+    </nav>
+    <p class="footer__legal">© 2026 Rayo · Hecho en Chile por Sebastian Perez. Los resultados dependen de tu hardware y de cada juego. Fortnite, Valorant y demás juegos son marcas de sus dueños; Rayo no está afiliado a ellos.</p>
   </div>
 </footer>
 

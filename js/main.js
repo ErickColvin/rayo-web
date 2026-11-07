@@ -91,7 +91,9 @@ listaPlanes.forEach(() => puntos.append(document.createElement('span')));
 planes.after(puntos);
 
 const marcarPunto = (plan) => [...puntos.children].forEach((p, i) => p.classList.toggle('is-activo', listaPlanes[i] === plan));
-if (planes.scrollWidth > planes.clientWidth) {
+// Se llama al abrir la pantalla Precios: oculta, el carrusel no tiene medidas
+function centrarPro() {
+  if (planes.scrollWidth <= planes.clientWidth) return;
   const pro = listaPlanes[1];
   planes.scrollLeft = pro.offsetLeft - (planes.clientWidth - pro.offsetWidth) / 2;
   marcarPunto(pro);
@@ -223,7 +225,7 @@ formulario.addEventListener('submit', async (e) => {
 const plataforma = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.userAgent;
 const esWindows = /windows/i.test(plataforma);
 const alPc = document.querySelector('.al-pc');
-const enlaceWeb = `${location.origin}${location.pathname}#descargar`;
+const enlaceWeb = `${location.origin}${location.pathname}#ayuda`;
 const estado = alPc.querySelector('.al-pc__estado');
 const compartir = alPc.querySelector('[data-compartir]');
 
@@ -234,11 +236,13 @@ document.querySelectorAll('[data-descarga]').forEach((el) => el.addEventListener
     alPc.showModal();
     return;
   }
-  const aviso = document.querySelector('.dl__ok');
-  aviso.hidden = false;
-  if (!el.closest('#descargar')) {
-    setTimeout(() => document.getElementById('instalar').scrollIntoView({ behavior: 'smooth', block: 'center' }), 250);
-  }
+  // La descarga sigue su curso; mientras, se abre Ayuda con los pasos de instalación
+  document.querySelector('.dl__ok').hidden = false;
+  const instalar = document.getElementById('instalar');
+  instalar.open = true;
+  document.getElementById('smartscreen').open = true;
+  irAVista('ayuda');
+  setTimeout(() => instalar.scrollIntoView({ behavior: 'smooth', block: 'center' }), 250);
 }));
 
 const copiar = alPc.querySelector('[data-copiar]');
@@ -285,25 +289,7 @@ alPc.addEventListener('click', (e) => {
   if (e.target === alPc || e.target.closest('[data-cerrar]')) alPc.close();
 });
 
-// Menú en móvil y fondo de la barra al hacer scroll
 const nav = document.querySelector('.nav');
-const toggle = document.querySelector('.nav__toggle');
-const menu = document.getElementById('menu');
-
-function cerrarMenu() {
-  toggle.setAttribute('aria-expanded', 'false');
-  toggle.setAttribute('aria-label', 'Abrir menú');
-  menu.classList.remove('is-open');
-}
-
-toggle.addEventListener('click', () => {
-  const abrir = toggle.getAttribute('aria-expanded') !== 'true';
-  toggle.setAttribute('aria-expanded', String(abrir));
-  toggle.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
-  menu.classList.toggle('is-open', abrir);
-});
-menu.addEventListener('click', (e) => { if (e.target.closest('a')) cerrarMenu(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarMenu(); });
 
 // Al hacer scroll: fondo de la barra, barra de progreso y la captura de la
 // portada que se endereza (de 7° a 0° en los primeros 500 px)
@@ -379,13 +365,13 @@ document.querySelectorAll('.reveal').forEach((el) => {
   const hermanos = [...el.parentElement.children].filter((h) => h.classList.contains('reveal'));
   el.style.setProperty('--i', hermanos.indexOf(el));
 });
-document.querySelectorAll('.games, .nohace__list, .plans__notes, .install, .ticks').forEach((lista) => {
+document.querySelectorAll('.games, .garantias, .plans__notes, .ticks').forEach((lista) => {
   [...lista.children].forEach((hijo, i) => hijo.style.setProperty('--i', i));
 });
 
 // Brillo que sigue al mouse en las tarjetas (solo con mouse, no en pantallas táctiles)
 if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  document.querySelectorAll('.seguro__col, .plan, .game, .dl__card').forEach((el) => el.classList.add('spot'));
+  document.querySelectorAll('.plan, .game, .dl__card').forEach((el) => el.classList.add('spot'));
   document.addEventListener('pointermove', (e) => {
     const tarjeta = e.target.closest('.spot');
     if (!tarjeta) return;
@@ -423,3 +409,39 @@ if ('IntersectionObserver' in window) {
 } else {
   aparecer.forEach((el) => el.classList.add('is-visible'));
 }
+
+// Pantallas: el <head> elige la primera según el #hash (data-vista en <html>).
+// Los enlaces #pantalla cambian de pantalla sin recargar y atrás/adelante
+// del navegador funcionan.
+const enlacesVista = document.querySelectorAll('.nav__links a[href^="#"], .tabbar a');
+
+function mostrarVista(vista) {
+  document.documentElement.dataset.vista = vista;
+  enlacesVista.forEach((a) => {
+    if (a.getAttribute('href') === `#${vista}`) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
+  window.scrollTo(0, 0);
+  if (vista === 'precios') centrarPro();
+  alHacerScroll();
+}
+
+function irAVista(vista) {
+  if (document.documentElement.dataset.vista === vista) return;
+  history.pushState(null, '', `#${vista}`);
+  mostrarVista(vista);
+}
+
+document.addEventListener('click', (e) => {
+  const enlace = e.target.closest('a[href^="#"]');
+  const vista = enlace && vistaDesdeHash(enlace.getAttribute('href').slice(1));
+  if (!vista || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  e.preventDefault();
+  if (document.documentElement.dataset.vista === vista) window.scrollTo({ top: 0, behavior: 'smooth' });
+  else irAVista(vista);
+});
+
+const vistaDeLaUrl = () => vistaDesdeHash(location.hash.slice(1)) || 'inicio';
+window.addEventListener('popstate', () => mostrarVista(vistaDeLaUrl()));
+window.addEventListener('hashchange', () => mostrarVista(vistaDeLaUrl()));
+mostrarVista(document.documentElement.dataset.vista);
