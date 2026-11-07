@@ -80,6 +80,29 @@ document.querySelectorAll('[data-moneda]').forEach((b) => b.addEventListener('cl
   guardar('rayo-moneda', b.dataset.moneda);
 }));
 
+// En el celular los planes se deslizan de lado: empiezan centrados en Pro y
+// unos puntos indican cuál se está viendo
+const planes = document.querySelector('.plans');
+const listaPlanes = [...planes.children];
+const puntos = document.createElement('div');
+puntos.className = 'plans__puntos';
+puntos.setAttribute('aria-hidden', 'true');
+listaPlanes.forEach(() => puntos.append(document.createElement('span')));
+planes.after(puntos);
+
+const marcarPunto = (plan) => [...puntos.children].forEach((p, i) => p.classList.toggle('is-activo', listaPlanes[i] === plan));
+if (planes.scrollWidth > planes.clientWidth) {
+  const pro = listaPlanes[1];
+  planes.scrollLeft = pro.offsetLeft - (planes.clientWidth - pro.offsetWidth) / 2;
+  marcarPunto(pro);
+}
+if ('IntersectionObserver' in window) {
+  const visto = new IntersectionObserver((entradas) => {
+    entradas.forEach((e) => { if (e.isIntersecting) marcarPunto(e.target); });
+  }, { root: planes, threshold: 0.6 });
+  listaPlanes.forEach((plan) => visto.observe(plan));
+}
+
 // Popup de compra. Sin JavaScript, «Comprar» sigue llevando al Discord.
 const pop = document.querySelector('.pop');
 const formulario = pop.querySelector('form');
@@ -356,13 +379,13 @@ document.querySelectorAll('.reveal').forEach((el) => {
   const hermanos = [...el.parentElement.children].filter((h) => h.classList.contains('reveal'));
   el.style.setProperty('--i', hermanos.indexOf(el));
 });
-document.querySelectorAll('.games, .diag, .nohace__list, .plans__notes, .req, .install, .compra__pasos, .ticks').forEach((lista) => {
+document.querySelectorAll('.games, .nohace__list, .plans__notes, .install, .ticks').forEach((lista) => {
   [...lista.children].forEach((hijo, i) => hijo.style.setProperty('--i', i));
 });
 
 // Brillo que sigue al mouse en las tarjetas (solo con mouse, no en pantallas táctiles)
 if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  document.querySelectorAll('.step, .trust__item, .plan, .card, .game, .dl__card, .nohace').forEach((el) => el.classList.add('spot'));
+  document.querySelectorAll('.seguro__col, .plan, .game, .dl__card').forEach((el) => el.classList.add('spot'));
   document.addEventListener('pointermove', (e) => {
     const tarjeta = e.target.closest('.spot');
     if (!tarjeta) return;
