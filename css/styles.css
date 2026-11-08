@@ -1317,6 +1317,8 @@ form.pop__paso > .btn,
     -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
   }
+  /* Netlify (plan gratis) pone su sello fijo abajo a la derecha: se sube sobre la barra para no tapar botones */
+  #nl-badge-frame { bottom: calc(68px + env(safe-area-inset-bottom)) !important; }
   .tabbar a {
     display: grid;
     justify-items: center;
