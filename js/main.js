@@ -63,7 +63,14 @@ const linkMercadoPago = (plan) => (monedaActual === 'clp' ? RAYO.mercadoPago[pla
 function usarMoneda(moneda) {
   monedaActual = moneda;
   document.querySelectorAll('[data-moneda]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.moneda === moneda)));
-  document.querySelectorAll(`[data-${moneda}]`).forEach((el) => { el.textContent = el.dataset[moneda]; });
+  document.querySelectorAll(`[data-${moneda}]`).forEach((el) => {
+    if (el.textContent === el.dataset[moneda]) return;
+    el.textContent = el.dataset[moneda];
+    // Reinicia la animación del precio que cambia
+    el.classList.remove('cambia');
+    void el.offsetWidth;
+    el.classList.add('cambia');
+  });
 
   const conMercadoPago = Boolean(linkMercadoPago('pro') || linkMercadoPago('elite'));
   document.querySelectorAll('[data-venta]').forEach((el) => {
@@ -318,6 +325,10 @@ const tablist = document.querySelector('.tour__tabs');
 const tabs = [...tablist.querySelectorAll('[role="tab"]')];
 
 function activar(tab, enfocar) {
+  // La captura nueva llega desde el lado de la pestaña elegida
+  const antes = tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
+  const ahora = tabs.indexOf(tab);
+  if (antes !== ahora) document.querySelector('.tour__panels').dataset.dir = ahora > antes ? 'adelante' : 'atras';
   tabs.forEach((t) => {
     const activa = t === tab;
     t.setAttribute('aria-selected', String(activa));
@@ -415,7 +426,24 @@ if ('IntersectionObserver' in window) {
 // del navegador funcionan.
 const enlacesVista = document.querySelectorAll('.nav__links a[href^="#"], .tabbar a');
 
+const ORDEN_VISTAS = ['inicio', 'funciones', 'juegos', 'precios', 'ayuda'];
+const navMarca = document.querySelector('.nav__marca');
+const tabbar = document.querySelector('.tabbar');
+
+// Mueve la raya del menú de arriba y la píldora de la barra inferior a la pantalla actual
+function moverMarcas() {
+  const vista = document.documentElement.dataset.vista;
+  tabbar.style.setProperty('--tab', ORDEN_VISTAS.indexOf(vista));
+  const activo = document.querySelector(`.nav__links a[href="#${vista}"]`);
+  if (!activo || !activo.offsetWidth) return;
+  navMarca.style.width = `${activo.offsetWidth - 24}px`;
+  navMarca.style.transform = `translateX(${activo.offsetLeft + 12}px)`;
+}
+
 function mostrarVista(vista) {
+  // La pantalla nueva entra desde la derecha si avanzas y desde la izquierda si vuelves
+  const paso = ORDEN_VISTAS.indexOf(vista) - ORDEN_VISTAS.indexOf(document.documentElement.dataset.vista);
+  if (paso) document.documentElement.dataset.dir = paso > 0 ? 'adelante' : 'atras';
   document.documentElement.dataset.vista = vista;
   enlacesVista.forEach((a) => {
     if (a.getAttribute('href') === `#${vista}`) a.setAttribute('aria-current', 'page');
@@ -424,7 +452,23 @@ function mostrarVista(vista) {
   window.scrollTo(0, 0);
   if (vista === 'precios') centrarPro();
   alHacerScroll();
+  moverMarcas();
 }
+window.addEventListener('resize', moverMarcas);
+if (document.fonts) document.fonts.ready.then(moverMarcas);
+
+// Onda al tocar botones, como en una app
+document.addEventListener('pointerdown', (e) => {
+  const boton = e.target.closest('.btn, .opcion, .tabbar a, .moneda__btn, .siguiente');
+  if (!boton) return;
+  const caja = boton.getBoundingClientRect();
+  const lado = Math.max(caja.width, caja.height) * 2;
+  const onda = document.createElement('span');
+  onda.className = 'onda';
+  onda.style.cssText = `width:${lado}px;height:${lado}px;left:${e.clientX - caja.left - lado / 2}px;top:${e.clientY - caja.top - lado / 2}px`;
+  boton.append(onda);
+  onda.addEventListener('animationend', () => onda.remove());
+});
 
 function irAVista(vista) {
   if (document.documentElement.dataset.vista === vista) return;
