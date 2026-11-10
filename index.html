@@ -98,16 +98,6 @@
       <span class="brand__mark"><svg class="i"><use href="#i-zap-fill"/></svg></span>
       <span class="brand__name">RAYO</span>
     </a>
-    <nav class="nav__links" aria-label="Principal">
-      <a href="#inicio">Inicio</a>
-      <a href="#funciones">Funciones</a>
-      <a href="#juegos">Juegos</a>
-      <a href="#precios">Precios</a>
-      <a href="#ayuda">Ayuda</a>
-      <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>
-      <a data-link="tiktok" href="https://www.tiktok.com/@rayopti.fps" target="_blank" rel="noopener">TikTok</a>
-      <span class="nav__marca" aria-hidden="true"></span>
-    </nav>
     <div class="nav__cta">
       <a class="btn btn--primary btn--sm" data-descarga href="https://github.com/sebaile/rayo-optimizador/releases/latest/download/RayoSetup.exe">
         <svg class="i"><use href="#i-download"/></svg><span>Descargar gratis</span>
@@ -117,7 +107,8 @@
   <span class="progreso" aria-hidden="true"></span>
 </header>
 
-<!-- En el celular las pantallas se cambian desde esta barra, como en una app -->
+<!-- Las pantallas se cambian desde esta barra de abajo, como en una app
+     (en el computador flota centrada) -->
 <nav class="tabbar" aria-label="Pantallas">
   <span class="tabbar__marca" aria-hidden="true"></span>
   <a href="#inicio"><svg class="i"><use href="#i-home"/></svg>Inicio</a>
@@ -134,6 +125,8 @@
 
   <!-- INICIO -->
   <section class="vista hero" id="inicio" aria-label="Inicio">
+    <!-- Chispas y rayos del fondo: js/main.js los crea -->
+    <div class="cielo" aria-hidden="true"></div>
     <div class="wrap hero__copy">
       <p class="eyebrow"><span class="eyebrow__dot"></span>Optimizador de FPS para Windows · <span data-version>v2.5.3</span></p>
       <h1>Saca los FPS que <span class="grad">tu PC ya tiene</span>.</h1>
@@ -537,7 +530,7 @@
       <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos, privacidad y devoluciones</a>
       <a data-link="catalogo" href="https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md" target="_blank" rel="noopener">Catálogo de optimizaciones</a>
     </nav>
-    <p class="footer__legal">© 2026 Rayo · Hecho en Chile por Sebastian Perez. Los resultados dependen de tu hardware y de cada juego. Fortnite, Valorant y demás juegos son marcas de sus dueños; Rayo no está afiliado a ellos.</p>
+    <p class="footer__legal">© 2026 Rayo · Hecho en Chile por Erick Colvin y Sebastian Perez. Los resultados dependen de tu hardware y de cada juego. Fortnite, Valorant y demás juegos son marcas de sus dueños; Rayo no está afiliado a ellos.</p>
   </div>
 </footer>
 

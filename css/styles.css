@@ -186,6 +186,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 32px;
 }
 
@@ -211,44 +212,88 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .brand__mark--lg .i { width: 34px; height: 34px; }
 .brand__name { font: 800 18px/1 var(--display); letter-spacing: .02em; }
 
-.nav__links {
-  display: flex;
-  gap: 4px;
-  margin-right: auto;
-}
-.nav__links a {
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: var(--muted);
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color .15s ease, background-color .15s ease;
-}
-.nav__links a:hover { color: var(--text); background: var(--surface-2); }
-
 .nav__cta { display: flex; align-items: center; gap: 8px; }
-
-.nav__links { position: relative; }
-.nav__links a[aria-current='page'] { color: var(--text); }
-/* Raya naranja bajo la pantalla actual; js/main.js la mueve de un enlace a otro */
-.nav__marca {
-  position: absolute;
-  left: 0;
-  bottom: 1px;
-  width: 0;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--grad);
-  pointer-events: none;
-  transition: transform .4s cubic-bezier(.2, .7, .2, 1), width .4s cubic-bezier(.2, .7, .2, 1);
-}
 
 /* El logo de la barra «respira» con un brillo suave */
 .nav .brand__mark { animation: carga 4s ease-in-out infinite; }
 
-/* Barra inferior de pantallas (solo celular y tablet) */
-.tabbar { display: none; }
+/* ---------- Barra de pantallas (abajo, como en una app) ---------- */
+
+body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+
+.tabbar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: rgba(6, 10, 19, .92);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.tabbar a {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  padding: 6px 2px;
+  border-radius: 10px;
+  color: var(--dim);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.tabbar .i { width: 22px; height: 22px; }
+.tabbar a:hover { color: var(--text); }
+.tabbar a[aria-current='page'] { color: var(--orange-2); }
+.tabbar a[aria-current='page'] .i {
+  filter: drop-shadow(0 0 8px rgba(249, 115, 22, .5));
+  animation: saltito .45s cubic-bezier(.3, 1.6, .5, 1);
+}
+/* Píldora que se desliza detrás de la pantalla actual (--tab lo pone js/main.js) */
+.tabbar__marca {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: calc((100% - 12px) / 5);
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(249, 115, 22, .12);
+  transform: translateX(calc(var(--tab, 0) * 100%));
+  transition: transform .4s cubic-bezier(.2, .7, .2, 1);
+  pointer-events: none;
+}
+
+/* En el computador la barra flota centrada, con ícono y nombre en una línea */
+@media (min-width: 961px) {
+  body { padding-bottom: 96px; }
+  .tabbar {
+    left: 50%;
+    right: auto;
+    bottom: 18px;
+    width: 540px;
+    padding: 6px;
+    border: 1px solid var(--border-2);
+    border-radius: 18px;
+    background: rgba(10, 15, 28, .82);
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .9), 0 0 0 1px rgba(249, 115, 22, .05);
+    transform: translateX(-50%);
+    animation: barra-sube .7s .5s cubic-bezier(.2, .7, .2, 1) backwards;
+  }
+  .tabbar a {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 6px;
+    font-size: 14px;
+  }
+  .tabbar .i { width: 18px; height: 18px; }
+  .tabbar__marca { height: calc(100% - 12px); }
+}
 
 /* ---------- Pantallas ---------- */
 
@@ -318,6 +363,53 @@ main { overflow-x: clip; }
   background-size: 56px 56px;
   -webkit-mask-image: radial-gradient(60% 60% at 50% 20%, #000, transparent);
   mask-image: radial-gradient(60% 60% at 50% 20%, #000, transparent);
+}
+
+/* Chispas que suben y un rayo que cae cada tantos segundos (js/main.js los crea) */
+.cielo {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 900px;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 55%, transparent);
+  mask-image: linear-gradient(#000 55%, transparent);
+}
+.chispa {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--t);
+  height: var(--t);
+  border-radius: 50%;
+  background: #fed7aa;
+  box-shadow: 0 0 6px 1px rgba(249, 115, 22, .9), 0 0 14px 2px rgba(249, 115, 22, .35);
+  opacity: 0;
+  animation: chispa-sube var(--d) linear var(--r) infinite;
+}
+.cielo svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 4px #fb923c) drop-shadow(0 0 14px rgba(249, 115, 22, .85));
+}
+.rayo-trazo {
+  fill: none;
+  stroke: #fff7ed;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.rayo-trazo--rama { stroke-width: 1.3; stroke: #fdba74; }
+/* Resplandor del cielo cuando cae el rayo (--rx: dónde cae) */
+.cielo__flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(55% 50% at var(--rx, 50%) 0%, rgba(255, 237, 213, .2), rgba(249, 115, 22, .07) 45%, transparent 75%);
+  opacity: 0;
 }
 
 .hero__copy {
@@ -1217,6 +1309,40 @@ form.pop__paso > .btn,
 }
 .spot:hover::after { opacity: 1; }
 
+/* Luz naranja suave que sigue al mouse por el fondo (solo con mouse; js/main.js la crea y la mueve) */
+.luz {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  width: 900px;
+  height: 900px;
+  margin: -450px 0 0 -450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(249, 115, 22, .1), rgba(249, 115, 22, .035) 35%, transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease, transform .45s cubic-bezier(.2, .7, .2, 1);
+  will-change: transform;
+}
+.luz.is-on { opacity: 1; }
+
+/* Títulos: las palabras aparecen una tras otra cada vez que se abre la pantalla
+   (js/main.js separa las palabras y pone --p) */
+.js .palabra {
+  display: inline-block;
+  animation: palabra .75s cubic-bezier(.2, .7, .2, 1) backwards;
+  animation-delay: calc(var(--base, .12s) + var(--p, 0) * 75ms);
+}
+/* El texto con degradado se queda en línea para que pueda partirse en dos renglones */
+.js .grad.palabra {
+  display: inline;
+  animation: palabra-fundido .9s ease backwards, brillo 6s linear infinite;
+  animation-delay: calc(var(--base, .12s) + var(--p, 0) * 75ms), 0s;
+}
+.js .hero__copy > h1 { animation: none; }
+.js .hero h1 { --base: .15s; }
+
 /* Elite: una luz naranja gira por el borde */
 @property --ang {
   syntax: '<angle>';
@@ -1267,15 +1393,26 @@ form.pop__paso > .btn,
   30% { transform: scale(1.25) rotate(-10deg); }
   60% { transform: scale(.92) rotate(4deg); }
 }
+@keyframes chispa-sube {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
+  15%, 70% { opacity: var(--o, .8); }
+  100% { opacity: 0; transform: translate3d(var(--dx, 0), var(--dy, -240px), 0) scale(.3); }
+}
+@keyframes palabra { from { opacity: 0; transform: translateY(.5em) rotate(3deg); filter: blur(6px); } }
+@keyframes palabra-fundido { from { opacity: 0; filter: blur(8px); } }
+@keyframes barra-sube { from { opacity: 0; transform: translate(-50%, 32px); } }
 
 /* Con «reducir movimiento» (Windows con los efectos de animación apagados, algo
-   común en PC gamer): nada se desplaza ni queda en bucle, pero las entradas
-   siguen como fundidos suaves */
+   común en PC gamer) se apagan solo los movimientos grandes o constantes: la
+   inclinación de la captura, el vaivén de las tarjetas flotantes y el fondo
+   que se desplaza. Las chispas van más lentas y el rayo cae sin destello. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .float { animation: flotar-in .7s 1.1s backwards; }
   .float--right { animation-delay: 1.35s; }
   .hero::before { animation: none; }
+  .chispa { animation-duration: calc(var(--d) * 1.6); }
+  .cielo__flash { display: none; }
 }
 
 /* ==========================================================================
@@ -1300,56 +1437,8 @@ form.pop__paso > .btn,
 }
 
 @media (max-width: 960px) {
-  /* En vez del menú de arriba, una barra fija abajo como en una app */
-  .nav__links { display: none; }
-  .nav__inner { justify-content: space-between; }
-  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
-
-  .tabbar {
-    position: fixed;
-    inset: auto 0 0;
-    z-index: 50;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
-    border-top: 1px solid var(--border);
-    background: rgba(6, 10, 19, .92);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-  }
   /* Netlify (plan gratis) pone su sello fijo abajo a la derecha: se sube sobre la barra para no tapar botones */
   #nl-badge-frame { bottom: calc(68px + env(safe-area-inset-bottom)) !important; }
-  .tabbar a {
-    display: grid;
-    justify-items: center;
-    gap: 3px;
-    padding: 6px 2px;
-    border-radius: 10px;
-    color: var(--dim);
-    font-size: 11.5px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: color .15s ease;
-  }
-  .tabbar .i { width: 22px; height: 22px; }
-  .tabbar a[aria-current='page'] { color: var(--orange-2); }
-  .tabbar a[aria-current='page'] .i {
-    filter: drop-shadow(0 0 8px rgba(249, 115, 22, .5));
-    animation: saltito .45s cubic-bezier(.3, 1.6, .5, 1);
-  }
-  /* Píldora que se desliza detrás de la pantalla actual (--tab lo pone js/main.js) */
-  .tabbar__marca {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    width: calc((100% - 12px) / 5);
-    height: 52px;
-    border-radius: 12px;
-    background: rgba(249, 115, 22, .12);
-    transform: translateX(calc(var(--tab, 0) * 100%));
-    transition: transform .4s cubic-bezier(.2, .7, .2, 1);
-    pointer-events: none;
-  }
 
   .stats__grid { grid-template-columns: repeat(2, 1fr); }
   .stats__grid li:nth-child(3) { border-left: 0; }

@@ -391,6 +391,141 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     tarjeta.style.setProperty('--mx', `${e.clientX - caja.left}px`);
     tarjeta.style.setProperty('--my', `${e.clientY - caja.top}px`);
   }, { passive: true });
+
+  // Luz naranja suave que sigue al mouse por el fondo de la página
+  const luz = document.createElement('div');
+  luz.className = 'luz';
+  luz.setAttribute('aria-hidden', 'true');
+  document.body.prepend(luz);
+  let luzPendiente = false;
+  let luzX = 0;
+  let luzY = 0;
+  document.addEventListener('pointermove', (e) => {
+    luzX = e.clientX;
+    luzY = e.clientY;
+    if (luzPendiente) return;
+    luzPendiente = true;
+    requestAnimationFrame(() => {
+      luzPendiente = false;
+      // Al aparecer se ubica de inmediato; después sigue al mouse con un leve retraso
+      const recienAparece = !luz.classList.contains('is-on');
+      if (recienAparece) luz.style.transitionProperty = 'opacity';
+      luz.style.transform = `translate3d(${luzX}px, ${luzY}px, 0)`;
+      luz.classList.add('is-on');
+      if (recienAparece) requestAnimationFrame(() => { luz.style.transitionProperty = ''; });
+    });
+  }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', () => luz.classList.remove('is-on'));
+}
+
+// Títulos que aparecen palabra por palabra (la animación está en el CSS y se
+// repite cada vez que se abre la pantalla)
+document.querySelectorAll('.vista h1, .vista .section__head h2').forEach((titulo) => {
+  let orden = 0;
+  const separar = (nodo) => {
+    [...nodo.childNodes].forEach((hijo) => {
+      if (hijo.nodeType === Node.TEXT_NODE) {
+        const trozos = hijo.textContent.split(/(\s+)/).filter(Boolean);
+        hijo.replaceWith(...trozos.map((trozo) => {
+          if (/^\s+$/.test(trozo)) return trozo;
+          const palabra = document.createElement('span');
+          palabra.className = 'palabra';
+          palabra.style.setProperty('--p', orden++);
+          palabra.textContent = trozo;
+          return palabra;
+        }));
+      } else if (hijo.classList.contains('grad')) {
+        // El texto con degradado aparece como un solo bloque
+        hijo.classList.add('palabra');
+        hijo.style.setProperty('--p', orden++);
+      } else {
+        separar(hijo);
+      }
+    });
+  };
+  separar(titulo);
+});
+
+// Portada: chispas que suben y un rayo que cae cada tantos segundos
+const cielo = document.querySelector('.cielo');
+if (cielo) {
+  const azar = (min, max) => min + Math.random() * (max - min);
+  const cuantas = window.innerWidth < 640 ? 14 : 26;
+  for (let n = 0; n < cuantas; n += 1) {
+    const chispa = document.createElement('span');
+    chispa.className = 'chispa';
+    chispa.style.cssText = [
+      `--x:${azar(2, 98).toFixed(1)}%`,
+      `--y:${azar(12, 78).toFixed(1)}%`,
+      `--t:${azar(1.5, 3.6).toFixed(1)}px`,
+      `--d:${azar(6, 12).toFixed(1)}s`,
+      `--r:-${azar(0, 12).toFixed(1)}s`, // empiezan ya en vuelo
+      `--dx:${azar(-60, 60).toFixed(0)}px`,
+      `--dy:-${azar(160, 320).toFixed(0)}px`,
+      `--o:${azar(0.45, 0.95).toFixed(2)}`,
+    ].join(';');
+    cielo.append(chispa);
+  }
+
+  const SVG = 'http://www.w3.org/2000/svg';
+  const dibujo = document.createElementNS(SVG, 'svg');
+  const destello = document.createElement('div');
+  destello.className = 'cielo__flash';
+  cielo.prepend(destello);
+  cielo.append(dibujo);
+
+  // Línea quebrada hacia abajo desde (x, y) hasta la altura «hasta»
+  const zigzag = (x, y, hasta, abre) => {
+    let d = `M${x.toFixed(1)} ${y.toFixed(1)}`;
+    const puntos = [];
+    while (y < hasta) {
+      y += azar(18, 42);
+      x += azar(-abre, abre);
+      d += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+      puntos.push([x, y]);
+    }
+    return { d, puntos };
+  };
+
+  const caerRayo = () => {
+    const ancho = cielo.clientWidth;
+    const alto = cielo.clientHeight;
+    if (!ancho) return;
+    dibujo.setAttribute('viewBox', `0 0 ${ancho} ${alto}`);
+    const x = ancho * azar(0.12, 0.88);
+    const largo = Math.min(alto * 0.55, 460) * azar(0.7, 1);
+    const tronco = zigzag(x, -10, largo, 26);
+    const [rx, ry] = tronco.puntos[Math.floor(tronco.puntos.length * azar(0.3, 0.6))];
+    const rama = zigzag(rx, ry, ry + largo * azar(0.2, 0.4), 22);
+    dibujo.replaceChildren();
+    [[tronco.d, 'rayo-trazo'], [rama.d, 'rayo-trazo rayo-trazo--rama']].forEach(([d, clase]) => {
+      const trazo = document.createElementNS(SVG, 'path');
+      trazo.setAttribute('d', d);
+      trazo.setAttribute('class', clase);
+      dibujo.append(trazo);
+      const total = trazo.getTotalLength();
+      trazo.style.strokeDasharray = total;
+      trazo.animate([{ strokeDashoffset: total }, { strokeDashoffset: 0 }], { duration: 140, easing: 'ease-out', fill: 'forwards' });
+    });
+    dibujo.animate(
+      [{ opacity: 1 }, { opacity: 0.25, offset: 0.2 }, { opacity: 1, offset: 0.32 }, { opacity: 0 }],
+      { duration: 750, delay: 120, easing: 'ease-out', fill: 'both' },
+    );
+    destello.style.setProperty('--rx', `${((x / ancho) * 100).toFixed(1)}%`);
+    destello.animate(
+      [{ opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 0.3, offset: 0.3 }, { opacity: 0.8, offset: 0.42 }, { opacity: 0 }],
+      { duration: 900, delay: 100, easing: 'ease-out' },
+    );
+  };
+
+  // Solo cae con la portada a la vista y la pestaña abierta
+  const programarRayo = (espera) => {
+    setTimeout(() => {
+      if (!document.hidden && document.documentElement.dataset.vista === 'inicio') caerRayo();
+      programarRayo(azar(5500, 9500));
+    }, espera);
+  };
+  programarRayo(1600);
 }
 
 // Cifras que cuentan desde 0 cuando aparecen
@@ -425,21 +560,10 @@ if ('IntersectionObserver' in window) {
 // Pantallas: el <head> elige la primera según el #hash (data-vista en <html>).
 // Los enlaces #pantalla cambian de pantalla sin recargar y atrás/adelante
 // del navegador funcionan.
-const enlacesVista = document.querySelectorAll('.nav__links a[href^="#"], .tabbar a');
+const enlacesVista = document.querySelectorAll('.tabbar a');
 
 const ORDEN_VISTAS = ['inicio', 'funciones', 'juegos', 'precios', 'ayuda'];
-const navMarca = document.querySelector('.nav__marca');
 const tabbar = document.querySelector('.tabbar');
-
-// Mueve la raya del menú de arriba y la píldora de la barra inferior a la pantalla actual
-function moverMarcas() {
-  const vista = document.documentElement.dataset.vista;
-  tabbar.style.setProperty('--tab', ORDEN_VISTAS.indexOf(vista));
-  const activo = document.querySelector(`.nav__links a[href="#${vista}"]`);
-  if (!activo || !activo.offsetWidth) return;
-  navMarca.style.width = `${activo.offsetWidth - 24}px`;
-  navMarca.style.transform = `translateX(${activo.offsetLeft + 12}px)`;
-}
 
 function mostrarVista(vista) {
   // La pantalla nueva entra desde la derecha si avanzas y desde la izquierda si vuelves
@@ -450,13 +574,12 @@ function mostrarVista(vista) {
     if (a.getAttribute('href') === `#${vista}`) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
+  // La píldora de la barra se desliza a la pantalla actual
+  tabbar.style.setProperty('--tab', ORDEN_VISTAS.indexOf(vista));
   window.scrollTo(0, 0);
   if (vista === 'precios') centrarPro();
   alHacerScroll();
-  moverMarcas();
 }
-window.addEventListener('resize', moverMarcas);
-if (document.fonts) document.fonts.ready.then(moverMarcas);
 
 // Onda al tocar botones, como en una app
 document.addEventListener('pointerdown', (e) => {
