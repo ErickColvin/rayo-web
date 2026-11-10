@@ -562,7 +562,7 @@ if ('IntersectionObserver' in window) {
 // del navegador funcionan.
 const enlacesVista = document.querySelectorAll('.tabbar a');
 
-const ORDEN_VISTAS = ['inicio', 'funciones', 'juegos', 'precios', 'ayuda'];
+const ORDEN_VISTAS = ['inicio', 'funciones', 'juegos', 'precios', 'ayuda', 'updates'];
 const tabbar = document.querySelector('.tabbar');
 
 function mostrarVista(vista) {

@@ -25,9 +25,9 @@
     // Se elige aquí, antes de dibujar, según el #hash; enlaces viejos como
     // #descargar o #preguntas llevan a su pantalla nueva.
     window.vistaDesdeHash = function (hash) {
-      var alias = { top: 'inicio', seguridad: 'funciones', descargar: 'ayuda', instalar: 'ayuda', smartscreen: 'ayuda', preguntas: 'ayuda', comprar: 'precios' };
+      var alias = { top: 'inicio', seguridad: 'funciones', descargar: 'ayuda', instalar: 'ayuda', smartscreen: 'ayuda', preguntas: 'ayuda', comprar: 'precios', novedades: 'updates' };
       var id = alias[hash] || hash;
-      return ['inicio', 'funciones', 'juegos', 'precios', 'ayuda'].indexOf(id) >= 0 ? id : null;
+      return ['inicio', 'funciones', 'juegos', 'precios', 'ayuda', 'updates'].indexOf(id) >= 0 ? id : null;
     };
     document.documentElement.classList.add('js');
     document.documentElement.dataset.vista = vistaDesdeHash(location.hash.slice(1)) || 'inicio';
@@ -116,6 +116,7 @@
   <a href="#juegos"><svg class="i"><use href="#i-gamepad"/></svg>Juegos</a>
   <a href="#precios"><svg class="i"><use href="#i-tag"/></svg>Precios</a>
   <a href="#ayuda"><svg class="i"><use href="#i-info"/></svg>Ayuda</a>
+  <a href="#updates"><svg class="i"><use href="#i-sparkles"/></svg>Updates</a>
 </nav>
 
 <main id="contenido">
@@ -516,6 +517,60 @@
           </details>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- UPDATES: una carta por versión, la más nueva arriba.
+       Para publicar una nueva, copia un <article class="carta"> arriba de la
+       lista, cambia autor, fecha, versión y resumen, y pásale
+       «carta--nueva» (quítasela a la anterior). -->
+  <section class="vista section" id="updates" aria-label="Updates">
+    <div class="wrap">
+      <header class="section__head reveal">
+        <p class="kicker">Updates</p>
+        <h2>Lo nuevo en Rayo</h2>
+        <p>Cada versión, contada en simple. Rayo se actualiza solo y las actualizaciones vienen incluidas en todos los planes.</p>
+      </header>
+
+      <div class="updates">
+        <article class="carta carta--nueva reveal">
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true">SP</span><span class="carta__autor">Sebastian Perez</span> — <time datetime="2026-10-24">24 oct 2026</time><span class="carta__tag">Última</span></p>
+          <h3>Actualización versión <span class="carta__version">2.5.3</span></h3>
+          <p>Cambiar entre tema oscuro y claro ahora es instantáneo: ya no hay que reiniciar Rayo y te quedas en la misma página.</p>
+        </article>
+
+        <article class="carta reveal">
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true">SP</span><span class="carta__autor">Sebastian Perez</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
+          <h3>Actualización versión <span class="carta__version">2.5.2</span></h3>
+          <p>«Comprar» abre Discord directo en el canal #comprar para que abras tu ticket. Si una función es de otro plan, el aviso trae su botón para comprarlo.</p>
+        </article>
+
+        <article class="carta reveal">
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true">SP</span><span class="carta__autor">Sebastian Perez</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
+          <h3>Actualización versión <span class="carta__version">2.5.1</span></h3>
+          <p>Nombres más claros en Aceleración en apps, y la categoría siempre muestra las apps que encontró en tu PC, estés en la pestaña que estés.</p>
+        </article>
+
+        <article class="carta reveal">
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true">SP</span><span class="carta__autor">Sebastian Perez</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
+          <h3>Actualización versión <span class="carta__version">2.5.0</span></h3>
+          <p>Nueva categoría «Aceleración en apps»: apaga la aceleración por hardware de Discord, Chrome, Edge, Brave, Firefox, Opera GX y Spotify para dejarle la GPU a tu juego. Todo se puede deshacer.</p>
+        </article>
+
+        <article class="carta reveal">
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true">SP</span><span class="carta__autor">Sebastian Perez</span> — <time datetime="2026-10-23">23 oct 2026</time></p>
+          <h3>Actualización versión <span class="carta__version">2.4.0</span></h3>
+          <p>Configs muestra solo todos los juegos instalados (Steam, Epic, Riot, GOG, Ubisoft, EA, Battle.net…). Los que no tienen config propia reciben una automática. Nuevo filtro «Instalados».</p>
+        </article>
+
+        <article class="carta reveal">
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true">SP</span><span class="carta__autor">Sebastian Perez</span> — <time datetime="2026-10-22">22 oct 2026</time></p>
+          <h3>Actualización versión <span class="carta__version">2.3.1</span></h3>
+          <p>El overlay en tamaño Mínimo y Compacto ahora es una columna angosta, con los FPS arriba, para tapar menos del juego.</p>
+        </article>
+      </div>
+
+      <a class="siguiente" href="https://github.com/sebaile/rayo-optimizador/releases" target="_blank" rel="noopener">Ver todas las versiones<svg class="i"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
