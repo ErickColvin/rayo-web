@@ -5,6 +5,7 @@ const RAYO = {
   version: 'v2.5.3',                // se muestra si GitHub no responde
   discord: 'https://discord.gg/vS4KV8m5su',
   tiktok: 'https://www.tiktok.com/@rayopti.fps',
+  instagram: 'https://www.instagram.com/rayofps.cl/',
   correo: '2002sebastian.perez@gmail.com',
   terminos: 'https://sebaile.github.io/rayo-optimizador/terminos.html',
   catalogo: 'https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md',
