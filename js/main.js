@@ -447,7 +447,7 @@ document.querySelectorAll('.vista h1, .vista .section__head h2').forEach((titulo
   separar(titulo);
 });
 
-// Portada: chispas que suben y un rayo que cae cada tantos segundos
+// Fondo de todas las pantallas: chispas que suben y un rayo que cae cada tantos segundos
 const cielo = document.querySelector('.cielo');
 if (cielo) {
   const azar = (min, max) => min + Math.random() * (max - min);
@@ -519,10 +519,10 @@ if (cielo) {
     );
   };
 
-  // Solo cae con la portada a la vista y la pestaña abierta
+  // Solo cae con la pestaña abierta
   const programarRayo = (espera) => {
     setTimeout(() => {
-      if (!document.hidden && document.documentElement.dataset.vista === 'inicio') caerRayo();
+      if (!document.hidden) caerRayo();
       programarRayo(azar(5500, 9500));
     }, espera);
   };

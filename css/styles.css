@@ -449,23 +449,28 @@ main { overflow-x: clip; }
   padding: calc(var(--nav-h) + 56px) 0 80px;
   isolation: isolate;
 }
-.hero::before {
+/* Fondo de todas las pantallas: resplandor naranja, cuadrícula, chispas y
+   rayos. Queda fijo detrás del contenido mientras cambias de pantalla. */
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.fondo::before {
   content: '';
   position: absolute;
-  inset: 0 0 auto;
-  height: 900px;
-  z-index: -1;
+  inset: 0;
   background:
     radial-gradient(60% 50% at 50% 0%, rgba(249, 115, 22, .16), transparent 70%),
     radial-gradient(40% 40% at 85% 20%, rgba(59, 130, 246, .08), transparent 70%);
   animation: aurora 16s ease-in-out infinite alternate;
 }
-.hero::after {
+.fondo::after {
   content: '';
   position: absolute;
-  inset: 0 0 auto;
-  height: 900px;
-  z-index: -1;
+  inset: 0;
   background-image:
     linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
@@ -477,13 +482,11 @@ main { overflow-x: clip; }
 /* Chispas que suben y un rayo que cae cada tantos segundos (js/main.js los crea) */
 .cielo {
   position: absolute;
-  inset: 0 0 auto;
-  height: 900px;
-  z-index: -1;
+  inset: 0;
+  z-index: 1;
   overflow: hidden;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(#000 55%, transparent);
-  mask-image: linear-gradient(#000 55%, transparent);
+  -webkit-mask-image: linear-gradient(#000 60%, transparent);
+  mask-image: linear-gradient(#000 60%, transparent);
 }
 .chispa {
   position: absolute;
@@ -1570,7 +1573,7 @@ form.pop__paso > .btn,
   html { scroll-behavior: auto; }
   .float { animation: flotar-in .7s 1.1s backwards; }
   .float--right { animation-delay: 1.35s; }
-  .hero::before { animation: none; }
+  .fondo::before { animation: none; }
   .chispa { animation-duration: calc(var(--d) * 1.6); }
   .cielo__flash { display: none; }
 }

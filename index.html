@@ -53,6 +53,9 @@
 </head>
 <body>
 
+<!-- Fondo de todas las pantallas: resplandor, chispas y rayos (js/main.js crea chispas y rayos) -->
+<div class="fondo" aria-hidden="true"><div class="cielo"></div></div>
+
 <!-- Iconos (estilo Lucide, como en la app) -->
 <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
   <symbol id="i-zap-fill" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
@@ -130,8 +133,6 @@
 
   <!-- INICIO -->
   <section class="vista hero" id="inicio" aria-label="Inicio">
-    <!-- Chispas y rayos del fondo: js/main.js los crea -->
-    <div class="cielo" aria-hidden="true"></div>
     <div class="wrap hero__copy">
       <p class="eyebrow"><span class="eyebrow__dot"></span>Optimizador de FPS para Windows · <span data-version>v2.5.3</span></p>
       <h1>Saca los FPS que <span class="grad">tu PC ya tiene</span>.</h1>
