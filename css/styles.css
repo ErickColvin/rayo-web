@@ -367,6 +367,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   color: var(--on-orange);
   font: 800 11px/1 var(--display);
 }
+.carta__avatar .i { width: 15px; height: 15px; }
 .carta__autor { color: var(--text); font-weight: 600; }
 .carta__tag {
   margin-left: auto;
