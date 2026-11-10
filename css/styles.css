@@ -381,7 +381,6 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 .carta h3 { margin-top: 12px; font-size: 1.15rem; }
 .carta__version { color: var(--orange-2); }
 .carta > p:last-child { margin-top: 6px; color: var(--muted); }
-#updates .siguiente { margin-top: 28px; }
 
 @keyframes linea-baja { from { transform: scaleY(0); } }
 @keyframes latido {
