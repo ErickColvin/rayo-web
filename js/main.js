@@ -302,9 +302,7 @@ const nav = document.querySelector('.nav');
 
 // Al hacer scroll: fondo de la barra, barra de progreso y la captura de la
 // portada que se endereza (de 7° a 0° en los primeros 500 px)
-const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const progreso = document.querySelector('.progreso');
-const capturaHero = document.querySelector('.window--hero');
 let scrollPendiente = false;
 
 function alHacerScroll() {
@@ -313,7 +311,6 @@ function alHacerScroll() {
   const total = document.documentElement.scrollHeight - window.innerHeight;
   nav.classList.toggle('is-scrolled', y > 8);
   progreso.style.transform = `scaleX(${total > 0 ? Math.min(1, y / total) : 0})`;
-  if (!sinMovimiento) capturaHero.style.setProperty('--tilt', `${(7 * Math.max(0, 1 - y / 500)).toFixed(2)}deg`);
 }
 alHacerScroll();
 window.addEventListener('scroll', () => {
@@ -522,11 +519,29 @@ if (cielo) {
   // Solo cae con la pestaña abierta
   const programarRayo = (espera) => {
     setTimeout(() => {
-      if (!document.hidden) caerRayo();
+      if (!document.hidden && !document.documentElement.classList.contains('fondo-pausado')) caerRayo();
       programarRayo(azar(5500, 9500));
     }, espera);
   };
   programarRayo(1600);
+}
+
+// Botón del pie para pausar el fondo animado; la elección se recuerda
+const pausa = document.querySelector('.pausa');
+if (pausa) {
+  const ponerPausa = (pausado) => {
+    document.documentElement.classList.toggle('fondo-pausado', pausado);
+    pausa.setAttribute('aria-pressed', String(pausado));
+    pausa.textContent = pausado ? 'Reanudar fondo animado' : 'Pausar fondo animado';
+  };
+  let guardado = false;
+  try { guardado = localStorage.getItem('rayo-fondo') === 'pausado'; } catch (e) { /* sin almacenamiento */ }
+  ponerPausa(guardado);
+  pausa.addEventListener('click', () => {
+    const pausado = !document.documentElement.classList.contains('fondo-pausado');
+    ponerPausa(pausado);
+    try { localStorage.setItem('rayo-fondo', pausado ? 'pausado' : 'activo'); } catch (e) { /* sin almacenamiento */ }
+  });
 }
 
 // Cifras que cuentan desde 0 cuando aparecen
@@ -570,6 +585,9 @@ function mostrarVista(vista) {
   // La pantalla nueva entra desde la derecha si avanzas y desde la izquierda si vuelves
   const paso = ORDEN_VISTAS.indexOf(vista) - ORDEN_VISTAS.indexOf(document.documentElement.dataset.vista);
   if (paso) document.documentElement.dataset.dir = paso > 0 ? 'adelante' : 'atras';
+  // La pantalla que dejas ya no repite su entrada (títulos y bloques) al volver
+  const anterior = document.getElementById(document.documentElement.dataset.vista);
+  if (anterior && anterior.id !== vista) anterior.classList.add('ya-vista');
   document.documentElement.dataset.vista = vista;
   enlacesVista.forEach((a) => {
     if (a.getAttribute('href') === `#${vista}`) a.setAttribute('aria-current', 'page');
