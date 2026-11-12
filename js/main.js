@@ -100,12 +100,13 @@ listaPlanes.forEach(() => puntos.append(document.createElement('span')));
 planes.after(puntos);
 
 const marcarPunto = (plan) => [...puntos.children].forEach((p, i) => p.classList.toggle('is-activo', listaPlanes[i] === plan));
-// Se llama al abrir la pantalla Precios: oculta, el carrusel no tiene medidas
+// Se llama al abrir la pantalla Precios: oculta, el carrusel no tiene medidas.
+// En el celular parte en Elite, el plan destacado, con Pro asomando al lado.
 function centrarPro() {
   if (planes.scrollWidth <= planes.clientWidth) return;
-  const pro = listaPlanes[1];
-  planes.scrollLeft = pro.offsetLeft - (planes.clientWidth - pro.offsetWidth) / 2;
-  marcarPunto(pro);
+  const elite = planes.querySelector('.plan--featured') || listaPlanes[1];
+  planes.scrollLeft = elite.offsetLeft - (planes.clientWidth - elite.offsetWidth) / 2;
+  marcarPunto(elite);
 }
 if ('IntersectionObserver' in window) {
   const visto = new IntersectionObserver((entradas) => {
@@ -121,6 +122,11 @@ const errorForm = pop.querySelector('.pop__error');
 const botonEnviar = formulario.querySelector('[type="submit"]');
 const pintar = (clave, texto) => pop.querySelectorAll(`[data-pop="${clave}"]`).forEach((el) => { el.textContent = texto; });
 let planElegido = 'pro';
+// Lo que incluye cada plan, repetido en el popup al momento de pagar
+const INCLUYE = {
+  pro: 'Incluye las 87 optimizaciones, perfiles, configs para 18 juegos, debloat y benchmark.',
+  elite: 'Incluye todo lo de Pro, más overlay en pantalla, Modo Juego automático, perfiles propios y mantenimiento.',
+};
 
 // Contra spam, la planilla exige un permiso firmado de un solo uso, pedido al
 // abrir el formulario, y que pasen al menos 4 s antes de enviar el pedido
@@ -160,6 +166,7 @@ document.querySelectorAll('[data-comprar]').forEach((boton) => boton.addEventLis
   pintar('plan', plan.querySelector('.plan__name').textContent);
   pintar('precio', plan.querySelector('.plan__amount').textContent);
   pintar('unidad', plan.querySelector('.plan__unit').textContent);
+  pintar('incluye', INCLUYE[planElegido] || '');
 
   // Sin Mercado Pago (en USD o sin link) se va directo a la compra por Discord
   const conMercadoPago = Boolean(linkMercadoPago(planElegido));
@@ -233,6 +240,18 @@ formulario.addEventListener('submit', async (e) => {
 // en celular o Mac ofrece enviarse el enlace para abrirlo en el PC
 const plataforma = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.userAgent;
 const esWindows = /windows/i.test(plataforma);
+
+// Fuera de Windows (casi siempre un celular) lo que se puede hacer es comprar:
+// «Ver planes» pasa a ser el botón principal de la portada
+if (!esWindows) {
+  const descargaHero = document.querySelector('.hero__ctas [data-descarga]');
+  const planesHero = document.querySelector('.hero__ctas a[href="#precios"]');
+  if (descargaHero && planesHero) {
+    descargaHero.classList.replace('btn--primary', 'btn--ghost');
+    planesHero.classList.replace('btn--ghost', 'btn--primary');
+    planesHero.after(descargaHero);
+  }
+}
 const alPc = document.querySelector('.al-pc');
 const enlaceWeb = `${location.origin}${location.pathname}#ayuda`;
 const estado = alPc.querySelector('.al-pc__estado');
