@@ -177,9 +177,9 @@ a { text-underline-offset: 3px; }
 .btn--discord {
   background: #5865f2;
   color: #fff;
-  box-shadow: 0 10px 28px -12px rgba(88, 101, 242, .9), inset 0 1px 0 rgba(255, 255, 255, .2);
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, .7), inset 0 1px 0 rgba(255, 255, 255, .2);
 }
-.btn--discord:hover { background: #4f5ce0; box-shadow: 0 12px 32px -10px rgba(88, 101, 242, 1), inset 0 1px 0 rgba(255, 255, 255, .2); }
+.btn--discord:hover { background: #4f5ce0; }
 .btn--discord .i { width: 18px; height: 18px; }
 @media (hover: hover) and (pointer: fine) {
   .btn--discord:hover .i { animation: saludo .6s var(--ease-out); }
@@ -232,7 +232,7 @@ a { text-underline-offset: 3px; }
   border-radius: 9px;
   background: var(--grad);
   color: #fff;
-  box-shadow: 0 6px 20px -6px rgba(249, 115, 22, .8);
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, .6);
 }
 .brand__mark .i { width: 18px; height: 18px; }
 .brand:hover .brand__mark .i { animation: chispa .5s ease; }
@@ -275,7 +275,6 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 .tabbar a:hover { color: var(--text); }
 .tabbar a[aria-current='page'] { color: var(--orange-2); }
 .tabbar a[aria-current='page'] .i {
-  filter: drop-shadow(0 0 8px rgba(249, 115, 22, .5));
   animation: saltito .35s var(--ease-out);
 }
 /* Píldora que se desliza detrás de la pantalla actual (--tab lo pone js/main.js) */
@@ -1101,7 +1100,7 @@ h2 {
   background:
     radial-gradient(90% 60% at 50% 0%, rgba(249, 115, 22, .12), transparent 70%),
     var(--surface);
-  box-shadow: 0 30px 80px -40px rgba(249, 115, 22, .5);
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, .8);
 }
 .dl__top { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
 .dl__top strong { display: block; font: 700 1.25rem/1.2 var(--display); }
@@ -1232,17 +1231,17 @@ h2 {
   transition: transform .3s var(--ease-out);
 }
 .red__logo .i { width: 24px; height: 24px; }
-.red--discord .red__logo { background: #5865f2; box-shadow: 0 8px 22px -8px rgba(88, 101, 242, .8); }
+.red--discord .red__logo { background: #5865f2; }
 .red--tiktok .red__logo { background: #000; box-shadow: -2px -2px 0 rgba(37, 244, 238, .55), 2px 2px 0 rgba(254, 44, 85, .55); }
-.red--instagram .red__logo { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); box-shadow: 0 8px 22px -8px rgba(214, 36, 159, .8); }
+.red--instagram .red__logo { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
 .red__texto { display: grid; min-width: 0; }
 .red__texto strong { font-size: 15.5px; }
 .red__texto span { color: var(--muted); font-size: 13.5px; }
 .red__flecha { width: 18px; height: 18px; margin-left: auto; color: var(--dim); transition: transform .2s ease, color .2s ease; }
 .red:hover { transform: translateY(-2px); }
-.red--discord:hover { border-color: rgba(88, 101, 242, .6); box-shadow: 0 14px 34px -18px rgba(88, 101, 242, .9); }
-.red--tiktok:hover { border-color: rgba(254, 44, 85, .5); box-shadow: 0 14px 34px -18px rgba(254, 44, 85, .7); }
-.red--instagram:hover { border-color: rgba(214, 36, 159, .55); box-shadow: 0 14px 34px -18px rgba(214, 36, 159, .8); }
+.red--discord:hover { border-color: rgba(88, 101, 242, .6); }
+.red--tiktok:hover { border-color: rgba(254, 44, 85, .5); }
+.red--instagram:hover { border-color: rgba(214, 36, 159, .55); }
 .red:hover .red__logo { transform: scale(1.06); }
 .red:hover .red__flecha { color: var(--text); transform: translateX(3px); }
 @media (max-width: 640px) {
@@ -1461,7 +1460,8 @@ form.pop__paso > .btn,
 }
 .al-pc::backdrop { background: rgba(3, 6, 12, .82); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .al-pc__body { padding: 28px 24px 24px; }
-.al-pc h2 { margin-top: 18px; font-size: 1.4rem; }
+.al-pc__titulo { display: flex; align-items: center; gap: 12px; }
+.al-pc h2 { font-size: 1.4rem; }
 .al-pc__body > p { margin-top: 10px; color: var(--muted); font-size: 15px; }
 .al-pc__acciones { display: grid; gap: 10px; margin-top: 22px; }
 .al-pc__estado:not(:empty) { margin-top: 12px; color: #4ade80; font-size: 14px; overflow-wrap: anywhere; }
