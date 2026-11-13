@@ -744,7 +744,7 @@ h2 {
 
 .tour {
   display: grid;
-  grid-template-columns: 228px 1fr;
+  grid-template-columns: 200px 1fr;
   gap: 28px;
   align-items: start;
 }
@@ -777,19 +777,7 @@ h2 {
   transition: color .15s ease, background-color .15s ease;
 }
 .tour__tab .i { width: 18px; height: 18px; }
-/* Plan de cada pestaña y grupos (Revisa / Optimiza / Juega / Mantiene) */
-.tour__tab { white-space: nowrap; }
-.tour__plan {
-  margin-left: auto;
-  padding: 1px 7px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-.tour__plan--gratis { background: rgba(34, 197, 94, .12); color: #4ade80; }
-.tour__plan--pro { background: rgba(249, 115, 22, .14); color: var(--orange-2); }
-.tour__plan--elite { background: var(--grad); color: var(--on-orange); }
+/* Grupos de pestañas (Revisa / Optimiza / Juega / Mantiene) */
 .tour__tab[data-grupo] { margin-top: 26px; }
 .tour__tab[data-grupo]:first-child { margin-top: 20px; }
 .tour__tab[data-grupo]::after {
@@ -943,7 +931,8 @@ h2 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-top: 40px;
+  max-width: 820px;
+  margin: 40px auto 0;
 }
 .garantias li {
   display: inline-flex;
@@ -1316,6 +1305,7 @@ h2 {
 
 .pop__paso { animation: subir .35s cubic-bezier(.2, .7, .2, 1); }
 .pop__paso h3 { font-size: 1.15rem; }
+.pop__etapa { margin-bottom: 8px; color: var(--orange-2); font-size: 13px; font-weight: 600; }
 .pop__lead { margin-bottom: 14px; color: var(--muted); font-size: 15px; }
 .pop__paso h3 + .pop__lead { margin-top: 6px; }
 
@@ -1649,7 +1639,6 @@ form.pop__paso > .btn,
   .tour__tab[aria-selected='true']::before { display: none; }
   .tour__tab[data-grupo], .tour__tab[data-grupo]:first-child { margin-top: 0; }
   .tour__tab[data-grupo]::after { display: none; }
-  .tour__plan { margin-left: 4px; }
 }
 
 @media (max-width: 960px) {
