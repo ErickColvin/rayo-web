@@ -102,7 +102,7 @@ let pedidoGuardado = ''; // plan y datos del último pedido guardado: evita fila
 try { pedidoGuardado = sessionStorage.getItem('rayo-pedido') || ''; } catch (e) { /* sin almacenamiento */ }
 // Lo que incluye cada plan, repetido en el popup al momento de pagar
 const INCLUYE = {
-  pro: 'Incluye las 87 optimizaciones, perfiles, configs para 18 juegos, quitar apps de más y medir tus FPS.',
+  pro: 'Incluye las 87 optimizaciones, perfiles, configs para 31 juegos, quitar apps de más y medir tus FPS.',
   elite: 'Incluye todo lo de Pro, más overlay en pantalla, Modo Juego automático, perfiles propios y mantenimiento.',
 };
 

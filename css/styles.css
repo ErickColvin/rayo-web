@@ -892,6 +892,12 @@ h2 {
   letter-spacing: -.02em;
 }
 .game__mono .i { width: 16px; height: 16px; }
+/* Juegos agrupados por tipo, con su cantidad al lado del título */
+.juegos__grupo + .juegos__grupo { margin-top: 28px; }
+.juegos__titulo { margin-bottom: 12px; font-size: 1rem; color: var(--muted); text-align: center; }
+.juegos__titulo span { margin-left: 6px; color: var(--orange-2); font-variant-numeric: tabular-nums; }
+.juegos__otros { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 28px; color: var(--muted); }
+.juegos__otros .game__mono { --c: var(--orange-2); }
 .game--more { border-style: dashed; background: transparent; color: var(--muted); }
 .game--more .game__mono { --c: var(--orange-2); }
 

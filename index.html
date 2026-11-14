@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rayo · Optimizador de FPS para Windows</title>
-  <meta name="description" content="Rayo escanea tu PC, encuentra lo que frena tus juegos y lo corrige con un clic. 87 optimizaciones, debloat de 34 apps, configs para 18 juegos y benchmark de FPS. Todo reversible. Empieza gratis.">
+  <meta name="description" content="Rayo escanea tu PC, encuentra lo que frena tus juegos y lo corrige con un clic. 87 optimizaciones, debloat de 34 apps, configs para 31 juegos y benchmark de FPS. Todo reversible. Empieza gratis.">
   <meta name="theme-color" content="#060a13">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
@@ -174,7 +174,7 @@
       <ul class="stats__grid" aria-label="Rayo en cifras">
         <li><strong data-count="87">87</strong><span>optimizaciones explicadas</span></li>
         <li><strong data-count="34">34</strong><span>apps que puedes quitar</span></li>
-        <li><strong data-count="18">18</strong><span>juegos con config propia</span></li>
+        <li><strong data-count="31">31</strong><span>juegos con config propia</span></li>
         <li><strong>1 clic</strong><span>para deshacer todo</span></li>
       </ul>
     </div>
@@ -389,30 +389,61 @@
     <div class="wrap">
       <header class="section__head reveal">
         <h2>Hecho para los juegos que juegas</h2>
-        <p>Config propia para 18 juegos y una automática para cualquier otro. Los encuentra en Steam, Epic, Riot, EA, Battle.net, Ubisoft, GOG y Rockstar.</p>
+        <p>Config propia para 31 juegos y una automática para cualquier otro. Los encuentra en Steam, Epic, Riot, EA, Battle.net, Ubisoft, GOG y Rockstar.</p>
       </header>
 
-      <ul class="games reveal">
-        <li class="game"><span class="game__mono" style="--c:#38bdf8">FN</span>Fortnite</li>
-        <li class="game"><span class="game__mono" style="--c:#ef4444">VA</span>Valorant</li>
-        <li class="game"><span class="game__mono" style="--c:#f59e0b">CS</span>Counter-Strike 2</li>
-        <li class="game"><span class="game__mono" style="--c:#22c55e">WZ</span>Call of Duty / Warzone</li>
-        <li class="game"><span class="game__mono" style="--c:#f87171">AP</span>Apex Legends</li>
-        <li class="game"><span class="game__mono" style="--c:#3b82f6">R6</span>Rainbow Six Siege</li>
-        <li class="game"><span class="game__mono" style="--c:#fbbf24">OW</span>Overwatch 2</li>
-        <li class="game"><span class="game__mono" style="--c:#dc2626">MR</span>Marvel Rivals</li>
-        <li class="game"><span class="game__mono" style="--c:#d97706">PG</span>PUBG</li>
-        <li class="game"><span class="game__mono" style="--c:#fb923c">FF</span>Free Fire (emulador)</li>
-        <li class="game"><span class="game__mono" style="--c:#60a5fa">LoL</span>League of Legends</li>
-        <li class="game"><span class="game__mono" style="--c:#b91c1c">D2</span>Dota 2</li>
-        <li class="game"><span class="game__mono" style="--c:#4ade80">MC</span>Minecraft</li>
-        <li class="game"><span class="game__mono" style="--c:#38bdf8">RB</span>Roblox</li>
-        <li class="game"><span class="game__mono" style="--c:#16a34a">GTA</span>GTA V</li>
-        <li class="game"><span class="game__mono" style="--c:#10b981">FC</span>EA Sports FC</li>
-        <li class="game"><span class="game__mono" style="--c:#0ea5e9">RL</span>Rocket League</li>
-        <li class="game"><span class="game__mono" style="--c:#f59e0b">TF</span>The Finals<em class="game__new">Nuevo</em></li>
-        <li class="game game--more"><span class="game__mono"><svg class="i"><use href="#i-sparkles"/></svg></span>Y cualquier otro</li>
-      </ul>
+      <div class="juegos__grupo reveal">
+        <h3 class="juegos__titulo">Shooters <span>9</span></h3>
+        <ul class="games">
+          <li class="game"><span class="game__mono" style="--c:#ef4444">VA</span>Valorant</li>
+          <li class="game"><span class="game__mono" style="--c:#f59e0b">CS</span>Counter-Strike 2</li>
+          <li class="game"><span class="game__mono" style="--c:#64748b">R6</span>Rainbow Six Siege</li>
+          <li class="game"><span class="game__mono" style="--c:#f97316">OW</span>Overwatch 2</li>
+          <li class="game"><span class="game__mono" style="--c:#dc2626">MR</span>Marvel Rivals</li>
+          <li class="game"><span class="game__mono" style="--c:#a3e635">DL</span>Deadlock</li>
+          <li class="game"><span class="game__mono" style="--c:#94a3b8">EFT</span>Escape from Tarkov</li>
+          <li class="game"><span class="game__mono" style="--c:#38bdf8">D2</span>Destiny 2</li>
+          <li class="game"><span class="game__mono" style="--c:#facc15">HD</span>Helldivers 2</li>
+        </ul>
+      </div>
+      <div class="juegos__grupo reveal">
+        <h3 class="juegos__titulo">Battle royale <span>5</span></h3>
+        <ul class="games">
+          <li class="game"><span class="game__mono" style="--c:#38bdf8">FN</span>Fortnite</li>
+          <li class="game"><span class="game__mono" style="--c:#22c55e">WZ</span>Call of Duty / Warzone</li>
+          <li class="game"><span class="game__mono" style="--c:#ef4444">AP</span>Apex Legends</li>
+          <li class="game"><span class="game__mono" style="--c:#f59e0b">PG</span>PUBG: Battlegrounds</li>
+          <li class="game"><span class="game__mono" style="--c:#f97316">FF</span>Free Fire (emulador)</li>
+        </ul>
+      </div>
+      <div class="juegos__grupo reveal">
+        <h3 class="juegos__titulo">MOBA <span>2</span></h3>
+        <ul class="games">
+          <li class="game"><span class="game__mono" style="--c:#eab308">LoL</span>League of Legends</li>
+          <li class="game"><span class="game__mono" style="--c:#dc2626">D2</span>Dota 2</li>
+        </ul>
+      </div>
+      <div class="juegos__grupo reveal">
+        <h3 class="juegos__titulo">Populares <span>15</span></h3>
+        <ul class="games">
+          <li class="game"><span class="game__mono" style="--c:#22c55e">MC</span>Minecraft</li>
+          <li class="game"><span class="game__mono" style="--c:#e2e8f0">RB</span>Roblox</li>
+          <li class="game"><span class="game__mono" style="--c:#16a34a">GTA</span>GTA V</li>
+          <li class="game"><span class="game__mono" style="--c:#10b981">FC</span>EA Sports FC</li>
+          <li class="game"><span class="game__mono" style="--c:#0ea5e9">RL</span>Rocket League</li>
+          <li class="game"><span class="game__mono" style="--c:#ea580c">RS</span>Rust</li>
+          <li class="game"><span class="game__mono" style="--c:#facc15">CP</span>Cyberpunk 2077</li>
+          <li class="game"><span class="game__mono" style="--c:#d4a017">ER</span>Elden Ring</li>
+          <li class="game"><span class="game__mono" style="--c:#b91c1c">RDR</span>Red Dead Redemption 2</li>
+          <li class="game"><span class="game__mono" style="--c:#f472b6">FG</span>Fall Guys</li>
+          <li class="game"><span class="game__mono" style="--c:#60a5fa">GI</span>Genshin Impact</li>
+          <li class="game"><span class="game__mono" style="--c:#f59e0b">LC</span>Lethal Company</li>
+          <li class="game"><span class="game__mono" style="--c:#ef4444">DBD</span>Dead by Daylight</li>
+          <li class="game"><span class="game__mono" style="--c:#14b8a6">SoT</span>Sea of Thieves</li>
+          <li class="game"><span class="game__mono" style="--c:#fb923c">BG3</span>Baldur's Gate 3</li>
+        </ul>
+      </div>
+      <p class="juegos__otros reveal"><span class="game__mono"><svg class="i"><use href="#i-sparkles"/></svg></span>¿Juegas otro? Rayo le aplica una config automática.</p>
       <p class="games__ask reveal">¿Falta tu juego? Pídelo en <strong>#pedir-juegos</strong> de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y aparece en Rayo sin actualizar.</p>
       <a class="btn btn--primary btn--lg cta-centro" href="#precios">Ver planes · Pro a <span data-clp="$3.990" data-usd="US$5">$3.990</span><svg class="i"><use href="#i-arrow"/></svg></a>
     </div>
@@ -455,7 +486,7 @@
             <li><strong>Todo lo de Gratis, y además:</strong></li>
             <li>Las 87 optimizaciones (FPS, latencia, red, NVIDIA)</li>
             <li>Perfiles Competitivo, Streaming y Portátil</li>
-            <li>Configs para 18 juegos y ajustes de archivo</li>
+            <li>Configs para 31 juegos y ajustes de archivo</li>
             <li>Quita 34 apps que no usas y el rastreo de Windows</li>
             <li>Benchmark, DNS más rápido y menos procesos</li>
           </ul>
