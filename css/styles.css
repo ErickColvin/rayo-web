@@ -697,7 +697,10 @@ main { overflow-x: clip; }
   margin-top: 96px;
 }
 .quienes h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
-.quienes__texto { max-width: 46ch; margin-top: 14px; color: var(--muted); }
+.quienes__texto { max-width: 52ch; margin-top: 14px; color: var(--muted); }
+.quienes__texto p + p { margin-top: 12px; }
+/* La idea central de Rayo, destacada con el naranja de la marca */
+.quienes__clave { padding: 14px 16px; border: 1px solid rgba(249, 115, 22, .3); border-radius: var(--radius); background: rgba(249, 115, 22, .06); color: var(--text); }
 .quienes .siguiente { margin: 22px 0 0; }
 .quienes__lista { margin: 0; padding: 0; list-style: none; }
 .quienes__lista li { display: flex; align-items: center; gap: 14px; padding: 16px 0; }
