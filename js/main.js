@@ -89,31 +89,7 @@ document.querySelectorAll('[data-moneda]').forEach((b) => b.addEventListener('cl
   guardar('rayo-moneda', b.dataset.moneda);
 }));
 
-// En el celular los planes se deslizan de lado: empiezan centrados en Pro y
-// unos puntos indican cuál se está viendo
-const planes = document.querySelector('.plans');
-const listaPlanes = [...planes.children];
-const puntos = document.createElement('div');
-puntos.className = 'plans__puntos';
-puntos.setAttribute('aria-hidden', 'true');
-listaPlanes.forEach(() => puntos.append(document.createElement('span')));
-planes.after(puntos);
 
-const marcarPunto = (plan) => [...puntos.children].forEach((p, i) => p.classList.toggle('is-activo', listaPlanes[i] === plan));
-// Se llama al abrir la pantalla Precios: oculta, el carrusel no tiene medidas.
-// En el celular parte en Elite, el plan destacado, con Pro asomando al lado.
-function centrarPro() {
-  if (planes.scrollWidth <= planes.clientWidth) return;
-  const elite = planes.querySelector('.plan--featured') || listaPlanes[1];
-  planes.scrollLeft = elite.offsetLeft - (planes.clientWidth - elite.offsetWidth) / 2;
-  marcarPunto(elite);
-}
-if ('IntersectionObserver' in window) {
-  const visto = new IntersectionObserver((entradas) => {
-    entradas.forEach((e) => { if (e.isIntersecting) marcarPunto(e.target); });
-  }, { root: planes, threshold: 0.6 });
-  listaPlanes.forEach((plan) => visto.observe(plan));
-}
 
 // Popup de compra. Sin JavaScript, «Comprar» sigue llevando al Discord.
 const pop = document.querySelector('.pop');
@@ -122,9 +98,11 @@ const errorForm = pop.querySelector('.pop__error');
 const botonEnviar = formulario.querySelector('[type="submit"]');
 const pintar = (clave, texto) => pop.querySelectorAll(`[data-pop="${clave}"]`).forEach((el) => { el.textContent = texto; });
 let planElegido = 'pro';
+let pedidoGuardado = ''; // plan y datos del último pedido guardado: evita filas repetidas
+try { pedidoGuardado = sessionStorage.getItem('rayo-pedido') || ''; } catch (e) { /* sin almacenamiento */ }
 // Lo que incluye cada plan, repetido en el popup al momento de pagar
 const INCLUYE = {
-  pro: 'Incluye las 87 optimizaciones, perfiles, configs para 18 juegos, debloat y benchmark.',
+  pro: 'Incluye las 87 optimizaciones, perfiles, configs para 18 juegos, quitar apps de más y medir tus FPS.',
   elite: 'Incluye todo lo de Pro, más overlay en pantalla, Modo Juego automático, perfiles propios y mantenimiento.',
 };
 
@@ -153,6 +131,7 @@ async function permisoListo() {
 }
 
 function irA(paso) {
+  pop.dataset.paso = paso;
   pop.querySelectorAll('[data-paso]').forEach((p) => { p.hidden = p.dataset.paso !== paso; });
   const primero = pop.querySelector(`[data-paso="${paso}"]`).querySelector('input, button:not(.pop__volver), a');
   if (primero) primero.focus({ preventScroll: true });
@@ -172,9 +151,21 @@ document.querySelectorAll('[data-comprar]').forEach((boton) => boton.addEventLis
   const conMercadoPago = Boolean(linkMercadoPago(planElegido));
   pop.querySelector('[data-ir="datos"]').hidden = !conMercadoPago;
   pop.querySelector('[data-paso="discord"] .pop__volver').hidden = !conMercadoPago;
+  pintar('etapaDiscord', conMercadoPago ? 'Paso 2 de 2 · Paga por Discord' : 'Paga por Discord');
   errorForm.hidden = true;
+  [formulario.elements.nombre, formulario.elements.correo, formulario.elements.numero].forEach(limpiarError);
+  if (pedidoGuardado.startsWith(`${planElegido}|`)) {
+    const [, nombre, correo, numero] = pedidoGuardado.split('|');
+    Object.assign(formulario.elements.nombre, { value: nombre });
+    Object.assign(formulario.elements.correo, { value: correo });
+    Object.assign(formulario.elements.numero, { value: numero });
+    pintar('nombre', nombre.split(' ')[0]);
+    pintar('correo', correo);
+    pop.querySelector('[data-pop="pagar"]').href = linkMercadoPago(planElegido);
+  }
   pop.showModal();
-  irA(conMercadoPago ? 'elegir' : 'discord');
+  // Si ya dejó sus datos para este plan, vuelve directo al pago
+  irA(!conMercadoPago ? 'discord' : pedidoGuardado.startsWith(`${planElegido}|`) ? 'pagar' : 'elegir');
 }));
 
 pop.addEventListener('click', (e) => {
@@ -183,31 +174,53 @@ pop.addEventListener('click', (e) => {
   else if (e.target === pop || e.target.closest('[data-cerrar]')) pop.close();
 });
 
+// Cada error va bajo su campo; se revisan los tres de una vez
 function marcarError(campo, mensaje) {
-  errorForm.textContent = mensaje;
-  errorForm.hidden = false;
+  const aviso = document.getElementById(`err-${campo.name}`);
+  aviso.textContent = mensaje;
+  aviso.hidden = false;
   campo.setAttribute('aria-invalid', 'true');
-  campo.focus();
+}
+function limpiarError(campo) {
+  campo.removeAttribute('aria-invalid');
+  const aviso = document.getElementById(`err-${campo.name}`);
+  if (aviso) aviso.hidden = true;
 }
 
-formulario.addEventListener('input', (e) => e.target.removeAttribute('aria-invalid'));
+const REGLAS = {
+  nombre: [(v) => v.length >= 2, 'Escribe tu nombre y apellido.'],
+  correo: [(v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v), 'Revisa tu correo: debe ser como nombre@correo.com.'],
+  numero: [(v) => v.replace(/\D/g, '').length >= 8, 'Escribe tu número con código de área, por ejemplo +56 9 1234 5678.'],
+};
+function revisar(campo) {
+  const [vale, mensaje] = REGLAS[campo.name];
+  if (vale(campo.value.trim())) limpiarError(campo);
+  else marcarError(campo, mensaje);
+}
+
+formulario.addEventListener('input', (e) => limpiarError(e.target));
+// Al salir de un campo ya escrito se avisa de inmediato, sin esperar a enviar
+formulario.addEventListener('focusout', (e) => { if (REGLAS[e.target.name] && e.target.value.trim()) revisar(e.target); });
 
 formulario.addEventListener('submit', async (e) => {
   e.preventDefault();
   errorForm.hidden = true;
-  formulario.querySelectorAll('[aria-invalid]').forEach((c) => c.removeAttribute('aria-invalid'));
   const campos = formulario.elements;
   const nombre = campos.nombre.value.trim();
   const correo = campos.correo.value.trim();
   const numero = campos.numero.value.trim();
-  if (nombre.length < 2) return marcarError(campos.nombre, 'Escribe tu nombre y apellido.');
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(correo)) return marcarError(campos.correo, 'Revisa tu correo: debe ser como nombre@correo.com.');
-  if (numero.replace(/\D/g, '').length < 8) return marcarError(campos.numero, 'Escribe tu número con código de área, por ejemplo +56 9 1234 5678.');
+  [campos.nombre, campos.correo, campos.numero].forEach(revisar);
+  const primerError = formulario.querySelector('[aria-invalid]');
+  if (primerError) { primerError.focus(); return; }
 
   botonEnviar.disabled = true;
-  botonEnviar.querySelector('span').textContent = 'Guardando…';
-  let guardado = false;
-  if (campos.sitio.value) {
+  botonEnviar.setAttribute('aria-busy', 'true');
+  botonEnviar.querySelector('span').textContent = 'Guardando tu pedido…';
+  const pedido = [planElegido, nombre, correo, numero].join('|');
+  let guardado = pedido === pedidoGuardado; // mismo pedido: no se envía otra vez
+  if (guardado) {
+    // nada que enviar
+  } else if (campos.sitio.value) {
     guardado = true; // campo trampa lleno: es un bot, no se envía nada
   } else if (RAYO.planillaPedidos) {
     const enviar = async () => {
@@ -228,9 +241,15 @@ formulario.addEventListener('submit', async (e) => {
     console.warn('Rayo web: falta planillaPedidos en js/main.js; el pedido no se guardó.');
   }
   botonEnviar.disabled = false;
+  botonEnviar.removeAttribute('aria-busy');
   botonEnviar.querySelector('span').textContent = 'Continuar al pago';
 
+  if (guardado && !campos.sitio.value) {
+    pedidoGuardado = pedido;
+    try { sessionStorage.setItem('rayo-pedido', pedido); } catch (err) { /* sin almacenamiento */ }
+  }
   pintar('nombre', nombre.split(' ')[0]);
+  pintar('correo', correo);
   pop.querySelector('[data-pop="sinConfirmar"]').hidden = guardado;
   pop.querySelector('[data-pop="pagar"]').href = linkMercadoPago(planElegido);
   irA('pagar');
@@ -347,6 +366,7 @@ function activar(tab, enfocar) {
   const antes = tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
   const ahora = tabs.indexOf(tab);
   if (antes !== ahora) document.querySelector('.tour__panels').dataset.dir = ahora > antes ? 'adelante' : 'atras';
+  document.querySelector('.tour__cuenta').textContent = `${ahora + 1} de ${tabs.length} · desliza para ver más`;
   tabs.forEach((t) => {
     const activa = t === tab;
     t.setAttribute('aria-selected', String(activa));
@@ -597,10 +617,13 @@ if ('IntersectionObserver' in window) {
 // del navegador funcionan.
 const enlacesVista = document.querySelectorAll('.tabbar a');
 
+const TITULO = document.title;
 const ORDEN_VISTAS = ['inicio', 'funciones', 'juegos', 'precios', 'ayuda', 'updates'];
 const tabbar = document.querySelector('.tabbar');
 
 function mostrarVista(vista) {
+  const enlace = document.querySelector(`.tabbar a[href="#${vista}"]`);
+  document.title = vista === 'inicio' ? TITULO : `${enlace.textContent.trim()} · Rayo`;
   // La pantalla nueva entra desde la derecha si avanzas y desde la izquierda si vuelves
   const paso = ORDEN_VISTAS.indexOf(vista) - ORDEN_VISTAS.indexOf(document.documentElement.dataset.vista);
   if (paso) document.documentElement.dataset.dir = paso > 0 ? 'adelante' : 'atras';
@@ -615,30 +638,25 @@ function mostrarVista(vista) {
   // La píldora de la barra se desliza a la pantalla actual
   tabbar.style.setProperty('--tab', ORDEN_VISTAS.indexOf(vista));
   window.scrollTo(0, 0);
-  if (vista === 'precios') centrarPro();
   alHacerScroll();
 }
-
-// Onda al tocar botones, como en una app
-document.addEventListener('pointerdown', (e) => {
-  const boton = e.target.closest('.btn, .opcion, .tabbar a, .moneda__btn, .siguiente');
-  if (!boton) return;
-  const caja = boton.getBoundingClientRect();
-  const lado = Math.max(caja.width, caja.height) * 2;
-  const onda = document.createElement('span');
-  onda.className = 'onda';
-  onda.style.cssText = `width:${lado}px;height:${lado}px;left:${e.clientX - caja.left - lado / 2}px;top:${e.clientY - caja.top - lado / 2}px`;
-  boton.append(onda);
-  onda.addEventListener('animationend', () => onda.remove());
-});
 
 function irAVista(vista) {
   if (document.documentElement.dataset.vista === vista) return;
   history.pushState(null, '', `#${vista}`);
   mostrarVista(vista);
+  // Solo cuando la persona cambia de pantalla: el foco va al título para que se anuncie
+  const titulo = document.querySelector(`#${vista} h1, #${vista} h2`);
+  if (titulo) { titulo.tabIndex = -1; titulo.focus({ preventScroll: true }); }
 }
 
 document.addEventListener('click', (e) => {
+  const abrir = e.target.closest('[data-abrir]');
+  if (abrir) {
+    const pregunta = document.getElementById(abrir.dataset.abrir);
+    pregunta.open = true;
+    setTimeout(() => pregunta.scrollIntoView({ block: 'center' }), 350); // tras el cambio de pantalla
+  }
   const enlace = e.target.closest('a[href^="#"]');
   const vista = enlace && vistaDesdeHash(enlace.getAttribute('href').slice(1));
   if (!vista || e.ctrlKey || e.metaKey || e.shiftKey) return;

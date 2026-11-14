@@ -22,7 +22,6 @@
   --green: #22c55e;
   --red: #ef4444;
   --blue: #3b82f6;
-  --purple: #a78bfa;
 
   --grad: linear-gradient(135deg, #fbbf24 0%, #f97316 55%, #ea580c 100%);
   --on-orange: #1c0d02;
@@ -144,18 +143,6 @@ a { text-underline-offset: 3px; }
 }
 .btn--primary:hover { box-shadow: 0 14px 40px -10px rgba(249, 115, 22, .9), inset 0 1px 0 rgba(255, 255, 255, .3); }
 
-/* Destello que cruza el botón al pasar el mouse */
-.btn--primary::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .5) 50%, transparent 65%);
-  transform: translateX(-120%);
-  transition: transform .7s ease;
-  pointer-events: none;
-}
-.btn--primary:hover::after { transform: translateX(120%); }
-
 .btn--ghost {
   background: var(--surface-2);
   border-color: var(--border-2);
@@ -179,6 +166,10 @@ a { text-underline-offset: 3px; }
 .btn--icono .i { width: 20px; height: 20px; }
 /* En Precios el botón «Ver planes» de arriba sobra */
 .js[data-vista='precios'] .nav__cta a[href='#precios'] { display: none; }
+/* En el celular la portada ya tiene su propio «Ver planes» */
+@media (max-width: 640px) {
+  .js[data-vista='inicio'] .nav__cta a[href='#precios'] { display: none; }
+}
 
 .btn--lg { padding: 14px 22px; font-size: 16px; border-radius: 12px; }
 .btn--block { width: 100%; }
@@ -265,7 +256,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 .tabbar a:hover { color: var(--text); }
 .tabbar a[aria-current='page'] { color: var(--orange-2); }
 .tabbar a[aria-current='page'] .i {
-  animation: saltito .35s var(--ease-out);
+  animation: saltito .3s var(--ease-out);
 }
 /* Píldora que se desliza detrás de la pantalla actual (--tab lo pone js/main.js) */
 .tabbar__marca {
@@ -285,6 +276,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 @media (pointer: coarse) {
   .nav__cta .btn, .moneda__btn, .tour__tab { min-height: 44px; }
   .btn--icono, .visor__close { min-width: 44px; min-height: 44px; }
+  .btn, .pausa, .pop__volver, .brand, .siguiente { min-height: 44px; }
 }
 
 /* Celulares angostos: 6 botones, letra un poco más chica para que quepa «Funciones» */
@@ -442,7 +434,6 @@ main { overflow-x: clip; }
 .siguiente .i { width: 18px; height: 18px; color: var(--orange-2); transition: transform .2s var(--ease-out); }
 .siguiente:hover .i { transform: translateX(3px); }
 .siguiente:hover { border-color: rgba(249, 115, 22, .5); background: var(--surface-2); }
-.siguiente:hover .i { transform: translateX(3px); }
 
 /* ---------- Hero ---------- */
 
@@ -597,7 +588,7 @@ main { overflow-x: clip; }
   transform-origin: 50% 0;
 }
 
-.zoom img { transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+.zoom img { transition: transform .3s var(--ease-out); }
 .window:hover .zoom img { transform: scale(1.012); }
 
 .zoom {
@@ -668,6 +659,18 @@ main { overflow-x: clip; }
 }
 .stats__grid span { color: var(--muted); font-size: 14.5px; }
 
+.plans__ayuda { margin-top: 18px; text-align: center; font-size: 15px; }
+.plans__ayuda a { color: var(--orange-2); font-weight: 600; text-underline-offset: 3px; }
+.tour__cuenta { display: none; }
+.cta-centro { display: flex; width: max-content; max-width: 100%; margin: 32px auto 0; }
+/* «Próximamente»: lugar reservado, con candado, para material que todavía no existe */
+.pronto { display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 8px 14px; border: 1px dashed var(--border-2); border-radius: 999px; color: var(--dim); font-size: 13.5px; }
+.pronto .i { width: 15px; height: 15px; }
+.quienes .pronto, .faq__list .pronto { margin-top: 12px; }
+.faq__list details p.pronto { padding: 8px 14px; }
+.plans__ayuda a { display: inline-block; padding: 12px 4px; }
+.wrap.prontos { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 64px; padding-block: 0; list-style: none; }
+
 /* ---------- Cierre de la portada: precios y botón a los planes ---------- */
 
 .wrap.cierre {
@@ -679,7 +682,7 @@ main { overflow-x: clip; }
 }
 .cierre__precios { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 28px; color: var(--muted); font: 600 1.05rem/1.2 var(--display); }
 .cierre__precios strong { margin-left: 6px; color: var(--text); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-.cierre__precios span:last-child strong { color: var(--orange-2); }
+.cierre__precios strong { color: var(--orange-2); }
 .cierre__nota { color: var(--muted); }
 .cierre .btn { margin-top: 12px; }
 
@@ -806,13 +809,13 @@ h2 {
   background: var(--orange);
 }
 
-.tour__panel { animation: fade .35s ease; }
+.tour__panel { animation: fade .25s var(--ease-out); }
 .tour__panel:focus-visible { outline-offset: 6px; }
-.tour__panel .window { animation: acercar .5s cubic-bezier(.2, .7, .2, 1); }
+.tour__panel .window { animation: acercar .3s var(--ease-out); }
 /* La captura llega desde el lado de la pestaña elegida */
 .tour__panels[data-dir='adelante'] .tour__panel .window { animation-name: panel-adelante; }
 .tour__panels[data-dir='atras'] .tour__panel .window { animation-name: panel-atras; }
-.tour__panel .ticks li { animation: subir .45s cubic-bezier(.2, .7, .2, 1) backwards; animation-delay: calc(.12s + var(--i, 0) * 70ms); }
+.tour__panel .ticks li { animation: subir .3s var(--ease-out) backwards; animation-delay: calc(.06s + var(--i, 0) * 50ms); }
 
 .tour__copy {
   display: grid;
@@ -1107,8 +1110,7 @@ h2 {
   margin-left: auto;
   padding-left: 12px;
   font-size: 13px;
-  font-weight: 500;
-  opacity: .75;
+  font-weight: 600;
 }
 
 .dl__ok {
@@ -1149,7 +1151,7 @@ h2 {
 .faq__list details[open] summary .i { transform: rotate(180deg); color: var(--orange-2); }
 .faq__list summary:hover { color: #fff; }
 .faq__list details p { padding: 0 40px 24px 4px; color: var(--muted); }
-.faq__list details[open] p { animation: subir .35s ease; }
+.faq__list details[open] p { animation: subir .25s var(--ease-out); }
 
 /* Las respuestas se abren y cierran deslizando (Chrome y Edge; en otros
    navegadores se abren al instante) */
@@ -1157,7 +1159,7 @@ h2 {
 .faq__list details::details-content {
   block-size: 0;
   overflow: hidden;
-  transition: block-size .35s cubic-bezier(.2, .7, .2, 1), content-visibility .35s allow-discrete;
+  transition: block-size .2s var(--ease-out), content-visibility .2s allow-discrete;
 }
 .faq__list details[open]::details-content { block-size: auto; }
 
@@ -1289,7 +1291,7 @@ h2 {
   color: var(--text);
   box-shadow: 0 40px 120px rgba(0, 0, 0, .8);
 }
-.pop[open] { animation: pop-in .35s cubic-bezier(.2, .7, .2, 1); }
+.pop[open] { animation: pop-in .25s var(--ease-out); }
 .pop::backdrop { background: rgba(3, 6, 12, .82); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .pop__body { padding: 26px 24px 24px; }
 
@@ -1299,12 +1301,18 @@ h2 {
 .pop__precio strong { font: 800 1.6rem/1 var(--display); letter-spacing: -.02em; color: var(--orange-2); }
 .pop__precio span { color: var(--muted); font-size: 14px; }
 .pop__incluye { margin-top: 10px; color: var(--text); font-size: 14.5px; }
-.pop__seguro { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 12px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 13.5px; }
+.pop__seguro { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 16px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 13.5px; }
 .pop__seguro li { display: inline-flex; align-items: center; gap: 6px; }
 .pop__seguro .i { width: 15px; height: 15px; color: var(--green); }
 
-.pop__paso { animation: subir .35s cubic-bezier(.2, .7, .2, 1); }
+.pop__paso { animation: subir .25s var(--ease-out); }
 .pop__paso h3 { font-size: 1.15rem; }
+/* Qué incluye y las garantías se muestran al elegir cómo pagar; después el encabezado se acorta */
+.pop:not([data-paso='elegir']) .pop__incluye,
+.pop:not([data-paso='elegir']) .pop__seguro { display: none; }
+.campo__error { margin: 6px 0 0; color: #fca5a5; font-size: 13.5px; }
+.pop__enlace { padding: 0; border: 0; background: none; color: var(--orange-2); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.pop__legal a { color: var(--orange-2); }
 .pop__etapa { margin-bottom: 8px; color: var(--orange-2); font-size: 13px; font-weight: 600; }
 .pop__lead { margin-bottom: 14px; color: var(--muted); font-size: 15px; }
 .pop__paso h3 + .pop__lead { margin-top: 6px; }
@@ -1420,22 +1428,11 @@ form.pop__paso > .btn,
 @keyframes panel-atras { from { opacity: .3; transform: translateX(-36px); } }
 @keyframes saltito { 40% { transform: translateY(-3px); } }
 @keyframes cambia { from { opacity: 0; transform: translateY(-12px) scale(.9); } }
-@keyframes onda { to { opacity: 0; transform: scale(1); } }
 
 /* Onda al tocar botones (js/main.js la crea donde tocaste) */
 .btn, .opcion, .tabbar a, .moneda__btn, .siguiente { position: relative; overflow: hidden; }
-.onda {
-  position: absolute;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: .22;
-  transform: scale(0);
-  pointer-events: none;
-  animation: onda .6s ease-out forwards;
-}
-
 /* Precio que cambia al pasar de CLP a USD */
-.cambia { animation: cambia .35s var(--ease-out); }
+.cambia { animation: cambia .25s var(--ease-out); }
 
 /* Planes que se levantan al pasar el mouse */
 @media (hover: hover) and (pointer: fine) {
@@ -1566,7 +1563,7 @@ form.pop__paso > .btn,
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  animation: girar 5s linear infinite;
+  animation: girar 4s linear infinite;
   pointer-events: none;
 }
 
@@ -1611,7 +1608,11 @@ form.pop__paso > .btn,
   .fondo::before { animation: none; }
   .chispa { animation-duration: calc(var(--d) * 1.6); }
   .cielo__flash { display: none; }
+  /* Entradas como fundido suave, sin deslizar ni girar */
+  .js .vista, .js .vista:not(.ya-vista) .reveal, .js .palabra, .js .grad.palabra, .pop[open],
+  .tour__panel .window, .js .hero__copy > *, .js .hero__shot { animation-name: fundido; }
 }
+@keyframes fundido { from { opacity: 0; } }
 
 /* ==========================================================================
    Responsive
@@ -1630,6 +1631,7 @@ form.pop__paso > .btn,
     scroll-snap-type: x proximity;
   }
   .tour__tabs::-webkit-scrollbar { display: none; }
+  .tour__cuenta { display: block; margin-bottom: 8px; color: var(--dim); font-size: 13px; }
   .tour__tabs {
     -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent);
     mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent);

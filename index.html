@@ -12,9 +12,11 @@
   <meta property="og:locale" content="es_CL">
   <meta property="og:title" content="Rayo · Optimizador de FPS para Windows">
   <meta property="og:description" content="Más FPS, menos latencia y todo reversible. Escanea tu PC, corrige lo que frena tus juegos y mide la diferencia. Empieza gratis.">
-  <!-- Cuando haya dominio propio, cambia esta ruta por la URL completa (https://…/assets/capturas/inicio.png) -->
-  <meta property="og:image" content="assets/capturas/inicio.png">
+  <meta property="og:url" content="https://rayofps.cl/">
+  <meta property="og:image" content="https://rayofps.cl/assets/capturas/inicio.png">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://rayofps.cl/assets/capturas/inicio.png">
+  <link rel="canonical" href="https://rayofps.cl/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,6 +82,7 @@
   <symbol id="i-flask" viewBox="0 0 24 24"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2M8.5 2h7M7 16h10"/></symbol>
   <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
   <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
   <symbol id="i-key" viewBox="0 0 24 24"><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4M21 2l-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
@@ -162,8 +165,8 @@
         <div><strong>Cada ajuste es reversible</strong><span>Rayo guarda el valor original</span></div>
       </div>
       <div class="float float--right" aria-hidden="true">
-        <span class="float__icon float__icon--orange"><svg class="i"><use href="#i-monitor"/></svg></span>
-        <div><strong>Monitor a 240 Hz</strong><span>Soporta 480 Hz · Abrir configuración</span></div>
+        <span class="float__icon float__icon--green"><svg class="i"><use href="#i-shield"/></svg></span>
+        <div><strong>No se inyecta en tus juegos</strong><span>Ni toca sus anticheats</span></div>
       </div>
     </div>
 
@@ -187,9 +190,16 @@
         <li><span class="quienes__avatar" aria-hidden="true">SP</span><div><strong>Sebastian Perez</strong><span>Desarrolla la app</span></div></li>
         <li><span class="quienes__avatar" aria-hidden="true">EC</span><div><strong>Erick Colvin</strong><span>Web y comunidad</span></div></li>
       </ul>
+      <p class="pronto"><svg class="i"><use href="#i-lock"/></svg>Fotos del equipo · Próximamente</p>
     </div>
 
     <!-- Cierre de la portada: los precios y el camino a comprar -->
+    <!-- Lo que viene: se llena cuando haya material real -->
+    <ul class="wrap prontos reveal" aria-label="Próximamente">
+      <li class="pronto"><svg class="i"><use href="#i-lock"/></svg>Opiniones de clientes · Próximamente</li>
+      <li class="pronto"><svg class="i"><use href="#i-lock"/></svg>Mediciones reales de FPS · Próximamente</li>
+    </ul>
+
     <div class="wrap cierre reveal">
       <p class="cierre__precios">
         <span>Pro <strong data-clp="$3.990" data-usd="US$5">$3.990</strong></span>
@@ -209,6 +219,7 @@
       </header>
 
       <div class="tour reveal">
+        <p class="tour__cuenta" aria-hidden="true">1 de 11 · desliza para ver más</p>
         <div class="tour__tabs" role="tablist" aria-label="Secciones de Rayo" aria-orientation="vertical">
           <button class="tour__tab" data-grupo="Revisa" role="tab" type="button" id="tab-inicio" aria-controls="panel-inicio" aria-selected="true"><svg class="i"><use href="#i-home"/></svg>Inicio</button>
           <button class="tour__tab" role="tab" type="button" id="tab-escaner" aria-controls="panel-escaner" aria-selected="false" tabindex="-1"><svg class="i"><use href="#i-cpu"/></svg>Escáner</button>
@@ -242,7 +253,7 @@
               <div><h3>Sabe exactamente qué tienes</h3><p>Detecta procesador, gráfica, RAM canal por canal, discos, placa madre y BIOS, pantallas, red y versión de Windows. Después revisa la configuración y te dice qué corregir y cómo.</p></div>
               <ul class="ticks">
                 <li>Avisos que puedes corregir o ignorar</li>
-                <li>RAM sin XMP / DOCP / EXPO, con guía de BIOS para MSI, ASUS, Gigabyte y ASRock</li>
+                <li>RAM que no corre a su velocidad real (XMP / DOCP / EXPO), con guía de BIOS para MSI, ASUS, Gigabyte y ASRock</li>
                 <li>Ideas de mejora de hardware por impacto y costo, con enlace a precios</li>
               </ul>
             </div>
@@ -311,7 +322,7 @@
           <div class="tour__panel" role="tabpanel" id="panel-benchmark" aria-labelledby="tab-benchmark" tabindex="0" hidden>
             <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/benchmark.png" width="1919" height="1032" loading="lazy" alt="Benchmark de FPS de Rayo con promedio, 1 % low, 0,1 % low y variación"></button></figure>
             <div class="tour__copy">
-              <div><h3>Mide antes y después</h3><p>Registra los FPS reales mientras juegas: promedio, 1 % low, P95 y P99 y tirones. Etiqueta cada pasada y compara con números de tu propio PC.</p></div>
+              <div><h3>Mide antes y después</h3><p>Registra los FPS reales mientras juegas: promedio, 1 % low (tus peores momentos) y tirones. Etiqueta cada pasada y compara con números de tu propio PC.</p></div>
               <ul class="ticks">
                 <li>Objetivo de FPS según tu monitor</li>
                 <li>Importa CSV de FrameView, PresentMon y CapFrameX</li>
@@ -325,7 +336,7 @@
             <div class="tour__copy">
               <div><h3>Libera espacio y memoria</h3><p>Temporales, cachés de sombreadores de DirectX y NVIDIA, descargas viejas de Windows Update, informes de errores y memoria en espera. Nunca toca tus documentos, fotos ni partidas guardadas.</p></div>
               <ul class="ticks">
-                <li>Vaciar caché DNS y TRIM del SSD</li>
+                <li>Vaciar caché DNS y optimizar el SSD</li>
                 <li>Cierra las apps que comen RAM antes de jugar, sin tocar Windows ni el antivirus</li>
                 <li>«Limpiar todo» en un clic</li>
               </ul>
@@ -335,7 +346,7 @@
           <div class="tour__panel" role="tabpanel" id="panel-herramientas" aria-labelledby="tab-herramientas" tabindex="0" hidden>
             <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/herramientas.png" width="1919" height="1030" loading="lazy" alt="Herramientas de Rayo: reparar Windows, paneles clásicos y DNS más rápido"></button></figure>
             <div class="tour__copy">
-              <div><h3>Repara Windows sin buscar comandos</h3><p>Repara archivos del sistema (SFC y DISM), reinicia la red, arregla Windows Update y abre los paneles clásicos de Windows sin perderte en Configuración.</p></div>
+              <div><h3>Repara Windows sin buscar comandos</h3><p>Repara archivos dañados de Windows, reinicia la red, arregla Windows Update y abre los paneles clásicos de Windows sin perderte en Configuración.</p></div>
               <ul class="ticks">
                 <li>DNS más rápido: mide Cloudflare, Google, AdGuard, OpenDNS y Quad9 desde tu conexión</li>
                 <li>Kit de apps gamer con «Actualizar todo» (Elite)</li>
@@ -365,7 +376,7 @@
         <li><svg class="i"><use href="#i-ban"/></svg>No toca Defender ni Windows Update</li>
         <li><svg class="i"><use href="#i-monitor"/></svg>No se inyecta en tus juegos</li>
       </ul>
-      <a class="siguiente" href="#precios">Ver planes<svg class="i"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn--primary btn--lg cta-centro" href="#precios">Ver planes · Pro a <span data-clp="$3.990" data-usd="US$5">$3.990</span><svg class="i"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
@@ -378,7 +389,7 @@
       </header>
 
       <ul class="games reveal">
-        <li class="game"><span class="game__mono" style="--c:#a78bfa">FN</span>Fortnite</li>
+        <li class="game"><span class="game__mono" style="--c:#38bdf8">FN</span>Fortnite</li>
         <li class="game"><span class="game__mono" style="--c:#ef4444">VA</span>Valorant</li>
         <li class="game"><span class="game__mono" style="--c:#f59e0b">CS</span>Counter-Strike 2</li>
         <li class="game"><span class="game__mono" style="--c:#22c55e">WZ</span>Call of Duty / Warzone</li>
@@ -399,7 +410,7 @@
         <li class="game game--more"><span class="game__mono"><svg class="i"><use href="#i-sparkles"/></svg></span>Y cualquier otro</li>
       </ul>
       <p class="games__ask reveal">¿Falta tu juego? Pídelo en <strong>#pedir-juegos</strong> de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y aparece en Rayo sin actualizar.</p>
-      <a class="siguiente" href="#precios">Ver planes<svg class="i"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn--primary btn--lg cta-centro" href="#precios">Ver planes · Pro a <span data-clp="$3.990" data-usd="US$5">$3.990</span><svg class="i"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
@@ -441,7 +452,7 @@
             <li>Las 87 optimizaciones (FPS, latencia, red, NVIDIA)</li>
             <li>Perfiles Competitivo, Streaming y Portátil</li>
             <li>Configs para 18 juegos y ajustes de archivo</li>
-            <li>Quita 34 apps que no usas y la telemetría</li>
+            <li>Quita 34 apps que no usas y el rastreo de Windows</li>
             <li>Benchmark, DNS más rápido y menos procesos</li>
           </ul>
         </article>
@@ -453,12 +464,12 @@
           <p class="plan__tag">Rayo trabaja solo mientras juegas: overlay en pantalla y Modo Juego automático.</p>
           <a class="btn btn--primary btn--block" data-comprar="elite" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-zap-fill"/></svg>Comprar Elite</a>
           <ul class="plan__list">
-            <li><strong>Todo lo de Pro, y además:</strong></li>
+            <li><strong>Todo lo de Pro (87 optimizaciones, configs y benchmark), y además:</strong></li>
             <li>Overlay en pantalla: FPS, tirones, temperaturas y ping</li>
             <li>Modo Juego automático al abrir tus juegos</li>
             <li>Perfiles propios para guardar y compartir</li>
             <li>Kit de apps gamer y mantenimiento semanal</li>
-            <li>Prioridad en novedades</li>
+            <li>Recibe la mayor parte de las novedades</li>
           </ul>
         </article>
       </div>
@@ -466,9 +477,10 @@
       <ul class="plans__notes reveal">
         <li><svg class="i"><use href="#i-key"/></svg><span><strong>Una clave única</strong> por compra, funciona sin internet</span></li>
         <li><svg class="i"><use href="#i-refresh"/></svg><span>Actualizaciones incluidas</span></li>
-        <li><svg class="i"><use href="#i-undo"/></svg><span>Devolución en <strong>10 días</strong></span></li>
+        <li><svg class="i"><use href="#i-undo"/></svg><span>Devolución en <strong>10 días</strong> si no te funciona</span></li>
         <li><svg class="i"><use href="#i-message"/></svg><span data-clp="Mercado Pago o transferencia · clave por Discord" data-usd="PayPal · clave por Discord">Mercado Pago o transferencia · clave por Discord</span></li>
       </ul>
+      <p class="plans__ayuda"><a href="#ayuda" data-abrir="como-compro">¿Cómo compro y recibo mi clave?</a></p>
     </div>
   </section>
 
@@ -489,10 +501,10 @@
             <svg class="i"><use href="#i-download"/></svg>Descargar instalador<span class="btn__meta" data-tam="exe">1,2 MB</span>
           </a>
           <a class="btn btn--ghost btn--block" data-descarga data-portable href="https://github.com/sebaile/rayo-optimizador/releases/latest">
-            <svg class="i"><use href="#i-package"/></svg>Versión portátil (ZIP)<span class="btn__meta" data-tam="zip">431 KB</span>
+            <svg class="i"><use href="#i-package"/></svg>Versión sin instalar (ZIP)<span class="btn__meta" data-tam="zip">431 KB</span>
           </a>
           <p class="dl__ok" role="status" hidden><svg class="i"><use href="#i-check"/></svg><span>Tu descarga empezó. Abajo tienes los pasos para instalar.</span></p>
-          <p class="dl__req">Windows 10 (1903+) u 11 · .NET 4.8 incluido · Español e inglés · <a data-notas href="https://github.com/sebaile/rayo-optimizador/releases/latest" target="_blank" rel="noopener">Novedades y SHA-256</a></p>
+          <p class="dl__req">Windows 10 (1903+) u 11 · .NET 4.8 (ya viene en Windows) · Español e inglés · <a data-notas href="https://github.com/sebaile/rayo-optimizador/releases/latest" target="_blank" rel="noopener">Novedades y huella del archivo (SHA-256)</a></p>
           <p class="dl__soporte">¿Otra duda? Pregunta en el canal de soporte de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a>.</p>
         </div>
 
@@ -508,7 +520,8 @@
           </details>
           <details id="smartscreen">
             <summary>¿Por qué dice «Windows protegió su PC»?<svg class="i"><use href="#i-chevron"/></svg></summary>
-            <p>Es normal: Rayo aún no tiene firma digital de código. Pulsa «Más información» y luego «Ejecutar de todas formas». Si quieres, compara el hash SHA-256 con el de la página de la versión.</p>
+            <p>Es normal: Rayo aún no tiene firma digital de código. Pulsa «Más información» y luego «Ejecutar de todas formas». Si quieres, compara el hash SHA-256 (la huella del archivo) con el de la página de la versión.</p>
+            <p class="pronto"><svg class="i"><use href="#i-lock"/></svg>Captura del aviso · Próximamente</p>
           </details>
           <details>
             <summary>¿Rayo es seguro para mi PC?<svg class="i"><use href="#i-chevron"/></svg></summary>
@@ -522,8 +535,8 @@
             <summary>¿Cuántos FPS voy a ganar?<svg class="i"><use href="#i-chevron"/></svg></summary>
             <p>Depende de tu equipo y de cómo esté hoy: un PC con la RAM sin XMP o Windows lleno de procesos mejora mucho más que uno ya afinado. Por eso Rayo trae un benchmark: mides antes y después en tu propio PC.</p>
           </details>
-          <details>
-            <summary>¿Cómo compro y activo mi clave?<svg class="i"><use href="#i-chevron"/></svg></summary>
+          <details id="como-compro">
+            <summary>¿Cómo compro y recibo mi clave?<svg class="i"><use href="#i-chevron"/></svg></summary>
             <p data-venta="mercadopago" hidden>Pulsa Comprar y elige Mercado Pago (dejas tu nombre, correo y número) o transferencia por Discord. Con el pago listo, abre un ticket en #comprar de nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y recibes tu clave. Pégala en Rayo → Ajustes → Activar clave. Recibes una clave única por compra.</p>
             <p data-venta="discord">Pulsa Comprar, únete a nuestro <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Discord</a> y abre un ticket en #comprar. Al confirmar el pago recibes tu clave: pégala en Rayo → Ajustes → Activar clave. Recibes una clave única por compra.</p>
           </details>
@@ -644,16 +657,10 @@
       <h2 id="pop-titulo">Comprar Rayo <span data-pop="plan">Pro</span></h2>
       <p class="pop__precio"><strong data-pop="precio">$3.990</strong><span data-pop="unidad">CLP · pago único</span></p>
       <p class="pop__incluye" data-pop="incluye"></p>
-      <ul class="pop__seguro">
-        <li><svg class="i"><use href="#i-key"/></svg>Una clave única por compra</li>
-        <li><svg class="i"><use href="#i-undo"/></svg>Devolución en 10 días si no te funciona</li>
-        <li><svg class="i"><use href="#i-shield"/></svg>No toca tus juegos ni sus anticheats</li>
-        <li><svg class="i"><use href="#i-check"/></svg>Sin suscripción</li>
-      </ul>
     </div>
   
     <section class="pop__paso" data-paso="elegir">
-      <p class="pop__etapa">Paso 1 · Elige cómo pagar</p>
+      <p class="pop__etapa" data-pop="etapa1">Paso 1 · Elige cómo pagar</p>
       <p class="pop__lead">Con cualquiera de las dos, tu clave te llega por un ticket (un chat privado) en nuestro Discord.</p>
       <button class="opcion" type="button" data-ir="datos">
         <span class="card__icon card__icon--blue"><svg class="i"><use href="#i-card"/></svg></span>
@@ -665,25 +672,35 @@
         <span class="opcion__texto"><strong>Transferencia directa</strong><span>Únete a nuestro Discord, abre un ticket y te damos los datos de la cuenta.</span></span>
         <svg class="i opcion__flecha"><use href="#i-arrow"/></svg>
       </button>
+      <ul class="pop__seguro">
+        <li><svg class="i"><use href="#i-key"/></svg>Una clave única por compra</li>
+        <li><svg class="i"><use href="#i-undo"/></svg>Devolución en 10 días si no te funciona</li>
+        <li><svg class="i"><use href="#i-shield"/></svg>No toca tus juegos ni sus anticheats</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Sin suscripción</li>
+      </ul>
     </section>
   
     <form class="pop__paso" data-paso="datos" novalidate hidden>
       <button class="pop__volver" type="button" data-ir="elegir"><svg class="i"><use href="#i-arrow-left"/></svg>Volver</button>
       <p class="pop__etapa">Paso 2 de 3 · Tus datos</p>
-      <h3>Tus datos</h3>
-      <p class="pop__lead">Los usamos solo para identificar tu pago y entregarte la clave.</p>
-      <label class="campo"><span>Nombre y apellido</span><input name="nombre" autocomplete="name" maxlength="80" required></label>
-      <label class="campo"><span>Correo</span><input name="correo" type="email" inputmode="email" autocomplete="email" maxlength="120" required></label>
-      <label class="campo"><span>Número de teléfono</span><input name="numero" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="+56 9 1234 5678" required></label>
+      <p class="pop__lead">Los usamos solo para corroborar tu pago y entregarte la clave. El teléfono es por si hay un problema con el cobro.</p>
+      <label class="campo"><span>Nombre y apellido</span><input name="nombre" autocomplete="name" maxlength="80" required aria-describedby="err-nombre"></label>
+      <p class="campo__error" id="err-nombre" hidden></p>
+      <label class="campo"><span>Correo</span><input name="correo" type="email" inputmode="email" autocomplete="email" maxlength="120" required aria-describedby="err-correo"></label>
+      <p class="campo__error" id="err-correo" hidden></p>
+      <label class="campo"><span>Número de teléfono</span><input name="numero" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="+56 9 1234 5678" required aria-describedby="err-numero"></label>
+      <p class="campo__error" id="err-numero" hidden></p>
       <input class="pop__trampa" name="sitio" tabindex="-1" autocomplete="off" aria-hidden="true">
       <p class="pop__error" role="alert" hidden></p>
       <button class="btn btn--primary btn--block" type="submit"><span>Continuar al pago</span><svg class="i"><use href="#i-arrow"/></svg></button>
-      <p class="pop__legal">Al continuar aceptas los <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos de uso</a>.</p>
+      <p class="pop__legal">¿Dudas antes de pagar? <a data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Escríbenos por Discord</a>. Al continuar aceptas los <a data-link="terminos" href="https://sebaile.github.io/rayo-optimizador/terminos.html" target="_blank" rel="noopener">Términos de uso</a>.</p>
     </form>
   
     <section class="pop__paso" data-paso="pagar" hidden>
+      <button class="pop__volver" type="button" data-ir="datos"><svg class="i"><use href="#i-arrow-left"/></svg>Volver</button>
       <p class="pop__etapa">Paso 3 de 3 · Paga y recibe tu clave</p>
       <h3>Listo, <span data-pop="nombre"></span></h3>
+      <p class="pop__lead">Guardamos tu pedido con <b data-pop="correo"></b>. <button class="pop__enlace" type="button" data-ir="datos">Corregir</button></p>
       <p class="pop__nota" data-pop="sinConfirmar" hidden>No pudimos confirmar que tus datos llegaron. Puedes pagar igual: al abrir el ticket, escribe tu nombre y tu correo.</p>
       <ol class="pop__pasos">
         <li>
@@ -691,7 +708,7 @@
           <a class="btn btn--primary btn--block" data-pop="pagar" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-card"/></svg><span>Pagar <span data-pop="precio">$3.990</span></span></a>
         </li>
         <li>
-          <strong>Abre un ticket con tu comprobante</strong><span>Un ticket es un chat privado con nosotros en <b>#comprar</b> de nuestro Discord. Pega ahí el comprobante y Sebastian o Erick te entregan tu clave apenas confirmamos el pago.</span>
+          <strong>Abre un ticket con tu comprobante</strong><span>Un ticket es un chat privado con nosotros en <b>#comprar</b> de nuestro Discord. Unirte es gratis y toma un minuto. Pega ahí el comprobante y Sebastian o Erick te entregan tu clave apenas confirmamos el pago.</span>
           <a class="btn btn--ghost btn--block" data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-message"/></svg>Abrir ticket en Discord</a>
         </li>
       </ol>
@@ -699,7 +716,7 @@
   
     <section class="pop__paso" data-paso="discord" hidden>
       <button class="pop__volver" type="button" data-ir="elegir"><svg class="i"><use href="#i-arrow-left"/></svg>Volver</button>
-      <p class="pop__etapa">Último paso · Paga por Discord</p>
+      <p class="pop__etapa" data-pop="etapaDiscord">Paso 2 de 2 · Paga por Discord</p>
       <h3 data-clp="Paga por transferencia" data-usd="Paga con PayPal">Paga por transferencia</h3>
       <ol class="pop__pasos">
         <li><strong>Únete a nuestro Discord</strong><span>Es gratis y toma un minuto.</span></li>
