@@ -392,6 +392,9 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 }
 .carta h3 { margin-top: 12px; font-size: 1.15rem; }
 .carta__version { color: var(--orange-2); }
+.carta > p:not(.carta__meta) { margin-top: 6px; color: var(--muted); }
+.carta__lista { display: grid; gap: 6px; margin: 12px 0 0; padding-left: 18px; list-style: disc; color: var(--muted); font-size: 15px; }
+.carta__lista li::marker { color: var(--orange-2); }
 .carta > p:last-child { margin-top: 6px; color: var(--muted); }
 
 @keyframes linea-baja { from { transform: scaleY(0); } }
