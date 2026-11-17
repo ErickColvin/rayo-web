@@ -26,6 +26,8 @@ const RAYO = {
 
 const instalador = `https://github.com/${RAYO.repo}/releases/latest/download/RayoSetup.exe`;
 const paginaVersion = `https://github.com/${RAYO.repo}/releases/latest`;
+// Solo se aceptan enlaces que apunten al repositorio de Rayo en GitHub
+const deGithub = (url) => typeof url === 'string' && url.startsWith(`https://github.com/${RAYO.repo}/`);
 
 document.querySelectorAll('[data-link]').forEach((el) => {
   const valor = RAYO[el.dataset.link];
@@ -49,9 +51,9 @@ fetch(`https://api.github.com/repos/${RAYO.repo}/releases/latest`)
     if (exe) document.querySelectorAll('[data-tam="exe"]').forEach((el) => { el.textContent = tamano(exe.size); });
     if (zip) {
       document.querySelectorAll('[data-tam="zip"]').forEach((el) => { el.textContent = tamano(zip.size); });
-      document.querySelectorAll('[data-portable]').forEach((el) => { el.href = zip.browser_download_url; });
+      if (deGithub(zip.browser_download_url)) document.querySelectorAll('[data-portable]').forEach((el) => { el.href = zip.browser_download_url; });
     }
-    if (rel.html_url) document.querySelectorAll('[data-notas]').forEach((el) => { el.href = rel.html_url; });
+    if (deGithub(rel.html_url)) document.querySelectorAll('[data-notas]').forEach((el) => { el.href = rel.html_url; });
   })
   .catch(() => {});
 

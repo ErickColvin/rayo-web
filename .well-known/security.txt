@@ -1,0 +1,4 @@
+Contact: https://discord.gg/vS4KV8m5su
+Expires: 2027-11-16T00:00:00.000Z
+Preferred-Languages: es, en
+Canonical: https://rayofps.cl/.well-known/security.txt
