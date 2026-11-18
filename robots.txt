@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /planilla/
+
+Sitemap: https://rayofps.cl/sitemap.xml
