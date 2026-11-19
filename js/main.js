@@ -1,3 +1,6 @@
+const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const suave = sinMovimiento ? 'auto' : 'smooth';
+
 // Datos de la tienda. Cambia aquí los enlaces y la web los usa en todos los
 // botones con data-link="…", data-comprar="…" y data-descarga.
 const RAYO = {
@@ -166,27 +169,33 @@ document.querySelectorAll('[data-comprar]').forEach((boton) => boton.addEventLis
     pop.querySelector('[data-pop="pagar"]').href = linkMercadoPago(planElegido);
   }
   pop.showModal();
+  // Botón Atrás del celular cierra el popup en vez de salir de la web
+  history.pushState({ popup: true }, '');
+  pop.addEventListener('close', () => { if (history.state && history.state.popup) history.back(); }, { once: true });
   // Si ya dejó sus datos para este plan, vuelve directo al pago
   irA(!conMercadoPago ? 'discord' : pedidoGuardado.startsWith(`${planElegido}|`) ? 'pagar' : 'elegir');
 }));
 
+window.addEventListener('popstate', () => { if (pop.open) pop.close(); });
+
 pop.addEventListener('click', (e) => {
   const destino = e.target.closest('[data-ir]');
   if (destino) irA(destino.dataset.ir);
-  else if (e.target === pop || e.target.closest('[data-cerrar]')) pop.close();
+  else if (e.target.closest('[data-cerrar]')) pop.close();
+  // Un toque accidental fuera no borra lo escrito
+  else if (e.target === pop && !formulario.elements.nombre.value && !formulario.elements.correo.value) pop.close();
 });
 
 // Cada error va bajo su campo; se revisan los tres de una vez
 function marcarError(campo, mensaje) {
   const aviso = document.getElementById(`err-${campo.name}`);
   aviso.textContent = mensaje;
-  aviso.hidden = false;
   campo.setAttribute('aria-invalid', 'true');
 }
 function limpiarError(campo) {
   campo.removeAttribute('aria-invalid');
   const aviso = document.getElementById(`err-${campo.name}`);
-  if (aviso) aviso.hidden = true;
+  if (aviso) aviso.textContent = '';
 }
 
 const REGLAS = {
@@ -291,7 +300,7 @@ document.querySelectorAll('[data-descarga]').forEach((el) => el.addEventListener
   instalar.open = true;
   document.getElementById('smartscreen').open = true;
   irAVista('ayuda');
-  setTimeout(() => instalar.scrollIntoView({ behavior: 'smooth', block: 'center' }), 250);
+  setTimeout(() => instalar.scrollIntoView({ behavior: suave, block: 'center' }), 250);
 }));
 
 const copiar = alPc.querySelector('[data-copiar]');
@@ -378,7 +387,7 @@ function activar(tab, enfocar) {
   if (enfocar) tab.focus({ preventScroll: true });
   // En pantallas angostas las pestañas van en fila: centra la elegida
   if (tablist.scrollWidth > tablist.clientWidth) {
-    tablist.scrollTo({ left: tab.offsetLeft - (tablist.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' });
+    tablist.scrollTo({ left: tab.offsetLeft - (tablist.clientWidth - tab.offsetWidth) / 2, behavior: suave });
   }
 }
 
@@ -537,11 +546,12 @@ if (cielo) {
     const [rx, ry] = tronco.puntos[Math.floor(tronco.puntos.length * azar(0.3, 0.6))];
     const rama = zigzag(rx, ry, ry + largo * azar(0.2, 0.4), 22);
     dibujo.replaceChildren();
-    [[tronco.d, 'rayo-trazo'], [rama.d, 'rayo-trazo rayo-trazo--rama']].forEach(([d, clase]) => {
+    [[tronco.d, 'rayo-halo'], [rama.d, 'rayo-halo'], [tronco.d, 'rayo-trazo'], [rama.d, 'rayo-trazo rayo-trazo--rama']].forEach(([d, clase]) => {
       const trazo = document.createElementNS(SVG, 'path');
       trazo.setAttribute('d', d);
       trazo.setAttribute('class', clase);
       dibujo.append(trazo);
+      if (clase === 'rayo-halo') return;
       const total = trazo.getTotalLength();
       trazo.style.strokeDasharray = total;
       trazo.animate([{ strokeDashoffset: total }, { strokeDashoffset: 0 }], { duration: 140, easing: 'ease-out', fill: 'forwards' });
@@ -560,7 +570,7 @@ if (cielo) {
   // Solo cae con la pestaña abierta
   const programarRayo = (espera) => {
     setTimeout(() => {
-      if (!document.hidden && !document.documentElement.classList.contains('fondo-pausado')) caerRayo();
+      if (!document.hidden && !document.documentElement.classList.contains('fondo-pausado') && !document.querySelector('dialog[open]')) caerRayo();
       programarRayo(azar(5500, 9500));
     }, espera);
   };
@@ -588,6 +598,7 @@ if (pausa) {
 // Cifras que cuentan desde 0 cuando aparecen
 function contar(el) {
   const meta = Number(el.dataset.count);
+  if (sinMovimiento) { el.textContent = meta; return; }
   const inicio = performance.now();
   const paso = (ahora) => {
     const avance = Math.min(1, (ahora - inicio) / 1400);
@@ -663,7 +674,7 @@ document.addEventListener('click', (e) => {
   const vista = enlace && vistaDesdeHash(enlace.getAttribute('href').slice(1));
   if (!vista || e.ctrlKey || e.metaKey || e.shiftKey) return;
   e.preventDefault();
-  if (document.documentElement.dataset.vista === vista) window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (document.documentElement.dataset.vista === vista) window.scrollTo({ top: 0, behavior: suave });
   else irAVista(vista);
 });
 
