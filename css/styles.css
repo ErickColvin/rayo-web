@@ -789,6 +789,19 @@ h2 {
   font-size: 12px;
   font-weight: 600;
 }
+/* 14 pestañas: en computadores de poca altura se compactan y, si aun así
+   no caben, la lista se desplaza por dentro en vez de quedar bajo la barra. */
+@media (min-width: 1101px) and (max-height: 900px) {
+  .tour__tabs {
+    max-height: calc(100vh - var(--nav-h) - 96px);
+    gap: 2px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  .tour__tab { padding-block: 6px; }
+  .tour__tab[data-grupo] { margin-top: 22px; }
+}
 @media (hover: hover) and (pointer: fine) { .tour__tab:hover { color: var(--text); background: var(--surface-2); } }
 .tour__tab[aria-selected='true'] {
   background: rgba(249, 115, 22, .12);
