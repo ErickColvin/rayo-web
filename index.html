@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <title>Rayo · Optimizador de FPS para Windows</title>
   <meta name="description" content="Rayo escanea tu PC, encuentra lo que frena tus juegos y lo corrige con un clic. 87 optimizaciones, debloat de 34 apps, configs para 31 juegos y benchmark de FPS. Todo reversible. Empieza gratis.">
   <meta name="theme-color" content="#060a13">
@@ -147,9 +147,9 @@
         <a class="btn btn--ghost btn--lg" href="#precios">Ver planes<svg class="i"><use href="#i-arrow"/></svg></a>
       </div>
       <ul class="hero__note">
-        <li>Windows 10 y 11 · <span data-version>v3.0.0</span></li>
-        <li>Gratis para empezar</li>
-        <li>Pro a <strong data-clp="$3.990 CLP" data-usd="US$5">$3.990 CLP</strong>, pago único</li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Windows 10 y 11 · <span data-version>v3.0.0</span></li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Gratis para empezar</li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Pro a <strong data-clp="$3.990 CLP" data-usd="US$5">$3.990 CLP</strong>, pago único</li>
       </ul>
     </div>
 
@@ -184,9 +184,9 @@
       <div>
         <h2>Quiénes hacemos Rayo</h2>
         <div class="quienes__texto">
+          <p class="quienes__clave">Lo más importante: en Rayo no vendemos «200 FPS de aumento». Lo que buscamos es reducir las caídas de FPS, bajar el input lag y ayudar a estabilizar el ping. En la mayoría de los casos que hemos visto esto también se tradujo en más FPS, pero no es lo principal de la app.</p>
           <p>Somos dos amigos de la universidad que estudiamos Ingeniería en Computación e Informática. Jugamos videojuegos desde pequeños, y Rayo nació para resolver problemas que teníamos en nuestros propios PC al jugar. Al ver que muchos conocidos pasaban por lo mismo, decidimos llevarla más lejos y enfocarla en ayudar a la comunidad gamer.</p>
           <p>Nuestro objetivo es que todos puedan tener una experiencia de juego óptima.</p>
-          <p class="quienes__clave">Lo más importante: en Rayo no vendemos «200 FPS de aumento». Lo que buscamos es reducir las caídas de FPS, bajar el input lag y ayudar a estabilizar el ping. En la mayoría de los casos que hemos visto esto también se tradujo en más FPS, pero no es lo principal de la app.</p>
         </div>
         <a class="siguiente" data-link="discord" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Hablar con nosotros<svg class="i"><use href="#i-arrow"/></svg></a>
       </div>
@@ -194,16 +194,9 @@
         <li><span class="quienes__avatar" aria-hidden="true">SP</span><div><strong>Sebastian Perez</strong><span>Desarrolla la app</span></div></li>
         <li><span class="quienes__avatar" aria-hidden="true">EC</span><div><strong>Erick Colvin</strong><span>Web y comunidad</span></div></li>
       </ul>
-      <p class="pronto"><svg class="i"><use href="#i-lock"/></svg>Fotos del equipo · Próximamente</p>
     </div>
 
     <!-- Cierre de la portada: los precios y el camino a comprar -->
-    <!-- Lo que viene: se llena cuando haya material real -->
-    <ul class="wrap prontos reveal" aria-label="Próximamente">
-      <li class="pronto"><svg class="i"><use href="#i-lock"/></svg>Opiniones de clientes · Próximamente</li>
-      <li class="pronto"><svg class="i"><use href="#i-lock"/></svg>Mediciones reales de FPS · Próximamente</li>
-    </ul>
-
     <div class="wrap cierre reveal">
       <p class="cierre__precios">
         <span>Pro <strong data-clp="$3.990" data-usd="US$5">$3.990</strong></span>
@@ -224,7 +217,7 @@
 
       <div class="tour reveal">
         <p class="tour__cuenta" aria-hidden="true">1 de 11 · desliza para ver más</p>
-        <div class="tour__tabs" role="tablist" aria-label="Secciones de Rayo" aria-orientation="vertical">
+        <div class="tour__tabs" role="tablist" aria-label="Secciones de Rayo">
           <button class="tour__tab" data-grupo="Revisa" role="tab" type="button" id="tab-inicio" aria-controls="panel-inicio" aria-selected="true"><svg class="i"><use href="#i-home"/></svg>Inicio</button>
           <button class="tour__tab" role="tab" type="button" id="tab-escaner" aria-controls="panel-escaner" aria-selected="false" tabindex="-1"><svg class="i"><use href="#i-cpu"/></svg>Escáner</button>
           <button class="tour__tab" data-grupo="Optimiza" role="tab" type="button" id="tab-optimizar" aria-controls="panel-optimizar" aria-selected="false" tabindex="-1"><svg class="i"><use href="#i-rocket"/></svg>Optimizar</button>
@@ -392,6 +385,10 @@
         <p>Config propia para 31 juegos y una automática para cualquier otro. Los encuentra en Steam, Epic, Riot, EA, Battle.net, Ubisoft, GOG y Rockstar.</p>
       </header>
 
+      <figure class="window window--juegos reveal">
+        <button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/configs.png" width="1919" height="1032" loading="lazy" alt="Configs por juego en Rayo, con los juegos instalados primero"></button>
+      </figure>
+
       <div class="juegos__grupo reveal">
         <h3 class="juegos__titulo">Shooters <span>9</span></h3>
         <ul class="games">
@@ -482,6 +479,7 @@
           <p class="plan__price"><span class="plan__amount" data-clp="$3.990" data-usd="US$5">$3.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
           <p class="plan__tag">Todas las optimizaciones para ganar FPS y bajar el input lag.</p>
           <a class="btn btn--pro btn--block" data-comprar="pro" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Comprar Pro</a>
+          <p class="plan__micro"><svg class="i"><use href="#i-undo"/></svg>Pago único · Devolución en 10 días</p>
           <ul class="plan__list">
             <li><strong>Todo lo de Gratis, y además:</strong></li>
             <li>Las 87 optimizaciones (FPS, latencia, red, NVIDIA)</li>
@@ -498,8 +496,9 @@
           <p class="plan__price"><span class="plan__amount" data-clp="$6.990" data-usd="US$8">$6.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
           <p class="plan__tag">Rayo trabaja solo mientras juegas: overlay en pantalla y Modo Juego automático.</p>
           <a class="btn btn--primary btn--block" data-comprar="elite" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-zap-fill"/></svg>Comprar Elite</a>
+          <p class="plan__micro"><svg class="i"><use href="#i-undo"/></svg>Pago único · Devolución en 10 días</p>
           <ul class="plan__list">
-            <li><strong>Todo lo de Pro (87 optimizaciones, configs y benchmark), y además:</strong></li>
+            <li><strong>Todo lo de Pro, y además:</strong></li>
             <li>Overlay en pantalla: FPS, tirones, temperaturas y ping</li>
             <li>Modo Juego automático al abrir tus juegos</li>
             <li>Perfiles propios para guardar y compartir</li>
@@ -556,7 +555,6 @@
           <details id="smartscreen">
             <summary>¿Por qué dice «Windows protegió su PC»?<svg class="i"><use href="#i-chevron"/></svg></summary>
             <p>Es normal: Rayo aún no tiene firma digital de código. Pulsa «Más información» y luego «Ejecutar de todas formas». Si quieres, compara el hash SHA-256 (la huella del archivo) con el de la página de la versión.</p>
-            <p class="pronto"><svg class="i"><use href="#i-lock"/></svg>Captura del aviso · Próximamente</p>
           </details>
           <details>
             <summary>¿Rayo es seguro para mi PC?<svg class="i"><use href="#i-chevron"/></svg></summary>
@@ -606,13 +604,13 @@
       <div class="updates">
         <article class="carta carta--nueva reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-16">16 nov 2026</time><span class="carta__tag">Última</span></p>
-          <h3>Actualización versión <span class="carta__version">3.1.0</span></h3>
+          <h3>Versión <span class="carta__version">3.1.0</span></h3>
           <p>Mejoras de ciberseguridad en la aplicación y en la página.</p>
         </article>
 
         <article class="carta reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-14">14 nov 2026</time></p>
-          <h3>Actualización versión <span class="carta__version">3.0.0</span></h3>
+          <h3>Versión <span class="carta__version">3.0.0</span></h3>
           <p>La actualización más grande hasta ahora. Rayo mide, aplica y vuelve a medir, para que decidas con datos si te quedas con cada cambio.</p>
           <ul class="carta__lista">
             <li>Prueba guiada en Inicio: mide, aplica, vuelve a medir y te deja conservar o revertir.</li>
@@ -627,39 +625,42 @@
 
         <article class="carta reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
-          <h3>Actualización versión <span class="carta__version">2.5.3</span></h3>
+          <h3>Versión <span class="carta__version">2.5.3</span></h3>
           <p>Cambiar entre tema oscuro y claro ahora es instantáneo: ya no hay que reiniciar Rayo y te quedas en la misma página.</p>
         </article>
 
         <article class="carta reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
-          <h3>Actualización versión <span class="carta__version">2.5.2</span></h3>
+          <h3>Versión <span class="carta__version">2.5.2</span></h3>
           <p>«Comprar» abre Discord directo en el canal #comprar para que abras tu ticket. Si una función es de otro plan, el aviso trae su botón para comprarlo.</p>
         </article>
+        <details class="carta-viejas">
+          <summary>Versiones anteriores (4)<svg class="i"><use href="#i-chevron"/></svg></summary>
 
         <article class="carta reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
-          <h3>Actualización versión <span class="carta__version">2.5.1</span></h3>
+          <h3>Versión <span class="carta__version">2.5.1</span></h3>
           <p>Nombres más claros en Aceleración en apps, y la categoría siempre muestra las apps que encontró en tu PC, estés en la pestaña que estés.</p>
         </article>
 
         <article class="carta reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
-          <h3>Actualización versión <span class="carta__version">2.5.0</span></h3>
+          <h3>Versión <span class="carta__version">2.5.0</span></h3>
           <p>Nueva categoría «Aceleración en apps»: apaga la aceleración por hardware de Discord, Chrome, Edge, Brave, Firefox, Opera GX y Spotify para dejarle la GPU a tu juego. Todo se puede deshacer.</p>
         </article>
 
         <article class="carta reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-23">23 oct 2026</time></p>
-          <h3>Actualización versión <span class="carta__version">2.4.0</span></h3>
+          <h3>Versión <span class="carta__version">2.4.0</span></h3>
           <p>Configs muestra solo todos los juegos instalados (Steam, Epic, Riot, GOG, Ubisoft, EA, Battle.net…). Los que no tienen config propia reciben una automática. Nuevo filtro «Instalados».</p>
         </article>
 
         <article class="carta reveal">
           <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-22">22 oct 2026</time></p>
-          <h3>Actualización versión <span class="carta__version">2.3.1</span></h3>
+          <h3>Versión <span class="carta__version">2.3.1</span></h3>
           <p>El overlay en tamaño Mínimo y Compacto ahora es una columna angosta, con los FPS arriba, para tapar menos del juego.</p>
         </article>
+        </details>
       </div>
     </div>
   </section>
@@ -741,11 +742,11 @@
       <p class="pop__etapa">Paso 2 de 3 · Tus datos</p>
       <p class="pop__lead">Los usamos solo para corroborar tu pago y entregarte la clave. El teléfono es por si hay un problema con el cobro.</p>
       <label class="campo"><span>Nombre y apellido</span><input name="nombre" autocomplete="name" maxlength="80" required aria-describedby="err-nombre"></label>
-      <p class="campo__error" id="err-nombre" hidden></p>
+      <p class="campo__error" id="err-nombre" aria-live="polite"></p>
       <label class="campo"><span>Correo</span><input name="correo" type="email" inputmode="email" autocomplete="email" maxlength="120" required aria-describedby="err-correo"></label>
-      <p class="campo__error" id="err-correo" hidden></p>
+      <p class="campo__error" id="err-correo" aria-live="polite"></p>
       <label class="campo"><span>Número de teléfono</span><input name="numero" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="+56 9 1234 5678" required aria-describedby="err-numero"></label>
-      <p class="campo__error" id="err-numero" hidden></p>
+      <p class="campo__error" id="err-numero" aria-live="polite"></p>
       <input class="pop__trampa" name="sitio" tabindex="-1" autocomplete="off" aria-hidden="true">
       <p class="pop__error" role="alert" hidden></p>
       <button class="btn btn--primary btn--block" type="submit"><span>Continuar al pago</span><svg class="i"><use href="#i-arrow"/></svg></button>
