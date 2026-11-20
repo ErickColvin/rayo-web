@@ -50,6 +50,7 @@ html {
   -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-h) + 16px);
+  scroll-padding-bottom: calc(64px + env(safe-area-inset-bottom) + 16px); /* la barra fija no tapa lo enfocado */
   -webkit-text-size-adjust: 100%;
 }
 
@@ -281,9 +282,12 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 @media (max-width: 440px) {
   .tabbar a { padding-inline: 0; font-size: 11.5px; letter-spacing: -.01em; }
 }
+@media (max-width: 380px) { .tabbar a { font-size: 11px; letter-spacing: -.02em; } }
+@media (max-width: 340px) { .tabbar a { font-size: 10px; letter-spacing: -.03em; } }
 
 /* En el computador la barra flota centrada, con ícono y nombre en una línea */
 @media (min-width: 961px) {
+  html { scroll-padding-bottom: 120px; }
   body { padding-bottom: 96px; }
   .tabbar {
     left: 50%;
@@ -332,7 +336,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   border-radius: 2px;
   background: linear-gradient(var(--orange), rgba(249, 115, 22, .25) 40%, var(--border));
   transform-origin: top;
-  animation: linea-baja 1.2s .2s cubic-bezier(.2, .7, .2, 1) backwards;
+  animation: linea-baja .7s .15s cubic-bezier(.2, .7, .2, 1) backwards;
 }
 .carta {
   position: relative;
@@ -1120,7 +1124,8 @@ h2 {
 }
 @media (min-width: 961px) { .dl__card { position: sticky; top: 88px; align-self: start; } }
 .dl__top { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-.dl__top strong { display: block; font: 700 1.25rem/1.2 var(--display); }
+.dl__top div { min-width: 0; }
+.dl__top strong { display: block; overflow-wrap: anywhere; font: 700 1.25rem/1.2 var(--display); }
 .dl__top div > span { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; }
 .brand__mark--md { width: 48px; height: 48px; border-radius: 13px; }
 .brand__mark--md .i { width: 26px; height: 26px; }
@@ -1273,7 +1278,7 @@ h2 {
 .visor {
   width: min(1600px, 94vw);
   max-width: none;
-  max-height: 92vh;
+  max-height: 92dvh;
   padding: 0;
   border: 1px solid var(--border-2);
   border-radius: 14px;
@@ -1282,7 +1287,15 @@ h2 {
   box-shadow: 0 40px 120px rgba(0, 0, 0, .8);
 }
 .visor::backdrop { background: rgba(3, 6, 12, .82); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
-.visor img { display: block; width: 100%; height: auto; max-height: 92vh; object-fit: contain; }
+.visor img { display: block; width: 100%; height: auto; max-height: 92dvh; object-fit: contain; }
+.pop, .al-pc, .visor { overscroll-behavior: contain; }
+html:has(dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
+/* En celular la captura se abre a 900 px y se desliza, para poder leerla */
+@media (max-width: 640px) {
+  .visor { overflow: auto; touch-action: pan-x pan-y pinch-zoom; }
+  .visor img { width: 900px; max-width: none; max-height: none; }
+  .visor__close { position: fixed; top: calc(12px + env(safe-area-inset-top)); right: 12px; z-index: 1; }
+}
 .visor__close {
   position: absolute;
   top: 10px;
@@ -1486,7 +1499,7 @@ form.pop__paso > .btn,
    Nada aparece «al hacer scroll». */
 .js .vista:not(.ya-vista) .reveal {
   animation: subir .45s var(--ease-out) backwards;
-  animation-delay: calc(.05s + var(--i, 0) * 60ms);
+  animation-delay: calc(.05s + min(var(--i, 0), 5) * 55ms);
 }
 
 /* ---------- Animaciones ---------- */
@@ -1550,13 +1563,13 @@ form.pop__paso > .btn,
 .js .palabra {
   display: inline-block;
   animation: palabra .75s cubic-bezier(.2, .7, .2, 1) backwards;
-  animation-delay: calc(var(--base, .12s) + var(--p, 0) * 45ms);
+  animation-delay: calc(var(--base, .12s) + min(var(--p, 0), 8) * 40ms);
 }
 /* El texto destacado se queda en línea para que pueda partirse en dos renglones */
 .js .grad.palabra {
   display: inline;
   animation: palabra-fundido .9s ease backwards;
-  animation-delay: calc(var(--base, .12s) + var(--p, 0) * 45ms);
+  animation-delay: calc(var(--base, .12s) + min(var(--p, 0), 8) * 40ms);
 }
 .js .hero__copy > h1 { animation: none; }
 .js .hero h1 { --base: .15s; }
@@ -1759,7 +1772,25 @@ html:has(dialog[open]) .chispa { animation-play-state: paused; }
   .fondo::before { animation: aurora-suave 32s ease-in-out infinite alternate; }
   .tabbar a[aria-current='page'] .i, .tour__panel .ticks li, .faq__list details[open] p, .pop__paso, .cambia,
   .float, .float--right { animation: fundido .2s ease-out backwards; animation-delay: 0s; }
+  .js .vista, .js[data-dir='adelante'] .vista, .js[data-dir='atras'] .vista { animation-name: fundido; animation-duration: .22s; }
+  /* el borde de Elite sigue girando, a la mitad de velocidad */
+  .plan--featured::before { animation-duration: 8s; }
   .tabbar__marca { transition-duration: .18s; }
   .luz { transition-property: opacity; }
   .pop, .visor, .al-pc { transition-duration: .01s; }
+}
+
+/* Teléfono en horizontal: la barra superior no se queda fija y la inferior se achica */
+@media (orientation: landscape) and (max-height: 480px) {
+  .nav { position: absolute; }
+  .tabbar { padding-block: 2px; }
+  .tabbar a { grid-auto-flow: column; justify-content: center; align-items: center; gap: 6px; padding: 8px 2px; }
+  .tabbar__marca { top: 2px; height: calc(100% - 4px); }
+  body { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
+  html { scroll-padding-top: 16px; scroll-padding-bottom: 64px; }
+}
+/* Pantalla plegada (Fold cerrado) */
+@media (max-width: 300px) {
+  .nav__cta .btn:not(.btn--icono) { display: none; }
+  .games { grid-template-columns: 1fr; }
 }
