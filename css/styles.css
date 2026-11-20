@@ -1023,7 +1023,7 @@ h2 {
   letter-spacing: -.03em;
 }
 .plan--featured .plan__amount,
-.plan:nth-child(2) .plan__amount { color: var(--orange-2); }
+.plan--pro .plan__amount { color: var(--orange-2); }
 .plan__unit { color: var(--muted); font-size: 14px; font-weight: 500; }
 .plan__tag { margin: 12px 0 22px; color: var(--muted); font-size: 15px; min-height: 48px; }
 
@@ -1294,7 +1294,7 @@ html:has(dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 @media (max-width: 640px) {
   .visor { overflow: auto; touch-action: pan-x pan-y pinch-zoom; }
   .visor img { width: 900px; max-width: none; max-height: none; }
-  .visor__close { position: fixed; top: calc(12px + env(safe-area-inset-top)); right: 12px; z-index: 1; }
+  .visor .visor__close { position: fixed; top: calc(12px + env(safe-area-inset-top)); right: calc(12px + env(safe-area-inset-right)); z-index: 1; width: 44px; height: 44px; background: rgb(13, 21, 36); }
 }
 .visor__close {
   position: absolute;
@@ -1630,7 +1630,7 @@ form.pop__paso > .btn,
   .chispa { animation-duration: calc(var(--d) * 1.6); }
   .cielo__flash { display: none; }
   /* Entradas como fundido suave, sin deslizar ni girar */
-  .js .vista, .js .vista:not(.ya-vista) .reveal, .js .palabra, .js .grad.palabra, .tour__panel .window, .js .hero__copy > *, .js .hero__shot { animation-name: fundido; }
+  .js .vista:not(.ya-vista) .reveal, .js .palabra, .js .grad.palabra, .tour__panel .window, .js .hero__copy > *, .js .hero__shot { animation-name: fundido; }
 }
 @keyframes fundido { from { opacity: 0; } }
 
@@ -1677,7 +1677,7 @@ form.pop__paso > .btn,
      para verlos y compararlos sin deslizar de lado */
   .plans { grid-template-columns: 1fr; gap: 14px; max-width: 480px; }
   .plan--featured { order: -2; }
-  .plan:nth-child(2) { order: -1; }
+  .plan--pro { order: -1; }
   .plan__tag { min-height: 0; }
   .tour__copy { grid-template-columns: 1fr; gap: 18px; }
   .ayuda { grid-template-columns: 1fr; max-width: 560px; }
@@ -1692,7 +1692,7 @@ form.pop__paso > .btn,
   .hero__ctas .btn { flex: 1 1 100%; }
   .hero__shot { margin-top: 36px; }
   .hero__note { flex-direction: column; align-items: center; gap: 2px; }
-  .stats__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 8px; margin-top: 32px; }
+  .stats__grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 10px 8px; margin-top: 32px; }
   .stats__grid li { flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; text-align: center; }
 
   .section { padding: 56px 0; }
@@ -1781,7 +1781,7 @@ html:has(dialog[open]) .chispa { animation-play-state: paused; }
 }
 
 /* Teléfono en horizontal: la barra superior no se queda fija y la inferior se achica */
-@media (orientation: landscape) and (max-height: 480px) {
+@media (orientation: landscape) and (max-height: 480px) and (max-width: 960px) {
   .nav { position: absolute; }
   .tabbar { padding-block: 2px; }
   .tabbar a { grid-auto-flow: column; justify-content: center; align-items: center; gap: 6px; padding: 8px 2px; }
