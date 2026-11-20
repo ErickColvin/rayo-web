@@ -1290,11 +1290,12 @@ h2 {
 .visor img { display: block; width: 100%; height: auto; max-height: 92dvh; object-fit: contain; }
 .pop, .al-pc, .visor { overscroll-behavior: contain; }
 html:has(dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
-/* En celular la captura se abre a 900 px y se desliza, para poder leerla */
+/* En celular la captura se abre a 900 px y se desliza dentro de .visor__scroll;
+   la X queda encima del visor (no del área que se desliza), así no se mueve. */
 @media (max-width: 640px) {
-  .visor { overflow: auto; touch-action: pan-x pan-y pinch-zoom; }
+  .visor__scroll { max-height: 92dvh; overflow: auto; overscroll-behavior: contain; touch-action: pan-x pan-y pinch-zoom; }
   .visor img { width: 900px; max-width: none; max-height: none; }
-  .visor .visor__close { position: fixed; top: calc(12px + env(safe-area-inset-top)); right: calc(12px + env(safe-area-inset-right)); z-index: 1; width: 44px; height: 44px; background: rgb(13, 21, 36); }
+  .visor .visor__close { z-index: 1; width: 44px; height: 44px; background: rgb(13, 21, 36); }
 }
 .visor__close {
   position: absolute;
