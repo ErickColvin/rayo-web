@@ -9,7 +9,6 @@ const RAYO = {
   discord: 'https://discord.gg/vS4KV8m5su',
   tiktok: 'https://www.tiktok.com/@rayopti.fps',
   instagram: 'https://www.instagram.com/rayofps.cl/',
-  correo: '2002sebastian.perez@gmail.com',
   terminos: 'https://sebaile.github.io/rayo-optimizador/terminos.html',
   catalogo: 'https://github.com/sebaile/rayo-optimizador/blob/main/OPTIMIZACIONES.md',
 
@@ -34,7 +33,7 @@ const deGithub = (url) => typeof url === 'string' && url.startsWith(`https://git
 
 document.querySelectorAll('[data-link]').forEach((el) => {
   const valor = RAYO[el.dataset.link];
-  if (valor) el.href = el.dataset.link === 'correo' ? `mailto:${valor}` : valor;
+  if (valor) el.href = valor;
 });
 document.querySelectorAll('[data-descarga]:not([data-portable])').forEach((el) => { el.href = instalador; });
 document.querySelectorAll('[data-portable], [data-notas]').forEach((el) => { el.href = paginaVersion; });
