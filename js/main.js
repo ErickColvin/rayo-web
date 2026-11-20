@@ -539,7 +539,9 @@ if (cielo) {
     const alto = cielo.clientHeight;
     if (!ancho) return;
     dibujo.setAttribute('viewBox', `0 0 ${ancho} ${alto}`);
-    const x = ancho * azar(0.12, 0.88);
+    // Solo cae por las franjas de los costados, para no tachar el texto de venta
+    const franja = ancho < 640 ? [0.02, 0.1] : [0.04, 0.26];
+    const x = ancho * (Math.random() < 0.5 ? azar(...franja) : 1 - azar(...franja));
     const largo = Math.min(alto * 0.55, 460) * azar(0.7, 1);
     const tronco = zigzag(x, -10, largo, 26);
     const [rx, ry] = tronco.puntos[Math.floor(tronco.puntos.length * azar(0.3, 0.6))];
