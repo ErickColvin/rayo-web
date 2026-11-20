@@ -498,21 +498,26 @@ const cielo = document.querySelector('.cielo');
 if (cielo) {
   const azar = (min, max) => min + Math.random() * (max - min);
   const cuantas = window.innerWidth < 640 ? 14 : 26;
+  // Cada chispa lleva su propio @keyframes con valores literales: con var() el navegador
+  // recalcula estilos en cada cuadro
+  const hoja = document.createElement('style');
+  let reglas = '';
   for (let n = 0; n < cuantas; n += 1) {
     const chispa = document.createElement('span');
     chispa.className = 'chispa';
+    reglas += `@keyframes cs${n}{0%{opacity:0;transform:translate3d(0,0,0) scale(1)}15%,70%{opacity:${azar(0.45, 0.95).toFixed(2)}}100%{opacity:0;transform:translate3d(${azar(-60, 60).toFixed(0)}px,-${azar(160, 320).toFixed(0)}px,0) scale(.3)}}`;
     chispa.style.cssText = [
+      `animation-name:cs${n}`,
       `--x:${azar(2, 98).toFixed(1)}%`,
       `--y:${azar(12, 78).toFixed(1)}%`,
       `--t:${azar(1.5, 3.6).toFixed(1)}px`,
       `--d:${azar(6, 12).toFixed(1)}s`,
       `--r:-${azar(0, 12).toFixed(1)}s`, // empiezan ya en vuelo
-      `--dx:${azar(-60, 60).toFixed(0)}px`,
-      `--dy:-${azar(160, 320).toFixed(0)}px`,
-      `--o:${azar(0.45, 0.95).toFixed(2)}`,
     ].join(';');
     cielo.append(chispa);
   }
+  hoja.textContent = reglas;
+  document.head.append(hoja);
 
   const SVG = 'http://www.w3.org/2000/svg';
   const dibujo = document.createElementNS(SVG, 'svg');
