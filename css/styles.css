@@ -555,7 +555,6 @@ main { overflow-x: clip; }
   color: var(--dim);
   font-size: 14px;
 }
-.hero__note li + li::before { content: '·'; margin: 0 10px; }
 .hero__note strong { color: var(--muted); font-weight: 600; }
 
 .hero__shot {
@@ -1676,7 +1675,6 @@ form.pop__paso > .btn,
   .hero__ctas .btn { flex: 1 1 100%; }
   .hero__shot { margin-top: 36px; }
   .hero__note { flex-direction: column; align-items: center; gap: 2px; }
-  .hero__note li + li::before { content: none; }
   .stats__grid { margin-top: 32px; }
 
   .section { padding: 56px 0; }
@@ -1726,8 +1724,8 @@ button, [role='button'], .btn, .opcion, .tabbar a { -webkit-user-select: none; u
 .quienes__texto p + p { margin-top: 0; }
 .quienes__texto p:not(.quienes__clave) + p:not(.quienes__clave) { margin-top: 12px; }
 .hero__note { gap: 8px 20px; }
-.hero__note li { display: inline-flex; align-items: center; gap: 6px; }
-.hero__note .i { width: 14px; height: 14px; color: var(--green); }
+.hero__note li { display: block; }
+.hero__note .i { width: 14px; height: 14px; margin-right: 6px; vertical-align: -2px; color: var(--green); }
 .window--juegos { max-width: 960px; margin: 0 auto 32px; }
 .carta-viejas { margin-top: 12px; }
 .carta-viejas > summary { display: flex; align-items: center; justify-content: space-between; padding: 16px 4px; color: var(--muted); font-weight: 600; cursor: pointer; list-style: none; }
