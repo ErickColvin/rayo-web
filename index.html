@@ -717,6 +717,8 @@
        4. Pásale «carta--nueva» y el chip «Última» (carta__tag) a la nueva y
           quítaselos a la anterior.
        5. Sube la versión de respaldo en JSON-LD, los [data-version] y js/main.js.
+       6. Si ya hay 5 cartas visibles, mueve la más antigua a «Versiones anteriores»
+          (details.carta-viejas) y sube el número del contador.
        El bloque plegable «Todo lo nuevo desde la 3.1» (details.resumen) es un
        resumen acumulado, no una versión: no lleva número. -->
   <section class="vista section" id="updates" aria-label="Updates">
@@ -730,11 +732,11 @@
         <summary><span>Todo lo nuevo desde la 3.1<small>Resumen de todo lo que cambió, no es una versión</small></span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
         <div class="resumen__cuerpo">
           <section>
-            <h4>Rayo en 3 idiomas (3.2.0)</h4>
+            <h3>Rayo en 3 idiomas (3.2.0)</h3>
             <p>Toda la app está en español, inglés y portugués. Cambias de idioma al instante con el ícono del planeta (ES / EN / PT), sin reiniciar. Los videos y streams de la Biblioteca también salen en tu idioma.</p>
           </section>
           <section>
-            <h4>Liberar espacio en disco (3.1.0)</h4>
+            <h3>Liberar espacio en disco (3.1.0)</h3>
             <ul>
               <li>Un analizador muestra qué ocupa más espacio (juegos, descargas, archivos de Windows), con botones para desinstalar o abrir la carpeta.</li>
               <li>Limpiezas nuevas: cachés de Steam, Epic, Battle.net, EA y Discord, la caché de Optimización de distribución y Windows.old.</li>
@@ -742,7 +744,7 @@
             </ul>
           </section>
           <section>
-            <h4>Juegos y Biblioteca: tus partidas (3.2.0)</h4>
+            <h3>Juegos y Biblioteca: tus partidas (3.2.0)</h3>
             <ul>
               <li>El overlay guarda el FPS de cada partida, y en la Biblioteca ves el promedio, los mínimos y un gráfico.</li>
               <li>Cuántas personas juegan ahora y espectadores en vivo de Fortnite, VALORANT y LoL.</li>
@@ -753,18 +755,18 @@
             </ul>
           </section>
           <section>
-            <h4>Escáner: Analizar drivers</h4>
+            <h3>Escáner: Analizar drivers</h3>
             <p>Compara tus drivers con las últimas versiones de NVIDIA, AMD y Windows Update y te lleva a la página oficial.</p>
           </section>
           <section>
-            <h4>Respaldo renovado (3.2.1)</h4>
+            <h3>Respaldo renovado (3.2.1)</h3>
             <ul>
               <li>Los cambios se agrupan por categoría, con buscador, «Revertir grupo» y cuánto tiempo hace que se aplicó cada uno.</li>
               <li>Los puntos de restauración son más claros: si ya no cabe otro, Rayo te avisa y te sugiere cuánto espacio darles.</li>
             </ul>
           </section>
           <section>
-            <h4>Más cómodo</h4>
+            <h3>Más cómodo</h3>
             <ul>
               <li>Modo Juego rediseñado, con las opciones explicadas y etiquetas fáciles para las apps que no se tocan.</li>
               <li>Herramientas ordenadas: Reparar Windows, Acciones rápidas y Mantener al día.</li>
@@ -774,7 +776,7 @@
             </ul>
           </section>
           <section>
-            <h4>Más seguro</h4>
+            <h3>Más seguro</h3>
             <ul>
               <li>Rayo se instala en Archivos de programa.</li>
               <li>La optimización de VBS se retiró.</li>
@@ -785,7 +787,7 @@
             </ul>
           </section>
           <section>
-            <h4>3.2.4: corregido el aviso de antivirus</h4>
+            <h3>3.2.4: corregido el aviso de antivirus</h3>
             <p>Algunos antivirus marcaban la 3.2.3 como amenaza. Era un falso positivo y ya está corregido. Si Windows bloqueó tu Rayo, instala la 3.2.4 encima desde <a href="#ayuda">rayofps.cl</a>.</p>
           </section>
         </div>

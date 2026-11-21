@@ -461,7 +461,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   font-size: 15px;
 }
 .carta__aviso .i { flex: none; width: 18px; height: 18px; margin-top: 2px; color: var(--orange-2); }
-.carta > .carta__aviso { margin-top: 14px; color: var(--text); }
+.carta > p.carta__aviso { margin-top: 14px; color: var(--text); }
 .carta__aviso a { color: var(--orange-2); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 /* Resumen acumulado: bloque plegable aparte, sin número de versión */
@@ -491,7 +491,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 .resumen[open] > summary .i { transform: rotate(180deg); color: var(--orange-2); }
 @media (hover: hover) and (pointer: fine) { .resumen > summary:hover { color: #fff; } }
 .resumen__cuerpo { display: grid; gap: 18px; padding: 4px 20px 22px; }
-.resumen h4 { font-size: 1rem; color: var(--orange-2); }
+.resumen h3 { font-size: 1rem; color: var(--orange-2); }
 .resumen p, .resumen li { color: var(--muted); font-size: 15px; }
 .resumen p { margin-top: 4px; }
 .resumen ul { display: grid; gap: 6px; margin: 6px 0 0; padding-left: 18px; list-style: disc; }
