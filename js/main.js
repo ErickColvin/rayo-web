@@ -68,6 +68,7 @@ const linkMercadoPago = (plan) => (monedaActual === 'clp' ? RAYO.mercadoPago[pla
 
 function usarMoneda(moneda) {
   monedaActual = moneda;
+  document.documentElement.dataset.moneda = moneda;
   document.querySelectorAll('[data-moneda]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.moneda === moneda)));
   document.querySelectorAll(`[data-${moneda}]`).forEach((el) => {
     if (el.textContent === el.dataset[moneda]) return;

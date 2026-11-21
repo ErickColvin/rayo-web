@@ -48,6 +48,14 @@
   --radius-lg: 20px;
   --shadow: 0 40px 100px -30px rgba(0, 0, 0, .75);
 
+  /* Tokens compartidos con la app (Theme.xaml): tarjetas de Updates y de Precios */
+  --card-radius: 16px;
+  --card-shadow: 0 18px 40px -30px rgba(0, 0, 0, .8);
+  --chip-radius: 6px;
+  --chip-bg: #142036;
+  --chip-border: #22314d;
+  --accent-soft: #22140a;
+
   --font: 'Inter', 'Segoe UI', system-ui, sans-serif;
   --display: 'Sora', 'Inter', 'Segoe UI', sans-serif;
   --wrap: 1200px;
@@ -360,8 +368,9 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   position: relative;
   padding: 20px 22px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--card-radius);
   background: var(--surface);
+  box-shadow: var(--card-shadow);
   transition: border-color .2s ease, transform .2s var(--ease-out);
 }
 /* Punto de la línea de tiempo */
@@ -376,8 +385,8 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   border-radius: 50%;
   background: var(--bg);
 }
-.carta--nueva { border-color: rgba(249, 115, 22, .4); background: linear-gradient(180deg, rgba(249, 115, 22, .07), transparent 70%), var(--surface); }
-.carta--nueva::before { background: var(--orange); box-shadow: 0 0 0 4px rgba(249, 115, 22, .2); }
+.carta--nueva { border-color: rgba(249, 115, 22, .45); background: var(--accent-soft); }
+.carta--nueva::before { background: var(--orange); }
 @media (hover: hover) and (pointer: fine) {
   .carta:hover { border-color: var(--border-2); }
 }
@@ -394,24 +403,36 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   place-items: center;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  background: var(--grad);
-  color: var(--on-orange);
+  border: 1px solid var(--chip-border);
+  border-radius: 8px;
+  background: var(--chip-bg);
+  color: var(--orange-2);
   font: 800 11px/1 var(--display);
 }
 .carta__avatar .i { width: 15px; height: 15px; }
 .carta__autor { color: var(--text); font-weight: 600; }
 .carta__tag {
   margin-left: auto;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgba(249, 115, 22, .14);
+  padding: 3px 8px;
+  border: 1px solid rgba(249, 115, 22, .4);
+  border-radius: var(--chip-radius);
+  background: var(--accent-soft);
   color: var(--orange-2);
   font-size: 12px;
   font-weight: 700;
 }
 .carta h3 { margin-top: 12px; font-size: 1.15rem; }
-.carta__version { color: var(--orange-2); }
+.carta__version {
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid var(--chip-border);
+  border-radius: var(--chip-radius);
+  background: var(--chip-bg);
+  color: var(--orange-2);
+  font-size: .92em;
+  font-variant-numeric: tabular-nums;
+}
+.carta--nueva .carta__version { border-color: rgba(249, 115, 22, .4); }
 .carta > p:not(.carta__meta) { margin-top: 6px; color: var(--muted); }
 .carta__lista { display: grid; gap: 6px; margin: 12px 0 0; padding-left: 18px; list-style: disc; color: var(--muted); font-size: 15px; }
 .carta__lista li::marker { color: var(--orange-2); }
@@ -1006,15 +1027,15 @@ h2 {
   flex-direction: column;
   padding: 30px 28px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--card-radius);
   background: var(--surface);
+  box-shadow: var(--card-shadow);
 }
 .plan--featured {
   border-color: rgba(249, 115, 22, .55);
   background:
     radial-gradient(80% 40% at 50% 0%, rgba(249, 115, 22, .12), transparent 70%),
     var(--surface);
-  box-shadow: 0 30px 80px -30px rgba(249, 115, 22, .45);
 }
 
 .plan__badge {
@@ -1022,8 +1043,9 @@ h2 {
   top: 26px;
   right: 24px;
   padding: 4px 10px;
-  border-radius: 6px;
-  background: rgba(249, 115, 22, .15);
+  border: 1px solid rgba(249, 115, 22, .4);
+  border-radius: var(--chip-radius);
+  background: var(--accent-soft);
   color: var(--orange-2);
   font-size: 12px;
   font-weight: 700;
@@ -1044,7 +1066,38 @@ h2 {
 .plan--featured .plan__amount,
 .plan--pro .plan__amount { color: var(--orange-2); }
 .plan__unit { color: var(--muted); font-size: 14px; font-weight: 500; }
-.plan__tag { margin: 12px 0 22px; color: var(--muted); font-size: 15px; min-height: 48px; }
+
+/* Oferta: precio regular tachado arriba, sello y línea de licencia debajo.
+   Las tres tarjetas reservan el mismo alto para que el precio y el botón queden alineados. */
+.plan__regular {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 22px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 22px;
+}
+.plan__regular-etq { font-size: 12.5px; font-weight: 600; letter-spacing: .02em; }
+.plan__regular s { font-size: 16px; text-decoration-thickness: 1.5px; text-decoration-color: var(--dim); font-variant-numeric: tabular-nums; }
+.plan__regular + .plan__price { margin-top: 2px; }
+/* Sin equivalente en USD confirmado: en USD no se muestra el precio tachado */
+html[data-moneda='usd'] .plan__regular { display: none; }
+html[data-moneda='usd'] .plan__regular + .plan__price { margin-top: 14px; }
+.plan__oferta { min-height: 62px; margin-top: 12px; }
+.plan__sello {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid rgba(249, 115, 22, .4);
+  border-radius: var(--chip-radius);
+  background: var(--accent-soft);
+  color: var(--orange-2);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.plan__siempre { margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.35; }
+.plan__tag { margin: 4px 0 22px; color: var(--muted); font-size: 15px; min-height: 48px; }
 
 .plan__list {
   display: grid;
@@ -1699,6 +1752,9 @@ form.pop__paso > .btn,
   .plan--featured { order: -2; }
   .plan--pro { order: -1; }
   .plan__tag { min-height: 0; }
+  /* Apilados no hace falta reservar alto: el hueco de Gratis sobra */
+  .plan__oferta { min-height: 0; }
+  .plan__regular--vacio, .plan__oferta--vacio { display: none; }
   .tour__copy { grid-template-columns: 1fr; gap: 18px; }
   .ayuda { grid-template-columns: 1fr; max-width: 560px; }
 }

@@ -20,7 +20,7 @@
 
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=20261121">
+  <link rel="stylesheet" href="css/styles.css?v=20261122">
   <script src="js/tema.js?v=20261121"></script>
 
   <script type="application/ld+json">
@@ -574,7 +574,9 @@
       <div class="plans">
         <article class="plan reveal">
           <h3 class="plan__name">Gratis</h3>
+          <p class="plan__regular plan__regular--vacio" aria-hidden="true">&nbsp;</p>
           <p class="plan__price"><span class="plan__amount">$0</span><span class="plan__unit">para siempre</span></p>
+          <div class="plan__oferta plan__oferta--vacio" aria-hidden="true"></div>
           <p class="plan__tag">Para probar Rayo y dejar tu PC en orden.</p>
           <a class="btn btn--ghost btn--block" data-descarga href="https://github.com/sebaile/rayo-optimizador/releases/latest/download/RayoSetup.exe"><svg class="i"><use href="#i-download"/></svg>Descargar gratis</a>
           <ul class="plan__list">
@@ -588,10 +590,12 @@
 
         <article class="plan plan--pro reveal">
           <h3 class="plan__name">Pro</h3>
-          <p class="plan__price"><span class="plan__amount" data-clp="$3.990" data-usd="US$5">$3.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
+          <p class="plan__regular"><span class="plan__regular-etq" aria-hidden="true">Precio regular</span><s aria-hidden="true">$7.990 /mes</s><span class="visually-hidden">Precio regular, mensual: $7.990 por mes.</span></p>
+          <p class="plan__price"><span class="visually-hidden">Precio ahora: </span><span class="plan__amount" data-clp="$3.990" data-usd="US$5">$3.990</span><span class="plan__unit" data-clp="CLP" data-usd="USD">CLP</span></p>
+          <div class="plan__oferta"><span class="plan__sello" data-clp="Pago único por 2026" data-usd="Pago único">Pago único por 2026</span><p class="plan__siempre">Paga una vez y ten tu licencia de por vida</p></div>
           <p class="plan__tag">Todas las optimizaciones para ganar FPS y bajar el input lag.</p>
           <a class="btn btn--pro btn--block" data-comprar="pro" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener">Comprar Pro</a>
-          <p class="plan__micro"><svg class="i"><use href="#i-undo"/></svg>Pago único · Devolución en 10 días</p>
+          <p class="plan__micro"><svg class="i"><use href="#i-undo"/></svg>Devolución en 10 días</p>
           <ul class="plan__list">
             <li><strong>Todo lo de Gratis, y además:</strong></li>
             <li>Las 86 optimizaciones (FPS, latencia, red, NVIDIA)</li>
@@ -605,10 +609,12 @@
         <article class="plan plan--featured reveal">
           <span class="plan__badge">Todo incluido</span>
           <h3 class="plan__name">Elite</h3>
-          <p class="plan__price"><span class="plan__amount" data-clp="$6.990" data-usd="US$8">$6.990</span><span class="plan__unit" data-clp="CLP · pago único" data-usd="USD · pago único">CLP · pago único</span></p>
+          <p class="plan__regular"><span class="plan__regular-etq" aria-hidden="true">Precio regular</span><s aria-hidden="true">$9.990 /mes</s><span class="visually-hidden">Precio regular, mensual: $9.990 por mes.</span></p>
+          <p class="plan__price"><span class="visually-hidden">Precio ahora: </span><span class="plan__amount" data-clp="$6.990" data-usd="US$8">$6.990</span><span class="plan__unit" data-clp="CLP" data-usd="USD">CLP</span></p>
+          <div class="plan__oferta"><span class="plan__sello" data-clp="Pago único por 2026" data-usd="Pago único">Pago único por 2026</span><p class="plan__siempre">Paga una vez y ten tu licencia de por vida</p></div>
           <p class="plan__tag">Rayo trabaja solo mientras juegas: overlay en pantalla y Modo Juego automático.</p>
           <a class="btn btn--primary btn--block" data-comprar="elite" href="https://discord.gg/vS4KV8m5su" target="_blank" rel="noopener"><svg class="i"><use href="#i-zap-fill"/></svg>Comprar Elite</a>
-          <p class="plan__micro"><svg class="i"><use href="#i-undo"/></svg>Pago único · Devolución en 10 días</p>
+          <p class="plan__micro"><svg class="i"><use href="#i-undo"/></svg>Devolución en 10 días</p>
           <ul class="plan__list">
             <li><strong>Todo lo de Pro, y además:</strong></li>
             <li>Overlay en pantalla: FPS, tirones, temperaturas y ping</li>
@@ -930,6 +936,6 @@
   <button class="visor__close" type="button" aria-label="Cerrar" data-cerrar><svg class="i"><use href="#i-x"/></svg></button>
 </dialog>
 
-<script src="js/main.js?v=20261121"></script>
+<script src="js/main.js?v=20261122"></script>
 </body>
 </html>
