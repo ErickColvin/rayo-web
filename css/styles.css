@@ -267,7 +267,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   border-radius: 12px;
   background: rgba(249, 115, 22, .12);
   transform: translateX(calc(var(--tab, 0) * 100%));
-  transition: transform .3s var(--ease-out);
+  transition: transform .22s var(--ease-out);
   pointer-events: none;
 }
 
@@ -300,7 +300,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
     background: rgba(10, 15, 28, .82);
     box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .9), 0 0 0 1px rgba(249, 115, 22, .05);
     transform: translateX(-50%);
-    animation: barra-sube .7s .5s cubic-bezier(.2, .7, .2, 1) backwards;
+    animation: barra-sube .3s var(--ease-out) backwards;
   }
   .tabbar a {
     grid-auto-flow: column;
@@ -344,7 +344,7 @@ body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
-  transition: border-color .2s ease, transform .2s ease;
+  transition: border-color .2s ease, transform .2s var(--ease-out);
 }
 /* Punto de la línea de tiempo */
 .carta::before {
@@ -827,7 +827,7 @@ h2 {
 
 .tour__panel { animation: fade .25s var(--ease-out); }
 .tour__panel:focus-visible { outline-offset: 6px; }
-.tour__panel .window { animation: acercar .3s var(--ease-out); }
+.tour__panel .window { animation: panel-adelante .22s var(--ease-out); }
 /* La captura llega desde el lado de la pestaña elegida */
 .tour__panels[data-dir='adelante'] .tour__panel .window { animation-name: panel-adelante; }
 .tour__panels[data-dir='atras'] .tour__panel .window { animation-name: panel-atras; }
@@ -886,7 +886,7 @@ h2 {
   background: var(--surface);
   font-size: 14.5px;
   font-weight: 600;
-  transition: border-color .2s ease, transform .2s ease;
+  transition: border-color .2s ease, transform .2s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) { .game:hover { border-color: var(--border-2); transform: translateY(-2px); } }
 .game__mono { transition: transform .25s var(--ease-out); }
@@ -1239,7 +1239,7 @@ h2 {
   background: var(--surface);
   text-decoration: none;
   overflow: hidden;
-  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, transform .2s var(--ease-out), box-shadow .2s ease;
 }
 .red__logo {
   display: grid;
@@ -1258,7 +1258,7 @@ h2 {
 .red__texto { display: grid; min-width: 0; }
 .red__texto strong { font-size: 15.5px; }
 .red__texto span { color: var(--muted); font-size: 13.5px; }
-.red__flecha { width: 18px; height: 18px; margin-left: auto; color: var(--dim); transition: transform .2s ease, color .2s ease; }
+.red__flecha { width: 18px; height: 18px; margin-left: auto; color: var(--dim); transition: transform .2s var(--ease-out), color .2s ease; }
 @media (hover: hover) and (pointer: fine) { .red:hover { transform: translateY(-2px); } }
 @media (hover: hover) and (pointer: fine) { .red--discord:hover { border-color: rgba(88, 101, 242, .6); } }
 @media (hover: hover) and (pointer: fine) { .red--tiktok:hover { border-color: rgba(254, 44, 85, .5); } }
@@ -1368,7 +1368,7 @@ html:has(dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
 @media (hover: hover) and (pointer: fine) { .opcion:hover { border-color: rgba(249, 115, 22, .5); background: var(--surface-3); } }
 .opcion__texto strong { display: block; font-size: 15.5px; font-weight: 600; }
 .opcion__texto span { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; line-height: 1.45; }
-.opcion__flecha { margin-left: auto; color: var(--dim); transition: transform .2s ease, color .2s ease; }
+.opcion__flecha { margin-left: auto; color: var(--dim); transition: transform .2s var(--ease-out), color .2s ease; }
 @media (hover: hover) and (pointer: fine) { .opcion:hover .opcion__flecha { color: var(--orange-2); transform: translateX(3px); } }
 
 .pop__volver {
@@ -1455,14 +1455,14 @@ form.pop__paso > .btn,
 @keyframes vista-in { from { opacity: 0; transform: translateY(10px); } }
 @keyframes vista-adelante { from { opacity: 0; transform: translateX(16px); } }
 @keyframes vista-atras { from { opacity: 0; transform: translateX(-16px); } }
-@keyframes panel-adelante { from { opacity: .3; transform: translateX(36px); } }
-@keyframes panel-atras { from { opacity: .3; transform: translateX(-36px); } }
-@keyframes cambia { from { opacity: 0; transform: translateY(-12px) scale(.9); } }
+@keyframes panel-adelante { from { opacity: 0; transform: translateX(16px); } }
+@keyframes panel-atras { from { opacity: 0; transform: translateX(-16px); } }
+@keyframes cambia { from { opacity: 0; transform: translateY(4px); } }
 
 /* Onda al tocar botones (js/main.js la crea donde tocaste) */
 .btn, .opcion, .tabbar a, .moneda__btn, .siguiente { position: relative; overflow: hidden; }
 /* Precio que cambia al pasar de CLP a USD */
-.cambia { animation: cambia .25s var(--ease-out); }
+.cambia { animation: cambia .15s var(--ease-out); }
 
 /* Planes que se levantan al pasar el mouse */
 @media (hover: hover) and (pointer: fine) {
@@ -1499,7 +1499,7 @@ form.pop__paso > .btn,
    desliza la pantalla, para que cambiar de pantalla se sienta rápido.
    Nada aparece «al hacer scroll». */
 .js .vista:not(.ya-vista) .reveal {
-  animation: subir .45s var(--ease-out) backwards;
+  animation: subir .35s var(--ease-out) backwards;
   animation-delay: calc(.05s + min(var(--i, 0), 5) * 55ms);
 }
 
@@ -1569,7 +1569,7 @@ form.pop__paso > .btn,
 /* El texto destacado se queda en línea para que pueda partirse en dos renglones */
 .js .grad.palabra {
   display: inline;
-  animation: palabra-fundido .9s ease backwards;
+  animation: palabra-fundido .6s cubic-bezier(.2, .7, .2, 1) backwards;
   animation-delay: calc(var(--base, .12s) + min(var(--p, 0), 8) * 40ms);
 }
 .js .hero__copy > h1 { animation: none; }
@@ -1601,7 +1601,6 @@ form.pop__paso > .btn,
 @keyframes asomar { from { opacity: 0; transform: translateY(60px) scale(.97); } }
 @keyframes flotar-in { from { opacity: 0; transform: translateY(16px) scale(.94); } }
 @keyframes subir { from { opacity: 0; transform: translateY(14px); } }
-@keyframes acercar { from { opacity: .4; transform: scale(.98); } }
 @keyframes girar { to { --ang: 360deg; } }
 @keyframes aurora {
   from { transform: translate3d(0, 0, 0) scale(1); }
@@ -1617,7 +1616,7 @@ form.pop__paso > .btn,
   100% { opacity: 0; transform: translate3d(var(--dx, 0), var(--dy, -240px), 0) scale(.3); }
 }
 @keyframes palabra { from { opacity: 0; transform: translateY(.5em) rotate(3deg); filter: blur(3px); } }
-@keyframes palabra-fundido { from { opacity: 0; filter: blur(8px); } }
+@keyframes palabra-fundido { from { opacity: 0; filter: blur(4px); } }
 @keyframes barra-sube { from { opacity: 0; transform: translate(-50%, 32px); } }
 
 /* Con «reducir movimiento» (Windows con los efectos de animación apagados, algo
@@ -1632,6 +1631,7 @@ form.pop__paso > .btn,
   .cielo__flash { display: none; }
   /* Entradas como fundido suave, sin deslizar ni girar */
   .js .vista:not(.ya-vista) .reveal, .js .palabra, .js .grad.palabra, .tour__panel .window, .js .hero__copy > *, .js .hero__shot { animation-name: fundido; }
+  .tour__panels[data-dir] .tour__panel .window { animation-name: fundido; }
 }
 @keyframes fundido { from { opacity: 0; } }
 
@@ -1764,7 +1764,8 @@ html:has(dialog[open]) .chispa { animation-play-state: paused; }
 .rayo-halo { fill: none; stroke: #f97316; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; opacity: .35; }
 .dl__ok:not([hidden]) { animation: subir .3s var(--ease-out) backwards; }
 @keyframes aurora-suave { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-1%, 1%, 0); } }
-.pop, .visor, .al-pc { transition: opacity .2s var(--ease-out), transform .2s var(--ease-out), overlay .2s allow-discrete, display .2s allow-discrete; }
+.pop, .visor, .al-pc { transition: opacity .15s var(--ease-out), transform .15s var(--ease-out), overlay .15s allow-discrete, display .15s allow-discrete; }
+.pop[open], .visor[open], .al-pc[open] { transition-duration: .2s; }
 .pop:not([open]), .visor:not([open]), .al-pc:not([open]) { opacity: 0; transform: translateY(12px) scale(.98); }
 @starting-style { .pop[open], .visor[open], .al-pc[open] { opacity: 0; transform: translateY(12px) scale(.98); } }
 .pop::backdrop, .visor::backdrop, .al-pc::backdrop { transition: background-color .2s ease, overlay .2s allow-discrete, display .2s allow-discrete; }
@@ -1778,7 +1779,9 @@ html:has(dialog[open]) .chispa { animation-play-state: paused; }
   .plan--featured::before { animation-duration: 8s; }
   .tabbar__marca { transition-duration: .18s; }
   .luz { transition-property: opacity; }
-  .pop, .visor, .al-pc { transition-duration: .01s; }
+  .pop, .visor, .al-pc { transition-property: opacity, overlay, display; transition-duration: .15s; }
+  .pop:not([open]), .visor:not([open]), .al-pc:not([open]) { transform: none; }
+  @starting-style { .pop[open], .visor[open], .al-pc[open] { transform: none; } }
 }
 
 /* Teléfono en horizontal: la barra superior no se queda fija y la inferior se achica */
