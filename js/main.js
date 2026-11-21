@@ -684,7 +684,16 @@ document.addEventListener('click', (e) => {
   else irAVista(vista);
 });
 
-const vistaDeLaUrl = () => vistaDesdeHash(location.hash.slice(1)) || 'inicio';
-window.addEventListener('popstate', () => mostrarVista(vistaDeLaUrl()));
-window.addEventListener('hashchange', () => mostrarVista(vistaDeLaUrl()));
+// Atrás/adelante o cambio de #hash. Sin hash se vuelve a Inicio; un hash que no es una
+// pantalla (como #contenido del enlace "Saltar al contenido") no cambia de pantalla; y si
+// la pantalla ya es la actual no se hace nada (cerrar el popup de compra no debe subir
+// la página a la cima).
+function alCambiarLaUrl() {
+  const hash = location.hash.slice(1);
+  const vista = hash ? vistaDesdeHash(hash) : 'inicio';
+  if (!vista || vista === document.documentElement.dataset.vista) return;
+  mostrarVista(vista);
+}
+window.addEventListener('popstate', alCambiarLaUrl);
+window.addEventListener('hashchange', alCambiarLaUrl);
 mostrarVista(document.documentElement.dataset.vista);
