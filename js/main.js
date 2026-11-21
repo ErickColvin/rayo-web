@@ -5,7 +5,7 @@ const suave = sinMovimiento ? 'auto' : 'smooth';
 // botones con data-link="…", data-comprar="…" y data-descarga.
 const RAYO = {
   repo: 'sebaile/rayo-optimizador', // GitHub: de aquí sale la última versión
-  version: 'v3.2.3',                // se muestra si GitHub no responde
+  version: 'v3.2.4',                // se muestra si GitHub no responde
   discord: 'https://discord.gg/vS4KV8m5su',
   tiktok: 'https://www.tiktok.com/@rayopti.fps',
   instagram: 'https://www.instagram.com/rayofps.cl/',

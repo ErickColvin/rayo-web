@@ -20,7 +20,7 @@
 
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css?v=20261122">
+  <link rel="stylesheet" href="css/styles.css?v=20261123">
   <script src="js/tema.js?v=20261121"></script>
 
   <script type="application/ld+json">
@@ -31,7 +31,7 @@
     "description": "Optimizador de FPS para Windows 10 y 11: escáner, optimizaciones reversibles, configs por juego y benchmark.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Windows 10, Windows 11",
-    "softwareVersion": "3.2.3",
+    "softwareVersion": "3.2.4",
     "url": "https://rayofps.cl/",
     "downloadUrl": "https://github.com/sebaile/rayo-optimizador/releases/latest/download/RayoSetup.exe",
     "inLanguage": ["es", "en"],
@@ -220,7 +220,7 @@
         <a class="btn btn--ghost btn--lg" href="#precios">Ver planes<svg class="i"><use href="#i-arrow"/></svg></a>
       </div>
       <ul class="hero__note">
-        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Windows 10 y 11, <span data-version>v3.2.3</span></li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Windows 10 y 11, <span data-version>v3.2.4</span></li>
         <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Gratis para empezar</li>
         <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Pro a <strong data-clp="$3.990 CLP" data-usd="US$5">$3.990 CLP</strong>, pago único</li>
       </ul>
@@ -647,13 +647,13 @@
         <div class="dl__card reveal">
           <div class="dl__top">
             <span class="brand__mark brand__mark--md"><svg class="i"><use href="#i-zap-fill"/></svg></span>
-            <div><strong>Rayo <span data-version>v3.2.3</span></strong><span>Windows 10 y 11 · 64 bits</span></div>
+            <div><strong>Rayo <span data-version>v3.2.4</span></strong><span>Windows 10 y 11 · 64 bits</span></div>
           </div>
           <a class="btn btn--primary btn--lg btn--block" data-descarga href="https://github.com/sebaile/rayo-optimizador/releases/latest/download/RayoSetup.exe">
-            <svg class="i"><use href="#i-download"/></svg>Descargar instalador<span class="btn__meta" data-tam="exe">1,2 MB</span>
+            <svg class="i"><use href="#i-download"/></svg>Descargar instalador<span class="btn__meta" data-tam="exe">2 MB</span>
           </a>
           <a class="btn btn--ghost btn--block" data-descarga data-portable href="https://github.com/sebaile/rayo-optimizador/releases/latest">
-            <svg class="i"><use href="#i-package"/></svg>Versión sin instalar (ZIP)<span class="btn__meta" data-tam="zip">431 KB</span>
+            <svg class="i"><use href="#i-package"/></svg>Versión sin instalar (ZIP)<span class="btn__meta" data-tam="zip">713 KB</span>
           </a>
           <p class="dl__ok" role="status" hidden><svg class="i"><use href="#i-check"/></svg><span>Tu descarga empezó. Abajo tienes los pasos para instalar.</span></p>
           <p class="dl__req">Windows 10 (1903+) u 11 · .NET 4.8 (ya viene en Windows) · Español e inglés · <a data-notas href="https://github.com/sebaile/rayo-optimizador/releases/latest" target="_blank" rel="noopener">Novedades y huella del archivo (SHA-256)</a></p>
@@ -709,9 +709,16 @@
   </section>
 
   <!-- UPDATES: una carta por versión, la más nueva arriba.
-       Para publicar una nueva, copia un <article class="carta"> arriba de la
-       lista, cambia autor, fecha, versión y resumen, y pásale
-       «carta--nueva» (quítasela a la anterior). -->
+       Para publicar una nueva:
+       1. Copia el <article class="carta carta--nueva"> de arriba y pégalo arriba de la lista.
+       2. Cambia autor, fecha (time datetime + texto), versión y resumen.
+       3. Suma 1 al correlativo «Actualización n.º N» (carta__num): es texto fijo,
+          contado de la más antigua a la más nueva.
+       4. Pásale «carta--nueva» y el chip «Última» (carta__tag) a la nueva y
+          quítaselos a la anterior.
+       5. Sube la versión de respaldo en JSON-LD, los [data-version] y js/main.js.
+       El bloque plegable «Todo lo nuevo desde la 3.1» (details.resumen) es un
+       resumen acumulado, no una versión: no lleva número. -->
   <section class="vista section" id="updates" aria-label="Updates">
     <div class="wrap">
       <header class="section__head reveal">
@@ -719,9 +726,87 @@
         <p>Cada versión, contada en simple. Rayo se actualiza solo y las actualizaciones vienen incluidas en todos los planes.</p>
       </header>
 
+      <details class="resumen reveal">
+        <summary><span>Todo lo nuevo desde la 3.1<small>Resumen de todo lo que cambió, no es una versión</small></span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+        <div class="resumen__cuerpo">
+          <section>
+            <h4>Rayo en 3 idiomas (3.2.0)</h4>
+            <p>Toda la app está en español, inglés y portugués. Cambias de idioma al instante con el ícono del planeta (ES / EN / PT), sin reiniciar. Los videos y streams de la Biblioteca también salen en tu idioma.</p>
+          </section>
+          <section>
+            <h4>Liberar espacio en disco (3.1.0)</h4>
+            <ul>
+              <li>Un analizador muestra qué ocupa más espacio (juegos, descargas, archivos de Windows), con botones para desinstalar o abrir la carpeta.</li>
+              <li>Limpiezas nuevas: cachés de Steam, Epic, Battle.net, EA y Discord, la caché de Optimización de distribución y Windows.old.</li>
+              <li>Pro: comprimir Windows (CompactOS) y el almacenamiento reservado, para discos chicos. Ambos son reversibles.</li>
+            </ul>
+          </section>
+          <section>
+            <h4>Juegos y Biblioteca: tus partidas (3.2.0)</h4>
+            <ul>
+              <li>El overlay guarda el FPS de cada partida, y en la Biblioteca ves el promedio, los mínimos y un gráfico.</li>
+              <li>Cuántas personas juegan ahora y espectadores en vivo de Fortnite, VALORANT y LoL.</li>
+              <li>Desinstalar juegos con el desinstalador oficial de cada launcher.</li>
+              <li>Pro: Servidores de juegos, con ping real a Valve (CS2, Dota 2, Deadlock) y a AWS (Fortnite y otros).</li>
+              <li>Pro: tarjeta «Config para tu juego» en la ficha de cada juego.</li>
+              <li>Elite: perfil por juego, con plan de energía, prioridad, apps de fondo y Wallpaper Engine. Todo se deshace al cerrar el juego.</li>
+            </ul>
+          </section>
+          <section>
+            <h4>Escáner: Analizar drivers</h4>
+            <p>Compara tus drivers con las últimas versiones de NVIDIA, AMD y Windows Update y te lleva a la página oficial.</p>
+          </section>
+          <section>
+            <h4>Respaldo renovado (3.2.1)</h4>
+            <ul>
+              <li>Los cambios se agrupan por categoría, con buscador, «Revertir grupo» y cuánto tiempo hace que se aplicó cada uno.</li>
+              <li>Los puntos de restauración son más claros: si ya no cabe otro, Rayo te avisa y te sugiere cuánto espacio darles.</li>
+            </ul>
+          </section>
+          <section>
+            <h4>Más cómodo</h4>
+            <ul>
+              <li>Modo Juego rediseñado, con las opciones explicadas y etiquetas fáciles para las apps que no se tocan.</li>
+              <li>Herramientas ordenadas: Reparar Windows, Acciones rápidas y Mantener al día.</li>
+              <li>Transiciones suaves entre páginas.</li>
+              <li>Benchmark: una imagen de antes y después para compartir en un post o una historia.</li>
+              <li>Inicio y Optimizar muestran el mismo número de optimizaciones activas (3.2.2).</li>
+            </ul>
+          </section>
+          <section>
+            <h4>Más seguro</h4>
+            <ul>
+              <li>Rayo se instala en Archivos de programa.</li>
+              <li>La optimización de VBS se retiró.</li>
+              <li>Restaurar archivos de juegos funciona con OneDrive y solo escribe en la carpeta del juego.</li>
+              <li>«Reportar un problema» ya no incluye tu clave.</li>
+              <li>Las limpiezas que no se pueden deshacer piden confirmación (3.2.4).</li>
+              <li>Términos de uso nuevos, con privacidad explicada sin letra chica (3.2.4).</li>
+            </ul>
+          </section>
+          <section>
+            <h4>3.2.4: corregido el aviso de antivirus</h4>
+            <p>Algunos antivirus marcaban la 3.2.3 como amenaza. Era un falso positivo y ya está corregido. Si Windows bloqueó tu Rayo, instala la 3.2.4 encima desde <a href="#ayuda">rayofps.cl</a>.</p>
+          </section>
+        </div>
+      </details>
+
       <div class="updates">
         <article class="carta carta--nueva reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-19">19 nov 2026</time><span class="carta__tag">Última</span></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-21">21 nov 2026</time><span class="carta__num">Actualización n.º 10</span><span class="carta__tag">Última</span></p>
+          <h3>Versión <span class="carta__version">3.2.4</span></h3>
+          <p>Corregido el aviso de antivirus de la 3.2.3.</p>
+          <p class="carta__aviso" role="note"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg><span>Si Windows bloqueó tu Rayo 3.2.3: descarga el instalador nuevo desde <a href="#ayuda">rayofps.cl</a> e instálalo encima. Tus ajustes se mantienen.</span></p>
+          <ul class="carta__lista">
+            <li>Corregido el aviso de antivirus de la 3.2.3.</li>
+            <li>«Componentes antiguos de Windows» ahora pide confirmación antes de ejecutarse, porque no se puede deshacer.</li>
+            <li>Términos de uso nuevos, con una sección de privacidad clara: qué datos se usan y cuándo se conecta a internet.</li>
+            <li>Rayo borra solo los archivos temporales que quedaban tras un cierre inesperado.</li>
+          </ul>
+        </article>
+
+        <article class="carta reveal">
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-19">19 nov 2026</time><span class="carta__num">Actualización n.º 9</span></p>
           <h3>Versión <span class="carta__version">3.2.3</span></h3>
           <p>La serie 3.2 trae Rayo en tres idiomas, el FPS de cada partida guardado y un Respaldo más fácil de usar. La 3.2.3 protege el programa contra copias modificadas.</p>
           <ul class="carta__lista">
@@ -735,13 +820,13 @@
         </article>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-16">16 nov 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-16">16 nov 2026</time><span class="carta__num">Actualización n.º 8</span></p>
           <h3>Versión <span class="carta__version">3.1.0</span></h3>
           <p>Mejoras de ciberseguridad en la aplicación y en la página.</p>
         </article>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-14">14 nov 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-11-14">14 nov 2026</time><span class="carta__num">Actualización n.º 7</span></p>
           <h3>Versión <span class="carta__version">3.0.0</span></h3>
           <p>La actualización más grande hasta ahora. Rayo mide, aplica y vuelve a medir, para que decidas con datos si te quedas con cada cambio.</p>
           <ul class="carta__lista">
@@ -756,7 +841,7 @@
         </article>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time><span class="carta__num">Actualización n.º 6</span></p>
           <h3>Versión <span class="carta__version">2.5.3</span></h3>
           <p>Cambiar entre tema oscuro y claro ahora es instantáneo: ya no hay que reiniciar Rayo y te quedas en la misma página.</p>
         </article>
@@ -764,31 +849,31 @@
           <summary>Versiones anteriores (5)<svg class="i"><use href="#i-chevron"/></svg></summary>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time><span class="carta__num">Actualización n.º 5</span></p>
           <h3>Versión <span class="carta__version">2.5.2</span></h3>
           <p>«Comprar» abre Discord directo en el canal #comprar para que abras tu ticket. Si una función es de otro plan, el aviso trae su botón para comprarlo.</p>
         </article>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time><span class="carta__num">Actualización n.º 4</span></p>
           <h3>Versión <span class="carta__version">2.5.1</span></h3>
           <p>Nombres más claros en Aceleración en apps, y la categoría siempre muestra las apps que encontró en tu PC, estés en la pestaña que estés.</p>
         </article>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-24">24 oct 2026</time><span class="carta__num">Actualización n.º 3</span></p>
           <h3>Versión <span class="carta__version">2.5.0</span></h3>
           <p>Nueva categoría «Aceleración en apps»: apaga la aceleración por hardware de Discord, Chrome, Edge, Brave, Firefox, Opera GX y Spotify para dejarle la GPU a tu juego. Todo se puede deshacer.</p>
         </article>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-23">23 oct 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-23">23 oct 2026</time><span class="carta__num">Actualización n.º 2</span></p>
           <h3>Versión <span class="carta__version">2.4.0</span></h3>
           <p>Configs muestra solo todos los juegos instalados (Steam, Epic, Riot, GOG, Ubisoft, EA, Battle.net…). Los que no tienen config propia reciben una automática. Nuevo filtro «Instalados».</p>
         </article>
 
         <article class="carta reveal">
-          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-22">22 oct 2026</time></p>
+          <p class="carta__meta"><span class="carta__avatar" aria-hidden="true"><svg class="i"><use href="#i-zap-fill"/></svg></span><span class="carta__autor">Developers</span> — <time datetime="2026-10-22">22 oct 2026</time><span class="carta__num">Actualización n.º 1</span></p>
           <h3>Versión <span class="carta__version">2.3.1</span></h3>
           <p>El overlay en tamaño Mínimo y Compacto ahora es una columna angosta, con los FPS arriba, para tapar menos del juego.</p>
         </article>
@@ -936,6 +1021,6 @@
   <button class="visor__close" type="button" aria-label="Cerrar" data-cerrar><svg class="i"><use href="#i-x"/></svg></button>
 </dialog>
 
-<script src="js/main.js?v=20261122"></script>
+<script src="js/main.js?v=20261123"></script>
 </body>
 </html>
