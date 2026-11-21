@@ -22,7 +22,7 @@ const RAYO = {
   },
 
   // URL de la aplicación web de Apps Script que guarda los pedidos en la
-  // planilla de Google (instrucciones en planilla/pedidos.gs). Termina en /exec.
+  // planilla de Google (instrucciones en RAYOWEB-privado/planilla/pedidos.gs, fuera del repo). Termina en /exec.
   planillaPedidos: 'https://script.google.com/macros/s/AKfycbwVxmh3H0O-A68tjzgqRvSiAntOcqfnJy7cQ_0aZWpLKaGXWIIaGjGUqlgwLJR7Fcpm/exec',
 };
 
