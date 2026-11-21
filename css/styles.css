@@ -1085,7 +1085,7 @@ h2 {
 /* Sin equivalente en USD confirmado: en USD no se muestra el precio tachado */
 html[data-moneda='usd'] .plan__regular { display: none; }
 html[data-moneda='usd'] .plan__regular + .plan__price { margin-top: 14px; }
-.plan__oferta { min-height: 62px; margin-top: 12px; }
+.plan__oferta { min-height: 80px; margin-top: 12px; }
 .plan__sello {
   display: inline-block;
   padding: 3px 8px;

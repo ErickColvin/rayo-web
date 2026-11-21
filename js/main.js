@@ -69,7 +69,7 @@ const linkMercadoPago = (plan) => (monedaActual === 'clp' ? RAYO.mercadoPago[pla
 function usarMoneda(moneda) {
   monedaActual = moneda;
   document.documentElement.dataset.moneda = moneda;
-  document.querySelectorAll('[data-moneda]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.moneda === moneda)));
+  document.querySelectorAll('button[data-moneda]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.moneda === moneda)));
   document.querySelectorAll(`[data-${moneda}]`).forEach((el) => {
     if (el.textContent === el.dataset[moneda]) return;
     el.textContent = el.dataset[moneda];
@@ -89,7 +89,7 @@ const zona = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
 const enChile = /^(America\/(Santiago|Punta_Arenas)|Pacific\/Easter)$/.test(zona);
 usarMoneda(leer('rayo-moneda') || (enChile ? 'clp' : 'usd'));
 
-document.querySelectorAll('[data-moneda]').forEach((b) => b.addEventListener('click', () => {
+document.querySelectorAll('button[data-moneda]').forEach((b) => b.addEventListener('click', () => {
   usarMoneda(b.dataset.moneda);
   guardar('rayo-moneda', b.dataset.moneda);
 }));
@@ -149,7 +149,7 @@ document.querySelectorAll('[data-comprar]').forEach((boton) => boton.addEventLis
   const plan = boton.closest('.plan');
   pintar('plan', plan.querySelector('.plan__name').textContent);
   pintar('precio', plan.querySelector('.plan__amount').textContent);
-  pintar('unidad', plan.querySelector('.plan__unit').textContent);
+  pintar('unidad', plan.querySelector('.plan__unit').textContent + ' · pago único');
   pintar('incluye', INCLUYE[planElegido] || '');
 
   // Sin Mercado Pago (en USD o sin link) se va directo a la compra por Discord
