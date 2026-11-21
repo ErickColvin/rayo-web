@@ -411,7 +411,8 @@ const visorImg = visor.querySelector('img');
 document.querySelectorAll('.zoom').forEach((boton) => {
   boton.addEventListener('click', () => {
     const img = boton.querySelector('img');
-    visorImg.src = img.currentSrc || img.src;
+    // La versión grande (data-grande); si falta, la que ya se está mostrando
+    visorImg.src = img.dataset.grande || img.currentSrc || img.src;
     visorImg.alt = img.alt;
     visor.showModal();
   });

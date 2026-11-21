@@ -18,9 +18,8 @@
   <meta name="twitter:image" content="https://rayofps.cl/assets/capturas/inicio.png">
   <link rel="canonical" href="https://rayofps.cl/">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/styles.css">
   <script>
     // La página se ve por pantallas (Inicio, Funciones, Juegos, Precios, Ayuda).
@@ -158,8 +157,8 @@
     <div class="wrap hero__shot">
       <figure class="window window--hero">
         <button class="zoom" type="button" aria-label="Ampliar captura de la pantalla de inicio">
-          <img src="assets/capturas/inicio.png" width="1919" height="958" fetchpriority="high"
-               alt="Pantalla de inicio de Rayo: puntuación del PC, uso de CPU, GPU y RAM en vivo y la siguiente optimización recomendada">
+          <picture><source type="image/webp" srcset="assets/capturas/inicio-640.webp 640w, assets/capturas/inicio-1280.webp 1280w, assets/capturas/inicio-1919.webp 1919w" sizes="(max-width: 640px) calc((100vw - 50px) * 1.5), min(1190px, calc(100vw - 48px))"><img src="assets/capturas/inicio.png" data-grande="assets/capturas/inicio-1919.webp" width="1919" height="958" fetchpriority="high"
+               alt="Pantalla de inicio de Rayo: puntuación del PC, uso de CPU, GPU y RAM en vivo y la siguiente optimización recomendada"></picture>
         </button>
       </figure>
       <div class="float float--left" aria-hidden="true">
@@ -238,7 +237,7 @@
 
         <div class="tour__panels">
           <div class="tour__panel" role="tabpanel" id="panel-inicio" aria-labelledby="tab-inicio" tabindex="0">
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/inicio.png" width="1919" height="958" loading="lazy" alt="Inicio de Rayo con puntuación, uso de CPU, GPU y RAM y recomendaciones pendientes"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/inicio-640.webp 640w, assets/capturas/inicio-1280.webp 1280w, assets/capturas/inicio-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/inicio.png" data-grande="assets/capturas/inicio-1919.webp" width="1919" height="958" loading="lazy" alt="Inicio de Rayo con puntuación, uso de CPU, GPU y RAM y recomendaciones pendientes"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Tu PC de un vistazo</h3><p>Una puntuación que sube a medida que optimizas, el uso de CPU, GPU y RAM en vivo y la siguiente mejora recomendada para tu equipo.</p></div>
               <ul class="ticks">
@@ -250,7 +249,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-escaner" aria-labelledby="tab-escaner" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/escaner.png" width="1919" height="1027" loading="lazy" alt="Escáner de Rayo con los componentes del PC y el diagnóstico de rendimiento"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/escaner-640.webp 640w, assets/capturas/escaner-1280.webp 1280w, assets/capturas/escaner-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/escaner.png" data-grande="assets/capturas/escaner-1919.webp" width="1919" height="1027" loading="lazy" alt="Escáner de Rayo con los componentes del PC y el diagnóstico de rendimiento"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Sabe exactamente qué tienes</h3><p>Detecta procesador, gráfica, RAM canal por canal, discos, placa madre y BIOS, pantallas, red y versión de Windows. Después revisa la configuración y te dice qué corregir y cómo.</p></div>
               <ul class="ticks">
@@ -262,7 +261,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-red" aria-labelledby="tab-red" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/red.png" width="1919" height="1028" loading="lazy" alt="Red en Rayo: ping a los servidores de los juegos por región, con el mejor servidor destacado"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/red-640.webp 640w, assets/capturas/red-1280.webp 1280w, assets/capturas/red-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/red.png" data-grande="assets/capturas/red-1919.webp" width="1919" height="1028" loading="lazy" alt="Red en Rayo: ping a los servidores de los juegos por región, con el mejor servidor destacado"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Encuentra el servidor con menos ping</h3><p>Rayo mide el ping real hasta los centros de datos donde se juega y te dice qué región elegir en el juego. También revisa tu conexión y aplica ajustes de red de Windows que guardan el valor original.</p></div>
               <ul class="ticks">
@@ -274,7 +273,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-optimizar" aria-labelledby="tab-optimizar" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/optimizar.png" width="1919" height="1029" loading="lazy" alt="Lista de optimizaciones de Rayo agrupadas por categoría, con etiquetas de riesgo"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/optimizar-640.webp 640w, assets/capturas/optimizar-1280.webp 1280w, assets/capturas/optimizar-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/optimizar.png" data-grande="assets/capturas/optimizar-1919.webp" width="1919" height="1029" loading="lazy" alt="Lista de optimizaciones de Rayo agrupadas por categoría, con etiquetas de riesgo"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>86 ajustes, explicados en español</h3><p>FPS y latencia, GPU y NVIDIA, CPU y energía, registro, red y ping, mouse y teclado, memoria y disco, calidad de vida y aceleración por hardware en apps como Discord, Chrome o Spotify. Más privacidad y servicios en Debloat.</p></div>
               <ul class="ticks">
@@ -286,7 +285,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-perfiles" aria-labelledby="tab-perfiles" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/perfiles.png" width="1919" height="848" loading="lazy" alt="Perfiles de Rayo: Recomendado, Competitivo, Streaming y Portátil"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/perfiles-640.webp 640w, assets/capturas/perfiles-1280.webp 1280w, assets/capturas/perfiles-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/perfiles.png" data-grande="assets/capturas/perfiles-1919.webp" width="1919" height="848" loading="lazy" alt="Perfiles de Rayo: Recomendado, Competitivo, Streaming y Portátil"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Un clic según cómo juegas</h3><p>Recomendado para cualquier uso, Competitivo para shooters, Streaming para no romper tus transmisiones y Portátil para jugar con el cargador conectado. Ves qué incluye cada perfil antes de aplicarlo.</p></div>
               <ul class="ticks">
@@ -298,7 +297,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-configs" aria-labelledby="tab-configs" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/configs.png" width="1919" height="1026" loading="lazy" alt="Configs por juego en Rayo, con los juegos instalados primero"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/configs-640.webp 640w, assets/capturas/configs-1280.webp 1280w, assets/capturas/configs-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/configs.png" data-grande="assets/capturas/configs-1919.webp" width="1919" height="1026" loading="lazy" alt="Configs por juego en Rayo, con los juegos instalados primero"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Configs a medida para tus juegos</h3><p>Ajustes de Windows para ese tipo de juego, GPU dedicada y prioridad para su ejecutable, y una guía de opciones dentro del juego. Tus juegos instalados aparecen primero, y los que no están en la lista reciben una config automática.</p></div>
               <ul class="ticks">
@@ -310,7 +309,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-debloat" aria-labelledby="tab-debloat" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/debloat.png" width="1919" height="651" loading="lazy" alt="Debloat de Windows en Rayo con apps preinstaladas que se pueden quitar"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/debloat-640.webp 640w, assets/capturas/debloat-1280.webp 1280w, assets/capturas/debloat-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/debloat.png" data-grande="assets/capturas/debloat-1919.webp" width="1919" height="651" loading="lazy" alt="Debloat de Windows en Rayo con apps preinstaladas que se pueden quitar"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Fuera lo que no usas</h3><p>49 apps preinstaladas, 6 servicios y 15 ajustes de privacidad y telemetría: Copilot, Recall, Widgets, anuncios, Cortana y apps de fabricantes. Las apps se reinstalan desde Microsoft Store cuando quieras.</p></div>
               <ul class="ticks">
@@ -322,7 +321,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-juegos" aria-labelledby="tab-juegos" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/juegos.png" width="1919" height="774" loading="lazy" alt="Overlay de Rayo: FPS, 1 % low, temperaturas y ping encima del juego, sin inyectarse"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/juegos-640.webp 640w, assets/capturas/juegos-1280.webp 1280w, assets/capturas/juegos-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/juegos.png" data-grande="assets/capturas/juegos-1919.webp" width="1919" height="774" loading="lazy" alt="Overlay de Rayo: FPS, 1 % low, temperaturas y ping encima del juego, sin inyectarse"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Se activa solo cuando abres un juego</h3><p>Al abrir uno de tus juegos, Rayo sube su prioridad, libera la RAM en espera y baja la prioridad de navegadores y launchers. Al cerrarlo, todo vuelve a la normalidad.</p></div>
               <ul class="ticks">
@@ -334,7 +333,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-biblioteca" aria-labelledby="tab-biblioteca" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/biblioteca.jpg" width="1919" height="822" loading="lazy" alt="Biblioteca de Rayo con los juegos instalados de Steam, Epic Games y Riot, y la config de cada uno"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/biblioteca-640.webp 640w, assets/capturas/biblioteca-1280.webp 1280w, assets/capturas/biblioteca-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/biblioteca.jpg" data-grande="assets/capturas/biblioteca-1919.webp" width="1919" height="822" loading="lazy" alt="Biblioteca de Rayo con los juegos instalados de Steam, Epic Games y Riot, y la config de cada uno"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Todos tus juegos en un solo lugar</h3><p>Rayo encuentra los juegos que tienes instalados, te muestra en qué disco está cada uno y aplica su config con un clic. Desde ahí también los abres.</p></div>
               <ul class="ticks">
@@ -346,7 +345,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-benchmark" aria-labelledby="tab-benchmark" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/benchmark.png" width="1919" height="948" loading="lazy" alt="Benchmark de FPS de Rayo con promedio, 1 % low, 0,1 % low y variación"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/benchmark-640.webp 640w, assets/capturas/benchmark-1280.webp 1280w, assets/capturas/benchmark-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/benchmark.png" data-grande="assets/capturas/benchmark-1919.webp" width="1919" height="948" loading="lazy" alt="Benchmark de FPS de Rayo con promedio, 1 % low, 0,1 % low y variación"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Mide antes y después</h3><p>Registra los FPS reales mientras juegas: promedio, 1 % low (tus peores momentos) y tirones. Etiqueta cada pasada y compara con números de tu propio PC.</p></div>
               <ul class="ticks">
@@ -358,7 +357,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-obs" aria-labelledby="tab-obs" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/obs.png" width="1919" height="1027" loading="lazy" alt="OBS en Rayo: configuración recomendada para transmitir con el codificador de la tarjeta de video"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/obs-640.webp 640w, assets/capturas/obs-1280.webp 1280w, assets/capturas/obs-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/obs.png" data-grande="assets/capturas/obs-1919.webp" width="1919" height="1027" loading="lazy" alt="OBS en Rayo: configuración recomendada para transmitir con el codificador de la tarjeta de video"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Transmite y graba sin que te cueste FPS</h3><p>Rayo arma un perfil de OBS pensado para tu PC: usa el chip de video de tu tarjeta gráfica (como NVIDIA NVENC) en vez del procesador, así transmitir o grabar casi no le resta al juego.</p></div>
               <ul class="ticks">
@@ -370,7 +369,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-limpieza" aria-labelledby="tab-limpieza" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/limpieza.png" width="1919" height="1020" loading="lazy" alt="Limpieza y Boost de Rayo con el espacio recuperable por categoría"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/limpieza-640.webp 640w, assets/capturas/limpieza-1280.webp 1280w, assets/capturas/limpieza-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/limpieza.png" data-grande="assets/capturas/limpieza-1919.webp" width="1919" height="1020" loading="lazy" alt="Limpieza y Boost de Rayo con el espacio recuperable por categoría"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Libera espacio y memoria</h3><p>Temporales, cachés de sombreadores de DirectX y NVIDIA, descargas viejas de Windows Update, informes de errores y memoria en espera. Nunca toca tus documentos, fotos ni partidas guardadas.</p></div>
               <ul class="ticks">
@@ -382,7 +381,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-herramientas" aria-labelledby="tab-herramientas" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/herramientas.png" width="1919" height="1026" loading="lazy" alt="Herramientas de Rayo: reparar Windows, paneles clásicos y DNS más rápido"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/herramientas-640.webp 640w, assets/capturas/herramientas-1280.webp 1280w, assets/capturas/herramientas-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/herramientas.png" data-grande="assets/capturas/herramientas-1919.webp" width="1919" height="1026" loading="lazy" alt="Herramientas de Rayo: reparar Windows, paneles clásicos y DNS más rápido"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Repara Windows sin buscar comandos</h3><p>Repara archivos dañados de Windows, reinicia la red, arregla Windows Update y abre los paneles clásicos de Windows sin perderte en Configuración.</p></div>
               <ul class="ticks">
@@ -394,7 +393,7 @@
           </div>
 
           <div class="tour__panel" role="tabpanel" id="panel-respaldo" aria-labelledby="tab-respaldo" tabindex="0" hidden>
-            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/respaldo.png" width="1919" height="960" loading="lazy" alt="Respaldo y restauración de Rayo con puntos de restauración e historial de cambios"></button></figure>
+            <figure class="window"><button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/respaldo-640.webp 640w, assets/capturas/respaldo-1280.webp 1280w, assets/capturas/respaldo-1919.webp 1919w" sizes="(max-width: 1100px) calc(100vw - 50px), min(970px, calc(100vw - 276px))"><img src="assets/capturas/respaldo.png" data-grande="assets/capturas/respaldo-1919.webp" width="1919" height="960" loading="lazy" alt="Respaldo y restauración de Rayo con puntos de restauración e historial de cambios"></picture></button></figure>
             <div class="tour__copy">
               <div><h3>Todo se puede revertir</h3><p>Rayo guarda el valor original de cada cambio antes de hacerlo. Revierte uno, varios o todos, cuando quieras. Además crea puntos de restauración de Windows por su cuenta.</p></div>
               <ul class="ticks">
@@ -427,7 +426,7 @@
       </header>
 
       <figure class="window window--juegos reveal">
-        <button class="zoom" type="button" aria-label="Ampliar captura"><img src="assets/capturas/configs.png" width="1919" height="1026" loading="lazy" alt="Configs por juego en Rayo, con los juegos instalados primero"></button>
+        <button class="zoom" type="button" aria-label="Ampliar captura"><picture><source type="image/webp" srcset="assets/capturas/configs-640.webp 640w, assets/capturas/configs-1280.webp 1280w, assets/capturas/configs-1919.webp 1919w" sizes="min(958px, calc(100vw - 50px))"><img src="assets/capturas/configs.png" data-grande="assets/capturas/configs-1919.webp" width="1919" height="1026" loading="lazy" alt="Configs por juego en Rayo, con los juegos instalados primero"></picture></button>
       </figure>
 
       <div class="juegos__grupo reveal">
