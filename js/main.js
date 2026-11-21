@@ -695,6 +695,11 @@ function alCambiarLaUrl() {
   if (!vista || vista === document.documentElement.dataset.vista) return;
   mostrarVista(vista);
 }
+// "Saltar al contenido" mueve el foco sin tocar el #hash, para no ensuciar el historial
+document.querySelector('a.skip')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('contenido').focus();
+});
 window.addEventListener('popstate', alCambiarLaUrl);
 window.addEventListener('hashchange', alCambiarLaUrl);
 mostrarVista(document.documentElement.dataset.vista);

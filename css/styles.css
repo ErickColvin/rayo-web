@@ -1817,3 +1817,6 @@ html:has(dialog[open]) .chispa { animation-play-state: paused; }
   .nav__cta .btn:not(.btn--icono) { display: none; }
   .games { grid-template-columns: 1fr; }
 }
+
+/* El contenido recibe foco desde "Saltar al contenido": sin borde alrededor de toda la página */
+#contenido:focus { outline: none; }
