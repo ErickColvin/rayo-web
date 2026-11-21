@@ -1,7 +1,19 @@
-# Protecciones de la página para el navegador (Netlify las agrega a cada respuesta)
+# Cabeceras de la página (Cloudflare Pages las agrega a cada respuesta; mismo formato que Netlify)
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
-  Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.github.com https://script.google.com https://script.googleusercontent.com; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+# Los archivos de estos directorios conservan su nombre cuando cambian
+# (el CSS y el JS llevan ?v= en index.html), así que caché de 1 semana, sin immutable
+/css/*
+  Cache-Control: public, max-age=604800
+/js/*
+  Cache-Control: public, max-age=604800
+/assets/*
+  Cache-Control: public, max-age=604800
+/fonts/*
+  Cache-Control: public, max-age=604800

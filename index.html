@@ -20,19 +20,8 @@
 
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css">
-  <script>
-    // La página se ve por pantallas (Inicio, Funciones, Juegos, Precios, Ayuda).
-    // Se elige aquí, antes de dibujar, según el #hash; enlaces viejos como
-    // #descargar o #preguntas llevan a su pantalla nueva.
-    window.vistaDesdeHash = function (hash) {
-      var alias = { top: 'inicio', seguridad: 'funciones', descargar: 'ayuda', instalar: 'ayuda', smartscreen: 'ayuda', preguntas: 'ayuda', comprar: 'precios', novedades: 'updates' };
-      var id = alias[hash] || hash;
-      return ['inicio', 'funciones', 'juegos', 'precios', 'ayuda', 'updates'].indexOf(id) >= 0 ? id : null;
-    };
-    document.documentElement.classList.add('js');
-    document.documentElement.dataset.vista = vistaDesdeHash(location.hash.slice(1)) || 'inicio';
-  </script>
+  <link rel="stylesheet" href="css/styles.css?v=20261121">
+  <script src="js/tema.js?v=20261121"></script>
 
   <script type="application/ld+json">
   {
@@ -43,11 +32,94 @@
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Windows 10, Windows 11",
     "softwareVersion": "3.2.3",
+    "url": "https://rayofps.cl/",
+    "downloadUrl": "https://github.com/sebaile/rayo-optimizador/releases/latest/download/RayoSetup.exe",
     "inLanguage": ["es", "en"],
     "offers": [
-      { "@type": "Offer", "name": "Gratis", "price": "0", "priceCurrency": "CLP" },
-      { "@type": "Offer", "name": "Pro", "price": "3990", "priceCurrency": "CLP" },
-      { "@type": "Offer", "name": "Elite", "price": "6990", "priceCurrency": "CLP" }
+      { "@type": "Offer", "name": "Gratis", "price": "0", "priceCurrency": "CLP", "url": "https://rayofps.cl/#precios", "availability": "https://schema.org/InStock" },
+      { "@type": "Offer", "name": "Pro", "price": "3990", "priceCurrency": "CLP", "url": "https://rayofps.cl/#precios", "availability": "https://schema.org/InStock" },
+      { "@type": "Offer", "name": "Elite", "price": "6990", "priceCurrency": "CLP", "url": "https://rayofps.cl/#precios", "availability": "https://schema.org/InStock" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cómo lo instalo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ejecuta el instalador o descomprime el ZIP. Acepta el permiso de administrador (sin él, Rayo abre en modo de solo lectura). Pulsa «Optimizar ahora» para aplicar el perfil Recomendado. Reinicia si Rayo te lo pide."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Por qué dice «Windows protegió su PC»?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Es normal: Rayo aún no tiene firma digital de código. Pulsa «Más información» y luego «Ejecutar de todas formas». Si quieres, compara el hash SHA-256 (la huella del archivo) con el de la página de la versión."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Rayo es seguro para mi PC?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Guarda el valor original de cada cambio, crea un punto de restauración antes de aplicar y puedes revertir uno o todos. No desactiva Windows Defender, el UAC ni Windows Update, no quita las protecciones contra Spectre y Meltdown y no recopila tus datos. Puedes ver el cambio exacto de cada ajuste en el catálogo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Me pueden banear en Valorant, Fortnite u otros juegos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rayo no se inyecta en los juegos ni toca sus anticheats (Vanguard, Easy Anti-Cheat, BattlEye, Ricochet…). Cambia ajustes de Windows y, en Fortnite, LoL y Rocket League, el mismo archivo de configuración que cambias desde el menú del juego."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuántos FPS voy a ganar?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende de tu equipo y de cómo esté hoy: un PC con la RAM sin XMP o Windows lleno de procesos mejora mucho más que uno ya afinado. Por eso Rayo trae un benchmark: mides antes y después en tu propio PC."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo compro y recibo mi clave?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pulsa Comprar, únete a nuestro Discord y abre un ticket en #comprar. Al confirmar el pago recibes tu clave: pégala en Rayo → Ajustes → Activar clave. Recibes una clave única por compra."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Y si no me funciona?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tienes 10 días desde la compra para pedir la devolución completa si Rayo no funciona en tu PC y el soporte no lo resuelve. Detalles en los Términos de uso."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué necesito para usarlo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Windows 10 (1903 o superior) u 11 de 64 bits y permiso de administrador para aplicar cambios. Funciona con AMD, Intel, NVIDIA y Radeon, en escritorio o notebook (tiene perfil Portátil)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Es una suscripción?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Pro y Elite se pagan una sola vez y traen las actualizaciones incluidas. El plan Gratis no pide medio de pago y sirve para probar Rayo en tu PC."
+        }
+      }
     ]
   }
   </script>
@@ -857,6 +929,6 @@
   <button class="visor__close" type="button" aria-label="Cerrar" data-cerrar><svg class="i"><use href="#i-x"/></svg></button>
 </dialog>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=20261121"></script>
 </body>
 </html>
